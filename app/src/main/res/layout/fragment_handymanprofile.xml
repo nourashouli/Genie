@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".Fragments.HandymanprofileFragment">
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pro_image_profile_frag"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/profile"
+
+            />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User name"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            />
+        <TextView
+            android:id="@+id/jobname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Job name"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            />
+
+        <TextView
+            android:layout_margin="5sp"
+            android:text="I do blalaallalablalla ......"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <RatingBar
+            android:id="@+id/rBar"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:theme="@style/Widget.AppCompat.RatingBar" />
+        <Button
+            android:layout_margin="5sp"
+            android:text="@string/download_certificate"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:text="Images"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/images_recycle_view_id"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</FrameLayout>
