@@ -45,4 +45,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    implementation 'com.github.kittinunf.fuel:fuel-json:2.2.1'
+
+    implementation 'com.github.kittinunf.fuel:fuel:2.2.1'
+
+
 }

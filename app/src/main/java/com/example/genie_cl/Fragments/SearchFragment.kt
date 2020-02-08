@@ -1,16 +1,20 @@
 package com.example.genie_cl.Fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.genie_cl.Login
 import com.example.genie_cl.MainActivity
 
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.SearchAdapter
+import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_search.*
 
 
 /**
@@ -28,7 +32,11 @@ class SearchFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        electrical.setOnClickListener {
+            (context as MainActivity).navigateToFragment(handymanList())
 
+
+        }
     } // onActivityCreated
 
 

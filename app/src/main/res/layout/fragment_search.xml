@@ -74,13 +74,14 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="38dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/mo_re"
                     android:text="Electrical"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:id="@+id/electrical"/>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

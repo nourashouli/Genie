@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+
+    android_orientation="horizontal"
+    android_layout_width="match_parent"
+
+    android_layout_margin="10dp"
+    card_view_cardCornerRadius="5dp"
+    card_view_cardElevation="5dp"
+    android_layout_height="200dp">
+
+    <TextView
+
+        android_layout_width="match_parent"
+        android_layout_height="wrap_content"
+        android_textAppearance="?android:attr/textAppearanceLarge"
+        android_text="Name"
+        android_id="@+id/nameTxt"
+        android_padding="10dp"
+        android_textColor="@color/colorAccent"
+        android_textStyle="bold"
+        android_layout_alignParentLeft="true"
+        />
+
+    <androidx.cardview.widget.CardView/>

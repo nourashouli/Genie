@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    android_layout_width="match_parent"
+    android_layout_height="match_parent"
+    tools_context=".handymanList">
+
+    <ToggleButton
+        android_text="Toggle Sort"
+        android_layout_width="match_parent"
+        android_layout_height="wrap_content"
+        android_background="@color/colorAccent"
+        android_padding="5dp"
+        android_id="@+id/sortBtn"
+        android_layout_marginRight="5.0dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android_id="@+id/rv"
+        android_layout_marginTop="40dp"
+        android_layout_width="match_parent"
+        android_layout_height="wrap_content" />
+
+</RelativeLayout>

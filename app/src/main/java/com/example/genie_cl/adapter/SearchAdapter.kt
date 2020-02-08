@@ -11,7 +11,7 @@ class SearchAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.Vi
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapterViewHolder {
-        return SearchAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.search_row, parent, false))
+        return SearchAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.handyman_row, parent, false))
     }
 
     override fun getItemCount(): Int {
