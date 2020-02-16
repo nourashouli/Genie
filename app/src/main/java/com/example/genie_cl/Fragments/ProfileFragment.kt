@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.genie_cl.AccountSettingsActivity
+import com.example.genie_cl.AccountSettingActivity
 import com.example.genie_cl.Login
 import com.example.genie_cl.R
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -29,7 +29,7 @@ class ProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         edit_account_settings_btn.setOnClickListener {
-            val i = Intent(this.context, AccountSettingsActivity::class.java)
+            val i = Intent(this.context, AccountSettingActivity::class.java)
             startActivity(i)
 
         }
