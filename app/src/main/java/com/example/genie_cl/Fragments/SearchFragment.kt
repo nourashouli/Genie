@@ -40,6 +40,11 @@ class SearchFragment : Fragment() {
         return inflater.inflate(com.example.genie_cl.R.layout.fragment_search, container, false)
     } // onCreateView
 
+
+
+    fun getServices(){
+        //TODO
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var adapter = ServiceAdapter(context!!)
         recycler_view.layoutManager=GridLayoutManager(context!!,30)
