@@ -7,7 +7,7 @@
     android_layout_margin="10dp"
     card_view_cardCornerRadius="5dp"
     card_view_cardElevation="5dp"
-    android_layout_height="200">
+    android_layout_height="200dp">
 
     <TextView
 
