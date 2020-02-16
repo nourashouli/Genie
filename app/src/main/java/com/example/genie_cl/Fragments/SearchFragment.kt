@@ -34,7 +34,8 @@ class SearchFragment : Fragment() {
 
         electrical.setOnClickListener {
             (context as MainActivity).navigateToFragment(handymanlist())
-
+//assume you wrotte a line of code here  and in the same time I am writing in the same page
+            // you want to push to the github your code but I already chnaged in t o in this case check what I am gonna do ok
 
         }
     } // onActivityCreated
