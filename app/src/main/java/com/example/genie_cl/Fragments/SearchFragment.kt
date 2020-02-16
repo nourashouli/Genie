@@ -33,7 +33,7 @@ class SearchFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         electrical.setOnClickListener {
-            (context as MainActivity).navigateToFragment(handymanList())
+            (context as MainActivity).navigateToFragment(handymanlist())
 
 
         }
