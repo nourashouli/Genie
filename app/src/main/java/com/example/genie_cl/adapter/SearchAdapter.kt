@@ -17,6 +17,7 @@ class SearchAdapter(val context: Context) : RecyclerView.Adapter<RecyclerView.Vi
     override fun getItemCount(): Int {
         return 5
     }
+    //vomm
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
