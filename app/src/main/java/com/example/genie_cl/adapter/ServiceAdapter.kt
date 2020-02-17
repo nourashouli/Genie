@@ -40,17 +40,17 @@ class ServiceAdapter(context: Context) : RecyclerView.Adapter<ServiceAdapter.Vie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.itemView.service_title.text = "123"
+//            holder.itemView.service_title.text = "123"
 
-//        holder.itemView.service_title.text = (list[position] as CardView).service_title
-//        holder.itemView.service_count.setText((list[position] as CardView).service_count)
-//        val image_url = (list[position] as CardView).service_picture
+      holder.itemView.service_title.text = (list[position] as CardView).service_title
+ //   holder.itemView.service_count.setText((list[position] as CardView).service_count)
+      val image_url = (list[position] as CardView).service_picture
 //        val url =
 //            Utils.BASE_IMAGE_URL.plus(image_url)
 
-//        Glide
-//            .with(holder.itemView)
-//            .load(image_url).into(holder.itemView.service_image)
+      Glide
+           .with(holder.itemView)
+          .load(image_url).into(holder.itemView.service_image)
     }
 
     override fun getItemCount(): Int {

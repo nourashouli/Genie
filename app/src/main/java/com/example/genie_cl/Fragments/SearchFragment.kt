@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
         )
         adapter.setItem(
                 CardView(
-                    "Plumber",
+                    "electrician",
                     "https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png",
                     3
                 )
