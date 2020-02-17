@@ -22,8 +22,10 @@ import android.graphics.Rect
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import android.R
-
-
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+import com.example.genie_cl.Fragments.SearchFragment.GridSpacingItemDecoration
 
 
 
@@ -47,19 +49,25 @@ class SearchFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var adapter = ServiceAdapter(context!!)
-        recycler_view.layoutManager=GridLayoutManager(context!!,30)
-
+       // recycler_view.layoutManager=GridLayoutManager(context!!,30)
 
         val mLayoutManager = GridLayoutManager(context!!, 2)
         recycler_view.setLayoutManager(mLayoutManager)
         recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
         recycler_view.setItemAnimator(DefaultItemAnimator())
-
-        recycler_view.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recycler_view.setAdapter(adapter)
 
 
-        recycler_view.adapter = adapter
+     //   val mLayoutManager = GridLayoutManager(context!!, 2)
+        recycler_view.setLayoutManager(mLayoutManager)
+        recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10),true))
+        recycler_view.setItemAnimator(DefaultItemAnimator())
+
+//        recycler_view.layoutManager =
+//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//
+//
+//        recycler_view.adapter = adapter
 
 
         adapter.setItem(
@@ -76,9 +84,15 @@ class SearchFragment : Fragment() {
                     3
                 )
                 )
+        adapter.setItem(
+            CardView(
+                "electrician",
+                "https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png",
+                3
+            )
+        )
 
     }
-
     inner class GridSpacingItemDecoration(
         private val spanCount: Int,
         private val spacing: Int,
