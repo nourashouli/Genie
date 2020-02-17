@@ -23,11 +23,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import android.R
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.genie_cl.Fragments.SearchFragment.GridSpacingItemDecoration
-
-
+import com.example.genie_cl.Utils.Utils
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.json.responseJson
+import com.github.kittinunf.result.failure
+import com.github.kittinunf.result.success
 
 
 /**
@@ -44,9 +50,7 @@ class SearchFragment : Fragment() {
 
 
 
-    fun getServices(){
-        //TODO
-    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var adapter = ServiceAdapter(context!!)
        // recycler_view.layoutManager=GridLayoutManager(context!!,30)
@@ -58,41 +62,56 @@ class SearchFragment : Fragment() {
         recycler_view.setAdapter(adapter)
 
 
-     //   val mLayoutManager = GridLayoutManager(context!!, 2)
         recycler_view.setLayoutManager(mLayoutManager)
         recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10),true))
         recycler_view.setItemAnimator(DefaultItemAnimator())
 
-//        recycler_view.layoutManager =
-//            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//
-//
-//        recycler_view.adapter = adapter
 
 
-        adapter.setItem(
-            CardView(
-                "Plumber",
-                "https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png",
-                3
-            )
-        )
-        adapter.setItem(
-                CardView(
-                    "electrician",
-                    "https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png",
-                    3
-                )
-                )
-        adapter.setItem(
-            CardView(
-                "electrician",
-                "https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png",
-                3
-            )
-        )
+
+        //TODO
+        Fuel.get(Utils.API_Services)
+            .header(
+                "accept" to "application/json"
+              )
+            .responseJson { _, _, result ->
+
+                result.success {
+//
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+
+                   //     var services = res.getJSONObject("services")
+                        activity!!.runOnUiThread {
+
+
+                            val items = res.getJSONArray("services")
+
+                            for (i in 0 until items.length()) {
+                                adapter.setItem(items.getJSONObject(i))
+                            }
+
+
+                        }
+                    } else {
+
+                        Toast.makeText(
+                            activity,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+               }
+                result.failure {
+
+                    Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
 
     }
+
     inner class GridSpacingItemDecoration(
         private val spanCount: Int,
         private val spacing: Int,
