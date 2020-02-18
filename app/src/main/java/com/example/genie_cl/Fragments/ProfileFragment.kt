@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import com.example.genie_cl.AccountSettingActivity
 import com.example.genie_cl.Login
 import com.example.genie_cl.R
+import com.example.genie_cl.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 /**
@@ -34,8 +35,7 @@ class ProfileFragment : Fragment() {
 
         }
         Logout.setOnClickListener {
-            val i = Intent(this.context, Login::class.java)
-            startActivity(i)
+           Utils.logout(context!!)
 
         }
     }

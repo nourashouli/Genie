@@ -1,6 +1,7 @@
 package com.example.genie_cl.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,14 @@ class ServiceAdapter(context: Context) : RecyclerView.Adapter<ServiceAdapter.Vie
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.service_image)
+        holder.itemView.setOnClickListener {
+//            val intent = Intent(  this, SignupActivity::class.java)
+//
+//            intent.flags =
+//                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+//
+//            startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

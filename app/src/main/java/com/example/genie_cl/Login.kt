@@ -14,6 +14,7 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
+
 class Login : AppCompatActivity() {
 
 
@@ -30,14 +31,12 @@ class Login : AppCompatActivity() {
     }
 
 
-
     private fun login() {
         btn_login.isEnabled = false
         val email = Email.text.toString()
         val password = Password.text.toString()
-
-
-        Fuel.post(Utils.API_LOGIN, listOf("email" to email, "password" to password))
+        val role = "user"
+        Fuel.post(Utils.API_LOGIN, listOf("email" to email, "password" to password, "role" to role))
             .header("accept" to "application/json")
             .responseJson { _, _, result ->
                 result.success {
@@ -76,8 +75,7 @@ class Login : AppCompatActivity() {
                     } else {
 
 
-
-                        runOnUiThread{
+                        runOnUiThread {
                             btn_login.isEnabled = true
                             Toast.makeText(
                                 this@Login,
@@ -96,7 +94,6 @@ class Login : AppCompatActivity() {
                     }
                 }
             }
-
 
 
     }

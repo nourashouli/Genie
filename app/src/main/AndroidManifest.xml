@@ -22,9 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountSettingsActivity" />
-        <activity android:name=".MainActivity" />
+<!--        <activity android:name=".AccountSettingsActivity" />-->
+
         <activity android:name=".Login" />
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

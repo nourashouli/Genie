@@ -27,10 +27,11 @@ class SignUp : AppCompatActivity() {
         val name=name.text.toString()
         val password = reg_password.text.toString()
         val passwordConfirmation=confirmtionpassword.text.toString()
+        val role="user"
         fbtn_register.isEnabled=false
         Fuel.post(
             Utils.API_Register,  listOf(
-                "password_confirmation"    to passwordConfirmation,
+                "password_confirmation"    to passwordConfirmation, "role" to role,
                 "name" to name, "email" to email, "password" to password
 
             )
