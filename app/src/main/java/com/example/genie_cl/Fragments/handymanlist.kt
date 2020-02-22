@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.adapter.HandymanListAdapter
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
+import kotlinx.android.synthetic.main.fragment_handymanlist.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 /**
@@ -35,8 +37,11 @@ class handymanlist : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         var adapter = HandymanListAdapter(context!!)
+        handymanlist_recycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 
+        handymanlist_recycler.setAdapter(adapter)
         Fuel.get(Utils.API_getHandymanList)
             .header(
                 "accept" to "application/json"
@@ -76,8 +81,6 @@ class handymanlist : Fragment() {
                         .show()
                 }
             }
-
-        recycler_view.setAdapter(adapter)
     }
 
 
