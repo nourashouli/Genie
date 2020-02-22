@@ -58,20 +58,6 @@ class ServiceAdapter(var context : Context) : RecyclerView.Adapter<ServiceAdapte
             (context as MainActivity).navigateToFragment(handymanlist())
 
 
-
-
-//            val bundle:Bundle = context.instance
-//            ba
-//            bundle.putString("category", (list[position] as JSONObject).getString("name"))
-//            //set Fragmentclass Arguments
-//            //set Fragmentclass Arguments
-//            val fragobj = handymanlist()
-//            fragobj.setArguments(bundle)
-
-
-
-
-
         }
     }
 

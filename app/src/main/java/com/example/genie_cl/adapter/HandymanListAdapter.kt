@@ -47,33 +47,22 @@ import org.json.JSONObject
     }
 
      override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.name.text = (list[position] as JSONObject).getString("name")
-        val image_url = (list[position] as JSONObject).getString("profile_picture")
+         if((list[position] as JSONObject).getString("name")!=""){
+             holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
 
-        Glide
-            .with(holder.itemView)
-            .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.imageView2)
-        holder.itemView.imageView2.setOnClickListener{
+         }
 
-            //{itemClick(layoutPosition)}
-            (context as MainActivity).navigateToFragment(HomeFragment())
+         if(((list[position]as JSONObject).has("profile_picture"))) {
 
 
+                 val image_url = (list[position] as JSONObject).getString("profile_picture")
 
+                 Glide
+                     .with(holder.itemView)
+                     .load(Utils.BASE_IMAGE_URL.plus(image_url))
+                     .into(holder.itemView.handyman_profile_picture)
 
-//            val bundle:Bundle = context.instance
-//            ba
-//            bundle.putString("category", (list[position] as JSONObject).getString("name"))
-//            //set Fragmentclass Arguments
-//            //set Fragmentclass Arguments
-//            val fragobj = handymanlist()
-//            fragobj.setArguments(bundle)
-
-
-
-
-
-        }
+             }
     }
 
 

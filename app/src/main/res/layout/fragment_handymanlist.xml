@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.handymanlist">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/category"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/handymanlist_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text= " this is a test @string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </FrameLayout>
