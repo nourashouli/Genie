@@ -33,6 +33,7 @@ class Utils {
         const val API_LOGIN = "$BASE_URL/login"
         const val API_Register ="$BASE_URL/register"
         const val  API_Services="$BASE_URL/getServices"
+
         const val API_EDIT_PROFILE = "$BASE_URL/profile-edit"
         const val API_DEVICE_TOKEN = "$BASE_URL/device-token"
         const val API_PROFILE = "$BASE_URL/profile"

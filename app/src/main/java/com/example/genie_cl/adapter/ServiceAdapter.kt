@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.genie_cl.Fragments.handymanlist
 import com.example.genie_cl.MainActivity
+import com.example.genie_cl.R
 import com.example.genie_cl.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_handymanlist.*
 import kotlinx.android.synthetic.main.service_card.view.*
