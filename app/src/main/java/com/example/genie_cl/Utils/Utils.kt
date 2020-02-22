@@ -33,7 +33,6 @@ class Utils {
         const val API_LOGIN = "$BASE_URL/login"
         const val API_Register ="$BASE_URL/register"
         const val  API_Services="$BASE_URL/getServices"
-
         const val API_EDIT_PROFILE = "$BASE_URL/profile-edit"
         const val API_DEVICE_TOKEN = "$BASE_URL/device-token"
         const val API_PROFILE = "$BASE_URL/profile"
@@ -55,8 +54,7 @@ class Utils {
         const val API_CONFIRM_PAYMENT = "$BASE_URL/confirm-payment"
         const val API_REQUEST_PASSWORD = "$BASE_URL/request-password"
         const val API_RESET_PASSWORD = "$BASE_URL/reset-password"
-
-
+        const val API_getHandymanList="$BASE_URL/getHandymanList"
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
 
