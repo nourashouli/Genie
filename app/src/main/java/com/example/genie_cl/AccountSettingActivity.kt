@@ -17,52 +17,60 @@ class AccountSettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_settings)
-        viewProfile()
+//        Glide
+//            .with(this@AccountSettingActivity)
+//            .load("https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png")
+//            .into(profile_image_edt_profile)
+         viewProfile()
     }
-     fun viewProfile(){
+
+    private fun viewProfile() {
         Fuel.get(Utils.API_EDIT_PROFILE)
             .header(
                 "accept" to "application/json",
                 Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
             )
-            .responseJson  { _, _, result ->
-
+            .responseJson { _, _, result ->
                 result.success {
-            var res = it.obj()
+                    var res = it.obj()
+                    if (res.optString("status", "error") == "success") {
+                        var profile = res.getJSONObject("profile")
+                        email_edt_profile.setText(profile.optString("email", "emailer"))
+                        password_edt_profile.setText(profile.optString("password",".."))
+runOnUiThread {
+                        if (profile.has("profile_picture")) {
+                            val url =
+                                Utils.BASE_IMAGE_URL.plus(profile.getString("profile_picture"))
+                            Glide
+                                .with(this@AccountSettingActivity)
+                                .load(url)
+                                .into(profile_image_edt_profile)
+                       }}
 
-            if (res.optString("status", "error") == "success") {
 
-                var profile = res.getJSONObject("profile")
+                    }
 
-                if(profile.getString("profile_picture")!="") {
-                    val image_url =profile.getString("profile_picture")
-                    val url =
-                        Utils.BASE_IMAGE_URL.plus(image_url)
-                    Glide
-                        .with(this)
-                        .load(url).into(profile_image_edt_profile)
+                 else {
 
+                        Toast.makeText(
+                            this,
+
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
-                email_edt_profile.setText(profile.getString("email"))
-                password_edt_profile.setText(profile.getString("password"))
 
 
-            } else {
 
-                Toast.makeText(
-                    this,
 
-                    res.getString("status"),
-                    Toast.LENGTH_LONG
-                ).show()
+
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
             }
-        }
-        result.failure {
-
-            Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
-                .show()
-        }
-    }
 
     }
 //
