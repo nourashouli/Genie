@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.genie_cl.Fragments.SearchFragment.GridSpacingItemDecoration
 import com.example.genie_cl.Utils.Utils
+import com.example.genie_cl.adapter.utils.AdapterListener
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
@@ -52,7 +53,12 @@ class SearchFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var adapter = ServiceAdapter(context!!)
+        var adapter = ServiceAdapter(context!!, object :AdapterListener{
+            override fun onAction(ob: Any) {
+                // play ur game here
+
+            }
+        })
        // recycler_view.layoutManager=GridLayoutManager(context!!,30)
 
         val mLayoutManager = GridLayoutManager(context!!, 2)

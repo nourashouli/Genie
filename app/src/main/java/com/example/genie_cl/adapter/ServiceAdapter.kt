@@ -13,6 +13,7 @@ import com.example.genie_cl.Fragments.handymanlist
 import com.example.genie_cl.MainActivity
 import com.example.genie_cl.R
 import com.example.genie_cl.Utils.Utils
+import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.fragment_handymanlist.*
 import kotlinx.android.synthetic.main.service_card.view.*
 import org.json.JSONObject
@@ -20,6 +21,13 @@ import org.json.JSONObject
 
 class ServiceAdapter(var context : Context) : RecyclerView.Adapter<ServiceAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
+    var listener: AdapterListener? = null
+
+    constructor(  context: Context , listener: AdapterListener) : this(context) {
+        this.listener = listener
+    }
+
+
    // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
@@ -47,17 +55,16 @@ class ServiceAdapter(var context : Context) : RecyclerView.Adapter<ServiceAdapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.service_title.text = (list[position] as JSONObject).getString("name")
-        val image_url = (list[position] as JSONObject).getString("service_picture")
+        val image_url = (list[position] as JSONObject).optString("image","image.png")
 
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.service_image)
         holder.itemView.service_image.setOnClickListener{
 
-            //{itemClick(layoutPosition)}
-            (context as MainActivity).navigateToFragment(handymanlist())
-
-
+//            //{itemClick(layoutPosition)}
+            (context as MainActivity).navigateToFragment(handymanlist((list[position])))
+//            this.listener!!.onAction(list[position])
         }
     }
 

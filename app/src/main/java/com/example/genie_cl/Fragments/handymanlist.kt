@@ -14,18 +14,19 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
+import org.json.JSONObject
 import kotlinx.android.synthetic.main.fragment_handymanlist.*
-import kotlinx.android.synthetic.main.fragment_search.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class handymanlist : Fragment() {
+class handymanlist(var data: Any) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(
             com.example.genie_cl.R.layout.fragment_handymanlist,
@@ -39,10 +40,10 @@ class handymanlist : Fragment() {
         var adapter = HandymanListAdapter(context!!)
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
-
+        var id:String= (data as JSONObject).getString("_id")
         handymanlist_recycler.setAdapter(adapter)
-        Fuel.get(Utils.API_getHandymanList)
+
+        Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
             .header(
                 "accept" to "application/json"
             )
@@ -82,8 +83,6 @@ class handymanlist : Fragment() {
                 }
             }
     }
-
-
 
 
 }
