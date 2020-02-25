@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.genie_cl.Fragments.HomeFragment
 import com.example.genie_cl.Fragments.handymanlist
-import com.example.genie_cl.MainActivity
-import com.example.genie_cl.R
 import com.example.genie_cl.Utils.Utils
-import kotlinx.android.synthetic.main.fragment_handymanlist.*
+import kotlinx.android.synthetic.main.fragment_handymanlist.view.*
+import com.example.genie_cl.R
 import kotlinx.android.synthetic.main.handyman_row.view.*
 import org.json.JSONObject
 
@@ -63,16 +62,19 @@ import org.json.JSONObject
                      .into(holder.itemView.handyman_profile_picture)
 
              }
+         val price = (list[position] as JSONObject).getString("price")
+        holder.itemView.sort_price.setOnClickListener{
+
+             var sortedList = list.sortedWith(compareBy( {price} ))
+         }
     }
 
 
     override fun getItemCount(): Int {
         return list.size
     }
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
         // itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
-
 }
