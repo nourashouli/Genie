@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
 import com.example.genie_cl.Fragments.HomeFragment
 import com.example.genie_cl.Fragments.handymanlist
@@ -64,8 +65,7 @@ import org.json.JSONObject
              }
          val price = (list[position] as JSONObject).getString("price")
         holder.itemView.sort_price.setOnClickListener{
-
-             var sortedList = list.sortedWith(compareBy( {price} ))
+            var SortedList = list.sortedWith(compareBy( {price} ))
          }
     }
 

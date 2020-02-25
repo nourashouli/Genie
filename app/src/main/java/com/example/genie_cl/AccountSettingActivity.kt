@@ -21,7 +21,8 @@ class AccountSettingActivity : AppCompatActivity() {
 //            .with(this@AccountSettingActivity)
 //            .load("https://handiman.club/public/storage/uploads/dzYci2r374tKkI7NdBtNu3L5K.png")
 //            .into(profile_image_edt_profile)
-         viewProfile()
+        viewProfile()
+        save_infor_profile_btn.setOnClickListener { EditProfile() }
     }
 
     private fun viewProfile() {
@@ -36,21 +37,20 @@ class AccountSettingActivity : AppCompatActivity() {
                     if (res.optString("status", "error") == "success") {
                         var profile = res.getJSONObject("profile")
                         email_edt_profile.setText(profile.optString("email", "emailer"))
-                        password_edt_profile.setText(profile.optString("password",".."))
-runOnUiThread {
-                        if (profile.has("profile_picture")) {
-                            val url =
-                                Utils.BASE_IMAGE_URL.plus(profile.getString("profile_picture"))
-                            Glide
-                                .with(this@AccountSettingActivity)
-                                .load(url)
-                                .into(profile_image_edt_profile)
-                       }}
+                        password_edt_profile.setText(profile.optString("password", ".."))
+                        runOnUiThread {
+                            if (profile.has("profile_picture")) {
+                                val url =
+                                    Utils.BASE_IMAGE_URL.plus(profile.getString("profile_picture"))
+                                Glide
+                                    .with(this@AccountSettingActivity)
+                                    .load(url)
+                                    .into(profile_image_edt_profile)
+                            }
+                        }
 
 
-                    }
-
-                 else {
+                    } else {
 
                         Toast.makeText(
                             this,
@@ -73,63 +73,56 @@ runOnUiThread {
             }
 
     }
-//
-/*
-
-    private fun viewProfile() {
-        Fuel.get(Utils.API_EDIT_PROFILE)
+    private fun EditProfile() {
+        Fuel.put(Utils.API_EDIT_PROFILE)
             .header(
                 "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(activity!!.baseContext).toString()
+                Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
             )
             .responseJson { _, _, result ->
-
                 result.success {
-
                     var res = it.obj()
-
                     if (res.optString("status", "error") == "success") {
-
                         var profile = res.getJSONObject("profile")
-                        activity!!.runOnUiThread {
-                            profile_name.setText(profile.getString("name"))
-                            profile_email.setText(profile.getString("email"))
-                        profile_phone.setText(profile.getString("phone"))
-                         profile_biography.setText(profile.getString("biography"))
-                            profile_balance.setText((profile.getString("balance")).plus("$"))
-                            if(profile.optString("isApproved", "false") == "true"){
-                                profile_status_background.setBackgroundColor(Color.GREEN)
-                                profile_status.setText("Online")
-                            }
-                           val image_url =profile.getString("profile_picture")
-                            val url =
-                               Utils.BASE_IMAGE_URL.plus(image_url)
-
-                            Glide
-                                .with(this)
-                                .load(url).into(profile_picture)
-                            activity?.runOnUiThread {
-                                Toast.makeText(activity, profile.toString(), Toast.LENGTH_LONG)
-                                    .show()
+                        email_edt_profile.setText(profile.optString("email", "emailer"))
+                        password_edt_profile.setText(profile.optString("password", ".."))
+                        runOnUiThread {
+                            if (profile.has("profile_picture")) {
+                                val url =
+                                    Utils.BASE_IMAGE_URL.plus(profile.getString("profile_picture"))
+                                Glide
+                                    .with(this@AccountSettingActivity)
+                                    .load(url)
+                                    .into(profile_image_edt_profile)
                             }
                         }
+
+
                     } else {
 
                         Toast.makeText(
-                            activity,
+                            this,
+
                             res.getString("status"),
                             Toast.LENGTH_LONG
                         ).show()
                     }
                 }
+
+
+
+
+
                 result.failure {
 
-                    Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_LONG)
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
                         .show()
                 }
             }
 
-
     }
- */
+
+
+
+
 }
