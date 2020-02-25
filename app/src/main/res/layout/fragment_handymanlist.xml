@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sort_time"
             android:layout_weight="1"
-            android:onClick="TimeSortClick"/>
+           />
 
         <Button
             android:text="Price"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/sort_year"
             android:layout_weight="1"
-            android:onClick="YearSortClick"/>
+        />
 
 
     </LinearLayout>
