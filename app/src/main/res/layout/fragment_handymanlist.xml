@@ -27,7 +27,7 @@
            />
 
         <Button
-            android:text="Year"
+            android:text="Location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/sort_year"
