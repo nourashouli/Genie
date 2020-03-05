@@ -28,6 +28,7 @@ class ChatLogActivity : AppCompatActivity() {
     val TAG = "ChatLog"
   }
 
+
   val adapter = GroupAdapter<ViewHolder>()
 
   var toUser: User? = null
@@ -67,7 +68,7 @@ class ChatLogActivity : AppCompatActivity() {
 
           if (chatMessage.fromId == FirebaseAuth.getInstance().uid) {
             val currentUser = LatestMessagesActivity.currentUser ?: return
-            adapter.add(ChatFromItem(chatMessage.text, currentUser))
+           adapter.add(ChatFromItem(chatMessage.text, currentUser))
           } else {
             adapter.add(ChatToItem(chatMessage.text, toUser!!))
           }

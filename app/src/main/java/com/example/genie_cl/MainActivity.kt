@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post ->{
-                val intent = Intent(this, messaging::class.java)
+                val intent = Intent(this, LatestMessagesActivity::class.java)
                 startActivity(intent)
             }
             R.id.nav_notifications ->{

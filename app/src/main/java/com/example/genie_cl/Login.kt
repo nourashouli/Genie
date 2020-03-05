@@ -14,7 +14,8 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
-
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 class Login : AppCompatActivity() {
 
 
@@ -26,8 +27,9 @@ class Login : AppCompatActivity() {
             startActivity(Intent(this@Login, MainActivity::class.java))
             finish()
         }
-        btn_login.setOnClickListener { login() }
+       // btn_login.setOnClickListener { login() }
         registration_id.setOnClickListener { Signup() }
+        btn_login.setOnClickListener { performLogin() }
     }
 
 
@@ -98,14 +100,32 @@ class Login : AppCompatActivity() {
 
     }
 
-    fun openSignUpPage(view: View) {
-        val intent = Intent(this@Login, MainActivity::class.java)
+    private fun performLogin() {
+        val email = Email.text.toString()
+        val password = Password.text.toString()
 
-        intent.flags =
-            Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill out email/pw.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) return@addOnCompleteListener
+
+                Log.d("Login", "Successfully logged in: ${it.result.user.uid}")
+
+                val intent = Intent(this, MainActivity::class.java).apply {
+
+                }
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to log in: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
+
+
 
     fun Signup() {
         val intent = Intent(this@Login, SignUp::class.java)
