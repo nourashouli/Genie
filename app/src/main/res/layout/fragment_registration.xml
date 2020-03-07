@@ -41,7 +41,7 @@
         android:gravity="bottom"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-100dp">
+        tools:layout_editor_absoluteY="0dp">
 
         >
 
@@ -161,11 +161,6 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp">
 
             <TextView
                 android:id="@+id/sign_in_button"
@@ -180,8 +175,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

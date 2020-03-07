@@ -79,12 +79,22 @@
 
 
 
-
+    <EditText
+        android:id="@+id/name_edt_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_image_text_btn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp"
+        android:inputType="text"
+        android:hint="Name"
+        />
     <EditText
         android:id="@+id/email_edt_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/change_image_text_btn"
+        android:layout_below="@+id/name_edt_profile"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="16dp"
@@ -123,6 +133,17 @@
         android:layout_below="@id/confirm_edt_profile"
         android:inputType="text"
         android:hint="bio"
+        />
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/bio"
+        android:inputType="text"
+        android:hint="Location"
         />
     <Button
         android:id="@+id/delete_account_btn"
