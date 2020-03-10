@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChatLogActivity"></activity>
-        <activity android:name=".LatestMessagesActivity"></activity>
+        <activity android:name=".requestForm"></activity>
+        <activity android:name=".ChatLogActivity" />
+        <activity android:name=".LatestMessagesActivity" />
         <activity android:name=".SignUp" />
         <activity android:name=".Login">
             <intent-filter>

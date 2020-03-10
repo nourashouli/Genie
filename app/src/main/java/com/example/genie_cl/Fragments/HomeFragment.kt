@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.MainActivity
-
+import android.content.Intent
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
+import com.example.genie_cl.requestForm
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -28,7 +29,11 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
+        requestbt.setOnClickListener {
+            val i = Intent(this.context, requestForm::class.java)
+            startActivity(i)
 
+        }
     } // onActivityCreated
 
     private fun initRecyclerView(){

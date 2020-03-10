@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.HomeFragment">
 
+    <Button
+        android:id="@+id/requestbt"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button"
+        android:text="Request"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/requestbt"
+        />
 
-</FrameLayout>
+</RelativeLayout>
