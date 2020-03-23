@@ -100,20 +100,6 @@ class Login : AppCompatActivity() {
 
     }
 
-    private fun performLogin() {
-        val email = Email.text.toString()
-        val password = Password.text.toString()
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill out email/pw.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) return@addOnCompleteListener
-
-                Log.d("Login", "Successfully logged in: ${it.result!!.user!!.uid}")
 
 
 
