@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post ->{
-                val intent = Intent(this, LatestMessagesActivity::class.java)
-                startActivity(intent)
+                navigateToFragment(notiFragment())
+                return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications ->{
                 navigateToFragment(notiFragment())

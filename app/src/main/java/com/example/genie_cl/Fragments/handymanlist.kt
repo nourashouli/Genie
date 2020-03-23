@@ -45,8 +45,8 @@ class handymanlist(var data: Any) : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val id:String= (data as JSONObject).getString("_id")
         handymanlist_recycler.setAdapter(adapter)
-
-        Fuel.get("http://handiman.club/api/getHandymenByService/5e406490278c5d484036f010")
+//"http://handiman.club/api/getHandymenByService/5e406490278c5d484036f010
+        Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
             .header(
                 "accept" to "application/json"
             )
@@ -59,11 +59,11 @@ class handymanlist(var data: Any) : Fragment() {
 
                     if (res.optString("status", "error") == "success") {
 
-                        Toast.makeText(
-                            activity,
-                            res.getJSONArray("handymen").toString(),
-                            Toast.LENGTH_LONG
-                        ).show()
+//                        Toast.makeText(
+//                            activity,
+//                            res.getJSONArray("handymen").toString(),
+//                            Toast.LENGTH_LONG
+//                        ).show()
                         activity!!.runOnUiThread {
 
 
