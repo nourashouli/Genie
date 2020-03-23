@@ -18,8 +18,6 @@ import android.util.Log
 import java.util.*
 import android.provider.MediaStore
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.example.genie_cl.Models.User
 class SignUp : AppCompatActivity() {
     companion object {
@@ -75,7 +73,7 @@ class SignUp : AppCompatActivity() {
                 if (!it.isSuccessful) return@addOnCompleteListener
 
                 // else if successful
-                Log.d(TAG, "Successfully created user with uid: ${it.result.user.uid}")
+                Log.d(TAG, "Successfully created user with uid: ${it.result!!.user!!.uid}")
 
                 uploadImageToFirebaseStorage()
             }
@@ -86,44 +84,44 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage() {
-        if (selectedPhotoUri == null) return
-
-        val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-
-        ref.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
-                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
-
-                ref.downloadUrl.addOnSuccessListener {
-                    Log.d(TAG, "File Location: $it")
-
-                    saveUserToFirebaseDatabase(it.toString())
-                }
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-            }
+//        if (selectedPhotoUri == null) return
+//
+//        val filename = UUID.randomUUID().toString()
+//        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+//
+//        ref.putFile(selectedPhotoUri!!)
+//            .addOnSuccessListener {
+//                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
+//
+//                ref.downloadUrl.addOnSuccessListener {
+//                    Log.d(TAG, "File Location: $it")
+//
+//                    saveUserToFirebaseDatabase(it.toString())
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+//            }
     }
 
     private fun saveUserToFirebaseDatabase(profileImageUrl: String) {
-        val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-
-        val user = User(uid, name.text.toString(), profileImageUrl)
-
-        ref.setValue(user)
-            .addOnSuccessListener {
-                Log.d(TAG, "Finally we saved the user to Firebase Database")
-
-                val intent = Intent(this, MainActivity::class.java).apply {
-
-                }
-                startActivity(intent)
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Failed to set value to database: ${it.message}")
-            }
+//        val uid = FirebaseAuth.getInstance().uid ?: ""
+//        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+//
+//        val user = User(uid, name.text.toString(), profileImageUrl)
+//
+//        ref.setValue(user)
+//            .addOnSuccessListener {
+//                Log.d(TAG, "Finally we saved the user to Firebase Database")
+//
+//                val intent = Intent(this, MainActivity::class.java).apply {
+//
+//                }
+//                startActivity(intent)
+//            }
+//            .addOnFailureListener {
+//                Log.d(TAG, "Failed to set value to database: ${it.message}")
+//            }
     }
 
     fun register(){
