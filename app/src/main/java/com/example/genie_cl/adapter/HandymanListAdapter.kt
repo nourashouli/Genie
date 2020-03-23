@@ -15,6 +15,7 @@ import com.example.genie_cl.Fragments.handymanlist
 import com.example.genie_cl.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_handymanlist.view.*
 import com.example.genie_cl.R
+import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.handyman_row.view.*
 import org.json.JSONObject
 
@@ -52,20 +53,22 @@ import org.json.JSONObject
 
          }
 
-         if(((list[position]as JSONObject).has("profile_picture"))) {
+         if(((list[position]as JSONObject).has("image"))) {
 
 
-                 val image_url = (list[position] as JSONObject).getString("profile_picture")
+                 val image_url = (list[position] as JSONObject).getString("image")
 
                  Glide
                      .with(holder.itemView)
                      .load(Utils.BASE_IMAGE_URL.plus(image_url))
                      .into(holder.itemView.handyman_profile_picture)
 
-             }
-         val price = (list[position] as JSONObject).getString("price")
-        holder.itemView.sort_price.setOnClickListener{
-            var SortedList = list.sortedWith(compareBy( {price} ))
+
+//         val price = (list[position] as JSONObject).getString("price")
+//        holder.itemView.sort_price.setOnClickListener{
+//            var SortedList = list.sortedWith(compareBy( {price} ))
+
+
          }
     }
 
@@ -74,7 +77,6 @@ import org.json.JSONObject
         return list.size
     }
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-
-        // itemView.setOnClickListener( {itemClick(layoutPosition)} )
+        //itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
 }

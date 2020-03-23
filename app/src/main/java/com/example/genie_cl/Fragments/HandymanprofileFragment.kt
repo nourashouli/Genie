@@ -1,6 +1,7 @@
 package com.example.genie_cl.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
@@ -15,7 +16,9 @@ import com.example.genie_cl.MainActivity
 
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
+import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class HandymanprofileFragment : Fragment() {
@@ -33,6 +36,9 @@ class HandymanprofileFragment : Fragment() {
 
         initRecyclerView()
 
+        requestbt.setOnClickListener {
+            val i = Intent(this.context, requestForm2::class.java)
+            startActivity(i)}
 //        handleDisqus()
 
 

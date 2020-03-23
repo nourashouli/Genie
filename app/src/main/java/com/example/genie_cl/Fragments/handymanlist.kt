@@ -1,6 +1,7 @@
 package com.example.genie_cl.Fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.adapter.HandymanListAdapter
+import com.example.genie_cl.requestForm2
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
@@ -33,6 +35,7 @@ class handymanlist(var data: Any) : Fragment() {
             container,
             false
         )
+
     } // onCreateView
 
 
@@ -53,13 +56,18 @@ class handymanlist(var data: Any) : Fragment() {
                     //
                     var res = it.obj()
 
+
                     if (res.optString("status", "error") == "success") {
 
-                        //     var services = res.getJSONObject("services")
+                        Toast.makeText(
+                            activity,
+                            res.getJSONArray("handymen").toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
                         activity!!.runOnUiThread {
 
 
-                            val items = res.getJSONArray("HandymanList")
+                            val items = res.getJSONArray("handymen")
 
                             for (i in 0 until items.length()) {
                                 adapter.setItem(items.getJSONObject(i))
@@ -82,6 +90,13 @@ class handymanlist(var data: Any) : Fragment() {
                         .show()
                 }
             }
+//        handymanlist_recycler.setOnClickListener {
+//            val i = Intent(this.context, requestForm2::class.java)
+//            i.putExtra(id,id)
+//            startActivity(i)
+//
+//
+//        }
     }
 
 
