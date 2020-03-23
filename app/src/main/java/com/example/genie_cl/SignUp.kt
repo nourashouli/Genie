@@ -20,12 +20,11 @@ import android.provider.MediaStore
 import com.google.firebase.auth.FirebaseAuth
 import com.example.genie_cl.Models.User
 class SignUp : AppCompatActivity() {
-    companion object {
-        val TAG = "SignUp"
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_registration)
+
         fbtn_register.setOnClickListener{register()}
         fbtn_register.setOnClickListener{performRegister()}
         sign_in_button.setOnClickListener{login()}
@@ -122,6 +121,8 @@ class SignUp : AppCompatActivity() {
 //            .addOnFailureListener {
 //                Log.d(TAG, "Failed to set value to database: ${it.message}")
 //            }
+        fbtn_register.setOnClickListener { register() }
+        sign_in_button.setOnClickListener { login() }
     }
 
     fun register(){

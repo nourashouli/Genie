@@ -27,9 +27,9 @@ class Login : AppCompatActivity() {
             startActivity(Intent(this@Login, MainActivity::class.java))
             finish()
         }
-       // btn_login.setOnClickListener { login() }
+        btn_login.setOnClickListener { login() }
         registration_id.setOnClickListener { Signup() }
-        btn_login.setOnClickListener { performLogin() }
+       // btn_login.setOnClickListener { performLogin() }
     }
 
 
@@ -115,15 +115,6 @@ class Login : AppCompatActivity() {
 
                 Log.d("Login", "Successfully logged in: ${it.result!!.user!!.uid}")
 
-                val intent = Intent(this, MainActivity::class.java).apply {
-
-                }
-                startActivity(intent)
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed to log in: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
 
 
 
