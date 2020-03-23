@@ -63,10 +63,10 @@ import org.json.JSONObject
                      .into(holder.itemView.handyman_profile_picture)
 
              }
-         val price = (list[position] as JSONObject).getString("price")
-        holder.itemView.sort_price.setOnClickListener{
-            var SortedList = list.sortedWith(compareBy( {price} ))
-         }
+         val price = (list[position] as JSONObject).optString("price","no price")
+//        holder.itemView.sort_price.setOnClickListener{
+//            var SortedList = list.sortedWith(compareBy( {price} ))
+//         }
     }
 
 
