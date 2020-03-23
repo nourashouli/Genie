@@ -16,8 +16,8 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
-import org.json.JSONObject
 import kotlinx.android.synthetic.main.fragment_handymanlist.*
+import org.json.JSONObject
 
 /**
  * A simple [Fragment] subclass.
@@ -40,13 +40,13 @@ class handymanlist(var data: Any) : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var adapter = HandymanListAdapter(context!!)
+        val adapter = HandymanListAdapter(context!!)
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        var id:String= (data as JSONObject).getString("_id")
+        val id:String= (data as JSONObject).getString("_id")
         handymanlist_recycler.setAdapter(adapter)
 
-        Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
+        Fuel.get("http://handiman.club/api/getHandymenByService/5e406490278c5d484036f010")
             .header(
                 "accept" to "application/json"
             )
