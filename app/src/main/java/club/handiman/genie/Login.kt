@@ -16,6 +16,7 @@ import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+
 class Login : AppCompatActivity() {
 
 
@@ -29,7 +30,7 @@ class Login : AppCompatActivity() {
         }
         btn_login.setOnClickListener { login() }
         registration_id.setOnClickListener { Signup() }
-       // btn_login.setOnClickListener { performLogin() }
+        // btn_login.setOnClickListener { performLogin() }
     }
 
 
@@ -61,10 +62,15 @@ class Login : AppCompatActivity() {
                             this@Login, Constants.FILE_USER,
                             Constants.USER_TOKEN, res.getString("token")
                         )
+                        SharedPreferences.setPrefernces(
+                            this@Login, Constants.FILE_USER,
+                            Constants.USER_ID, user.getString("_id")
+                        )
+                        Utils.sendRegistrationToServer(this)
                         runOnUiThread {
                             Toast.makeText(
                                 this,
-                                SharedPreferences.getToken(this@Login).toString(),
+                                SharedPreferences.getID(this).toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -99,9 +105,6 @@ class Login : AppCompatActivity() {
 
 
     }
-
-
-
 
 
     fun Signup() {

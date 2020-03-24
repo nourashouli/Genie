@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.MainActivity
 import android.content.Intent
+import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
 import com.example.genie_cl.requestForm
@@ -30,8 +31,11 @@ class HomeFragment : Fragment() {
 
         initRecyclerView()
         requestbt.setOnClickListener {
-            val i = Intent(this.context, requestForm::class.java)
-            startActivity(i)
+            val intent = Intent(context!!, TestingActivity::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+
 
         }
     } // onActivityCreated

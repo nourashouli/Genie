@@ -1,21 +1,26 @@
 package com.example.genie_cl.Utils
 
+
+
+
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 import android.media.RingtoneManager
-import android.widget.Toast
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
+import java.util.*
+
+
 import com.google.gson.Gson
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.util.*
 
 
 class Firebase : FirebaseMessagingService(){
@@ -24,7 +29,9 @@ class Firebase : FirebaseMessagingService(){
         //any notification reach here so
         //so here if type is comment  u send notification and broadcast to the chat activity and
         //append the chat list
+        Log.e("abito","test")
         if (remoteMessage.data.isNotEmpty()){
+
             //there is a new notification
             // to be notified to the device
             var msg = JSONObject(Gson().toJson(remoteMessage.data).toString())
@@ -33,14 +40,15 @@ class Firebase : FirebaseMessagingService(){
             //  Toast.makeText(this, remoteMessage.data.get("type"), Toast.LENGTH_SHORT).show()
 
             when (remoteMessage.data.get("type")){
-                "message"->{
-                    // sending broadcast using broadcast receiver to refresh the chat list
-                    var msg = JSONObject(Gson().toJson(remoteMessage.data).toString())
-                    sendBrodcastNotification( msg)
-                    //sendRegularNotification( msg, Intent(baseContext , ChatLogActivity::class.java))
-                }
+
                 "request"->{
 
+                }
+                "message"->{
+                    // sending broadcast using broadcast receiver to refresh the chat list
+                    var msg = JSONObject(Gson().toJson(remoteMessage.data))
+                    sendBrodcastNotification( msg)
+                    sendRegularNotification( msg, Intent(baseContext , TestingActivity::class.java))
                 }
                 "announcement"->{
 

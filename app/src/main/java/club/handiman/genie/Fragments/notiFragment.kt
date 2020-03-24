@@ -11,7 +11,7 @@ import com.example.genie_cl.MainActivity
 
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
-import com.example.genie_cl.adapter.NotificationAdapter
+import com.example.handymanapplication.adapters.NotificationAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_noti.*
 
@@ -24,6 +24,7 @@ class notiFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_noti, container, false)
     }

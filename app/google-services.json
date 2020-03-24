@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670141142138:android:1d9389fb2c786d4e41d7c3",
+        "mobilesdk_app_id": "1:670141142138:android:1f712e10ed6e459b41d7c3",
         "android_client_info": {
-          "package_name": "club.handyman.handymanapplication"
+          "package_name": "club.handiman.genie"
         }
       },
       "oauth_client": [
         {
-          "client_id": "670141142138-9bsetstu17eiibntnn6nv8ht5p2b0d5u.apps.googleusercontent.com",
+          "client_id": "670141142138-s18en8g4eq4dimb7uihdd9u728i5h9c5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "club.handyman.handymanapplication",
+            "package_name": "club.handiman.genie",
             "certificate_hash": "b71b16423e6ae21d30725e6013d809a13cc3d1aa"
           }
         },
@@ -45,17 +45,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:670141142138:android:476e47cf5aedc7e841d7c3",
+        "mobilesdk_app_id": "1:670141142138:android:1d9389fb2c786d4e41d7c3",
         "android_client_info": {
-          "package_name": "com.example.genie_cl"
+          "package_name": "club.handyman.handymanapplication"
         }
       },
       "oauth_client": [
         {
-          "client_id": "670141142138-fn2i3g4k0b8m3m4mujetdoqetkee5nf9.apps.googleusercontent.com",
+          "client_id": "670141142138-9bsetstu17eiibntnn6nv8ht5p2b0d5u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.genie_cl",
+            "package_name": "club.handyman.handymanapplication",
             "certificate_hash": "b71b16423e6ae21d30725e6013d809a13cc3d1aa"
           }
         },

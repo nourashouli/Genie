@@ -44,7 +44,22 @@ companion object {
         }
         return null
     }
-
+    fun getID(context: Context): String? {
+        return if (getPreferences(
+                context,
+                Constants.FILE_USER,
+                Constants.USER_ID
+            ).toString() != "null"
+        ) {
+            getPreferences(
+                context,
+                Constants.FILE_USER,
+                Constants.USER_ID
+            ).toString()
+        } else {
+            null
+        }
+    }
     fun getToken(context: Context): String? {
         return if (getPreferences(
                 context,
