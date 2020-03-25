@@ -38,7 +38,6 @@
     </LinearLayout>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="60dp"
         android:id="@+id/handymanlist_recycler"
