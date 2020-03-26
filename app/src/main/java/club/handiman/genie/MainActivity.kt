@@ -2,13 +2,22 @@ package com.example.genie_cl
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.genie_cl.Fragments.*
+import com.example.genie_cl.Utils.Utils
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.json.responseJson
+import com.github.kittinunf.result.failure
+import com.github.kittinunf.result.success
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
+
 
     private var textMessage:TextView?= null
 
@@ -50,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         this.textMessage=findViewById(R.id.message)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         navigateToFragment(HomeFragment())
+
+
+
 
     } // onCreate
 

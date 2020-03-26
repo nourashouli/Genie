@@ -75,7 +75,11 @@ class ServiceAdapter(var context : Context) : RecyclerView.Adapter<ServiceAdapte
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
-       // itemView.setOnClickListener( {itemClick(layoutPosition)} )
+       init {
+           view.setOnClickListener {
+               println("Rami")
+           }
+       }
     }
 
 }

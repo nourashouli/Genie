@@ -15,12 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".requestForm2"></activity>
-
-
-        <activity android:name="club.handiman.genie.TestingActivity"></activity>
-
-
         <activity android:name=".SignUp" />
         <activity android:name=".Login">
             <intent-filter>
@@ -30,13 +24,13 @@
             </intent-filter>
         </activity> <!-- <activity android:name=".AccountSettingsActivity" /> -->
         <activity android:name=".AccountSettingActivity" />
-
-        <activity android:name=".MainActivity" />
-        <service android:name=".Utils.Firebase">
+        <activity android:name=".MainActivity" >
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </service>
+        </activity>
     </application>
 
 </manifest>

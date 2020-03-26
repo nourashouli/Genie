@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.adapter.HandymanListAdapter
+import com.example.genie_cl.adapter.HomeAdapter
 import com.example.genie_cl.requestForm2
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -24,6 +25,8 @@ import org.json.JSONObject
  */
 class handymanlist(var data: Any) : Fragment() {
 
+    var adapter : HandymanListAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,12 +38,16 @@ class handymanlist(var data: Any) : Fragment() {
             container,
             false
         )
+       // onCreateView
 
-    } // onCreateView
-
-
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = HandymanListAdapter(context!!)
+        activity!!.runOnUiThread {
+        sort_price.setOnClickListener {
+            adapter?.sort("price","asc")
+
+        }}
+        adapter =  HandymanListAdapter(context!!)
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val id:String= (data as JSONObject).getString("_id")
@@ -70,7 +77,7 @@ class handymanlist(var data: Any) : Fragment() {
                             val items = res.getJSONArray("handymen")
 
                             for (i in 0 until items.length()) {
-                                adapter.setItem(items.getJSONObject(i))
+                                adapter?.setItem(items.getJSONObject(i))
                             }
 
 
