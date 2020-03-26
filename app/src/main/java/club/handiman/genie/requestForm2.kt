@@ -60,6 +60,7 @@ class requestForm2 : AppCompatActivity() {
                     selectedDate.set(Calendar.MONTH, month)
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     date = formate.format(selectedDate.time) as Nothing?
+
                     Toast.makeText(this, "date : " + date, Toast.LENGTH_SHORT).show()
                 },
                 now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
@@ -70,54 +71,55 @@ class requestForm2 : AppCompatActivity() {
 
         }
 
-//        save_infor_profile_btn.setOnClickListener {
-//            val des = description.text.toString()
-//
-//            save_infor_profile_btn.isEnabled = false
-//            Fuel.post(
-//                    Utils.API_MAKE_REQUEST, listOf(
-//                        "description" to des,
-//                        "date" to date, "employee_id" to employee_id,
-//                        "service_id" to service_id, "user_id" to id
-//                    )
-//                )
-//                .header("accept" to "application/json")
-//                .responseJson { _, _, result ->
-//                    result.success {
-//
-//                        var res = it.obj()
-//                        if (res.optString("status", "error") == "success") {
-//
-//
-//                            var request = res.getJSONObject("request")
-//
-//                          val intent = Intent(this, MainActivity::class.java)
-//                            intent.flags =
-//                                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                            startActivity(intent)
-//
-//
-////                       SharedPreferences.clearPreferences(this@MainActivity, Constants.FILE_USER)
-//                        } else {
-//                            Toast.makeText(
-//                                this@requestForm2,
-//                                res.getString("message"),
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//                    }
-//                    result.failure {
-//                        runOnUiThread {
-//                            Toast.makeText(
-//                                    this@requestForm2,
-//                                    it.localizedMessage,
-//                                    Toast.LENGTH_LONG
-//                                )
-//                                .show()
-//                        }
-//                    }
-//                }
-//        }
+
+        save_infor_profile_btn.setOnClickListener {
+            val des = description.text.toString()
+
+            save_infor_profile_btn.isEnabled = false
+            Fuel.post(
+                    Utils.API_MAKE_REQUEST, listOf(
+                        "description" to des,
+                        "date" to date, "employee_id" to employee_id,
+                        "service_id" to service_id, "user_id" to id
+                    )
+                )
+                .header("accept" to "application/json")
+                .responseJson { _, _, result ->
+                    result.success {
+
+                        var res = it.obj()
+                        if (res.optString("status", "error") == "success") {
+
+
+                            var request = res.getJSONObject("request")
+
+                          val intent = Intent(this, MainActivity::class.java)
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            startActivity(intent)
+
+
+//                       SharedPreferences.clearPreferences(this@MainActivity, Constants.FILE_USER)
+                        } else {
+                            Toast.makeText(
+                                this@requestForm2,
+                                res.getString("message"),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                    result.failure {
+                        runOnUiThread {
+                            Toast.makeText(
+                                    this@requestForm2,
+                                    it.localizedMessage,
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        }
+                    }
+                }
+        }
 
     }
 
