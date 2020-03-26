@@ -10,18 +10,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
+import com.example.genie_cl.Fragments.HandymanprofileFragment
 import com.example.genie_cl.Fragments.HomeFragment
 import com.example.genie_cl.Fragments.handymanlist
+import com.example.genie_cl.MainActivity
 import com.example.genie_cl.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_handymanlist.view.*
 import com.example.genie_cl.R
-import com.example.genie_cl.requestForm2
+//import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.handyman_row.view.*
+import kotlinx.android.synthetic.main.service_card.view.*
 import org.json.JSONObject
 
 
- class HandymanListAdapter(var context : Context) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
+ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
+     var service_id:String?=id
     // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
@@ -48,31 +52,30 @@ import org.json.JSONObject
     }
 
      override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-         if((list[position] as JSONObject).getString("name")!=""){
+         if ((list[position] as JSONObject).getString("name") != "") {
              holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
 
          }
 
-         if(((list[position]as JSONObject).has("image"))) {
+         if (((list[position] as JSONObject).has("image"))) {
 
 
-                 val image_url = (list[position] as JSONObject).getString("image")
+             val image_url = (list[position] as JSONObject).getString("image")
 
-                 Glide
-                     .with(holder.itemView)
-                     .load(Utils.BASE_IMAGE_URL.plus(image_url))
-                     .into(holder.itemView.handyman_profile_picture)
+             Glide
+                 .with(holder.itemView)
+                 .load(Utils.BASE_IMAGE_URL.plus(image_url))
+                 .into(holder.itemView.handyman_profile_picture)
+             holder.itemView.setOnClickListener{
 
-
-
-//         val price = (list[position] as JSONObject).getString("price")
-//        holder.itemView.sort_price.setOnClickListener{
-//            var SortedList = list.sortedWith(compareBy( {price} ))
-
+//            //{itemClick(layoutPosition)}
+                 (context as MainActivity).navigateToFragment(HandymanprofileFragment((list[position]),service_id!!))
+//            this.listener!!.onAction(list[position])
+             }
 
          }
 
-             }
+     }
        //  val price = (list[position] as JSONObject).optString("price","no price")
 //        holder.itemView.sort_price.setOnClickListener{
 //            var SortedList = list.sortedWith(compareBy( {price} ))
