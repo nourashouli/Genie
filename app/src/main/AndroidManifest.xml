@@ -4,14 +4,8 @@
     package="com.example.genie_cl">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <dist:module dist:instant="true" />
-
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCz2sr8lqv78g7jcTN8Kjk2i-p1MO5H560"/>
 
     <application
         android:allowBackup="true"
@@ -21,8 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".requestForm2" />
-        <activity android:name="club.handiman.genie.TestingActivity" />
+        <activity android:name=".requestForm2"></activity>
+
+
+        <activity android:name="club.handiman.genie.TestingActivity"></activity>
+
 
         <activity android:name=".SignUp" />
         <activity android:name=".Login">
@@ -34,18 +31,12 @@
         </activity> <!-- <activity android:name=".AccountSettingsActivity" /> -->
         <activity android:name=".AccountSettingActivity" />
 
-
-
-        <service android:name=".Utils.Firebase"/>
-
-        <activity android:name=".MainActivity" >
-
+        <activity android:name=".MainActivity" />
+        <service android:name=".Utils.Firebase">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </activity>
+        </service>
     </application>
 
 </manifest>

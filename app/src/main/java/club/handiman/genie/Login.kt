@@ -15,7 +15,7 @@ import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
 import android.util.Log
-
+import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
 
@@ -30,7 +30,7 @@ class Login : AppCompatActivity() {
         }
         btn_login.setOnClickListener { login() }
         registration_id.setOnClickListener { Signup() }
-
+        // btn_login.setOnClickListener { performLogin() }
     }
 
 

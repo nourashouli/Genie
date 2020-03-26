@@ -10,6 +10,8 @@ class Constants {
         val USER_NAME = Constants.javaClass.name + ".USER_NAME"
         val USER_EMAIL = Constants.javaClass.name + ".USER_EMAIL"
         val WEBVIEW = Constants.javaClass.name + ".WEBVIEW"
+
+
         val USER_ID = Constants.javaClass.name + ".User_id"
         val PARAM_NOTIFICATION_INFO = Constants.javaClass.name + ".PARAM_NOTIFICATION_INFO"
         val NOTIFICATION_BROADCAST_RECEIVER_MESSAGE_EVENT = Constants.javaClass.name + ".NOTIFICATION_BROADCAST_RECEIVER_MESSAGE_EVENT"
