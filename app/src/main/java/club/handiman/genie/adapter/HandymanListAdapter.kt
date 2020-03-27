@@ -10,33 +10,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
-import com.example.genie_cl.Fragments.HandymanprofileFragment
 import com.example.genie_cl.Fragments.HomeFragment
 import com.example.genie_cl.Fragments.handymanlist
-import com.example.genie_cl.MainActivity
 import com.example.genie_cl.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_handymanlist.view.*
 import com.example.genie_cl.R
-//import com.example.genie_cl.requestForm2
+import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.handyman_row.view.*
-import kotlinx.android.synthetic.main.service_card.view.*
 import org.json.JSONObject
 
 
-<<<<<<< HEAD
-class HandymanListAdapter(var context: Context) :
-    RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
+ class HandymanListAdapter(var context : Context) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
-    var sortedlist: ArrayList<Any> = ArrayList()
-=======
- class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
-    var list: ArrayList<Any> = ArrayList()
-     var service_id:String?=id
->>>>>>> parent of 7c04743... .
     // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
-        sortedlist.add(ob)
         notifyItemInserted(list.size - 1)
     }
 
@@ -59,80 +47,44 @@ class HandymanListAdapter(var context: Context) :
         )
     }
 
-<<<<<<< HEAD
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if ((list[position] as JSONObject).getString("name") != "") {
-            holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
-=======
      override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-         if ((list[position] as JSONObject).getString("name") != "") {
+         if((list[position] as JSONObject).getString("name")!=""){
              holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
->>>>>>> parent of 7c04743... .
-
-        }
-
-<<<<<<< HEAD
-        if (((list[position] as JSONObject).has("image"))) {
-
-
-            val image_url = (list[position] as JSONObject).getString("image")
-
-            Glide
-                .with(holder.itemView)
-                .load(Utils.BASE_IMAGE_URL.plus(image_url))
-                .into(holder.itemView.handyman_profile_picture)
-
-        }
-    }
-//generic sort
-    fun sort(value : String, order : String = "asc" ) {
-       if ( order == "asc"){
-           list.sortBy {
-               (it as JSONObject).getString(value)
-           }
-       }else{
-           list.sortByDescending {
-               (it as JSONObject).getString(value)
-           }
-       }
-    // [long , latit]
-    notifyDataSetChanged()
-    }
-    // }
-=======
-         if (((list[position] as JSONObject).has("image"))) {
-
-
-             val image_url = (list[position] as JSONObject).getString("image")
-
-             Glide
-                 .with(holder.itemView)
-                 .load(Utils.BASE_IMAGE_URL.plus(image_url))
-                 .into(holder.itemView.handyman_profile_picture)
-             holder.itemView.setOnClickListener{
-
-//            //{itemClick(layoutPosition)}
-                 (context as MainActivity).navigateToFragment(HandymanprofileFragment((list[position]),service_id!!))
-//            this.listener!!.onAction(list[position])
-             }
 
          }
 
-     }
+         if(((list[position]as JSONObject).has("image"))) {
+
+
+                 val image_url = (list[position] as JSONObject).getString("image")
+
+                 Glide
+                     .with(holder.itemView)
+                     .load(Utils.BASE_IMAGE_URL.plus(image_url))
+                     .into(holder.itemView.handyman_profile_picture)
+
+
+
+//         val price = (list[position] as JSONObject).getString("price")
+//        holder.itemView.sort_price.setOnClickListener{
+//            var SortedList = list.sortedWith(compareBy( {price} ))
+
+
+         }
+
+             }
        //  val price = (list[position] as JSONObject).optString("price","no price")
 //        holder.itemView.sort_price.setOnClickListener{
 //            var SortedList = list.sortedWith(compareBy( {price} ))
 //         }
 
    // }
->>>>>>> parent of 7c04743... .
 
 
     override fun getItemCount(): Int {
         return list.size
     }
-
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         //itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
 }

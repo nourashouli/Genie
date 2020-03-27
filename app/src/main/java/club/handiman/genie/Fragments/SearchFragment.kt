@@ -25,7 +25,6 @@ import android.R
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -36,14 +35,12 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
-import org.json.JSONObject
 
 
 /**
  * A simple [Fragment] subclass.
  */
 class SearchFragment : Fragment() {
-    lateinit var data:Any
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,13 +53,13 @@ class SearchFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var adapter = ServiceAdapter(context!!, object : AdapterListener {
+        var adapter = ServiceAdapter(context!!, object :AdapterListener{
             override fun onAction(ob: Any) {
                 // play ur game here
 
             }
         })
-        // recycler_view.layoutManager=GridLayoutManager(context!!,30)
+       // recycler_view.layoutManager=GridLayoutManager(context!!,30)
 
         val mLayoutManager = GridLayoutManager(context!!, 2)
         recycler_view.setLayoutManager(mLayoutManager)
@@ -72,35 +69,33 @@ class SearchFragment : Fragment() {
 
 
         recycler_view.setLayoutManager(mLayoutManager)
-        recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10),true))
         recycler_view.setItemAnimator(DefaultItemAnimator())
+
+
 
 
         //TODO
         Fuel.get(Utils.API_Services)
             .header(
                 "accept" to "application/json"
-            )
+              )
             .responseJson { _, _, result ->
 
                 result.success {
-                    //
+//
                     var res = it.obj()
 
                     if (res.optString("status", "error") == "success") {
 
-                        //     var services = res.getJSONObject("services")
+                   //     var services = res.getJSONObject("services")
                         activity!!.runOnUiThread {
 
 
                             val items = res.getJSONArray("services")
-                            // Log.d("items",items.toString())
 
                             for (i in 0 until items.length()) {
                                 adapter.setItem(items.getJSONObject(i))
-
-                               Log.d("rami", items.getJSONObject(i).getString("name").toString())
-
                             }
 
 
@@ -113,16 +108,13 @@ class SearchFragment : Fragment() {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                }
+               }
                 result.failure {
 
                     Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_LONG)
                         .show()
                 }
             }
-
-
-
 
     }
 
