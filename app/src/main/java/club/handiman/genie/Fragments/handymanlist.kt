@@ -23,7 +23,7 @@ import org.json.JSONObject
  * A simple [Fragment] subclass.
  */
 class handymanlist(var data: Any) : Fragment() {
-
+    var adapter: HandymanListAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,12 +40,19 @@ class handymanlist(var data: Any) : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = HandymanListAdapter(context!!)
+        activity!!.runOnUiThread {
+            sort_price.setOnClickListener {
+                adapter?.sort("price", "asc")
+
+            }
+        }
+        adapter = HandymanListAdapter(context!!)
+
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val id:String= (data as JSONObject).getString("_id")
+
+        val id: String = (data as JSONObject).getString("_id")
         handymanlist_recycler.setAdapter(adapter)
-//"http://handiman.club/api/getHandymenByService/5e406490278c5d484036f010
         Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
             .header(
                 "accept" to "application/json"
@@ -70,7 +77,7 @@ class handymanlist(var data: Any) : Fragment() {
                             val items = res.getJSONArray("handymen")
 
                             for (i in 0 until items.length()) {
-                                adapter.setItem(items.getJSONObject(i))
+                                adapter?.setItem(items.getJSONObject(i))
                             }
 
 

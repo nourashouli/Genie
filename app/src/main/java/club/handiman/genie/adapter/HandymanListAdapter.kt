@@ -20,7 +20,8 @@ import kotlinx.android.synthetic.main.handyman_row.view.*
 import org.json.JSONObject
 
 
- class HandymanListAdapter(var context : Context) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
+class HandymanListAdapter(var context: Context) :
+    RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
     // var context:Context = context
     fun setItem(ob: Any) {
@@ -47,44 +48,46 @@ import org.json.JSONObject
         )
     }
 
-     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-         if((list[position] as JSONObject).getString("name")!=""){
-             holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if ((list[position] as JSONObject).getString("name") != "") {
+            holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
 
-         }
+        }
 
-         if(((list[position]as JSONObject).has("image"))) {
-
-
-                 val image_url = (list[position] as JSONObject).getString("image")
-
-                 Glide
-                     .with(holder.itemView)
-                     .load(Utils.BASE_IMAGE_URL.plus(image_url))
-                     .into(holder.itemView.handyman_profile_picture)
+        if (((list[position] as JSONObject).has("image"))) {
 
 
+            val image_url = (list[position] as JSONObject).getString("image")
 
-//         val price = (list[position] as JSONObject).getString("price")
-//        holder.itemView.sort_price.setOnClickListener{
-//            var SortedList = list.sortedWith(compareBy( {price} ))
+            Glide
+                .with(holder.itemView)
+                .load(Utils.BASE_IMAGE_URL.plus(image_url))
+                .into(holder.itemView.handyman_profile_picture)
 
 
-         }
+        }
 
-             }
-       //  val price = (list[position] as JSONObject).optString("price","no price")
-//        holder.itemView.sort_price.setOnClickListener{
-//            var SortedList = list.sortedWith(compareBy( {price} ))
-//         }
+    }
 
-   // }
-
+    fun sort(value: String, order: String = "asc") {
+        if (order == "asc") {
+            list.sortBy {
+                (it as JSONObject).getString(value)
+            }
+        } else {
+            list.sortByDescending {
+                (it as JSONObject).getString(value)
+            }
+        }
+        // [long , latit]
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return list.size
     }
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
 }
