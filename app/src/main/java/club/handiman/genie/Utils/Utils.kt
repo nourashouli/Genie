@@ -17,6 +17,7 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import com.google.firebase.iid.FirebaseInstanceId
+
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,11 +25,11 @@ import java.util.*
 
 class Utils {
     companion object {
-        private const val BASE_URL = "https://handiman.club/api"
         private const val BASE_CLIENT_URL = "https://handiman.club/api/client"
+        private const val BASE_URL = "https://handiman.club/api"
+        const val API_MAKE_REQUEST="$BASE_CLIENT_URL/make-request"
         const val BASE_IMAGE_URL = "https://handiman.club/public/storage/"
         const val AUTHORIZATION = "Authorization"
-        const val API_MAKE_REQUEST="$BASE_CLIENT_URL/make-request"
         const val API_CHECK_DISTRIBUTOR = "$BASE_URL/check-distributor/"
         const val API_LOGIN = "$BASE_URL/login"
         const val API_Register ="$BASE_URL/register"

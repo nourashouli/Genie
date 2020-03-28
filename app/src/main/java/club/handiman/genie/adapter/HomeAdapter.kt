@@ -28,7 +28,7 @@ class HomeAdapter(val context: Context, val fragmentName: String) : RecyclerView
         if (fragmentName == "home"){
 
             holder.mainCardView.setOnClickListener {
-           //     (context as MainActivity).navigateToFragment(HandymanprofileFragment(3))
+              //  (context as MainActivity).navigateToFragment(HandymanprofileFragment())
             }
 
         } else if("handyman" == fragmentName){

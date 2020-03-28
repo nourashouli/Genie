@@ -1,20 +1,15 @@
 package com.example.genie_cl.adapter
-
-import android.content.ContentResolver
+import com.example.genie_cl.Fragments.handymanlist
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.genie_cl.Fragments.handymanlist
 import com.example.genie_cl.MainActivity
 import com.example.genie_cl.R
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.adapter.utils.AdapterListener
-import kotlinx.android.synthetic.main.fragment_handymanlist.*
 import kotlinx.android.synthetic.main.service_card.view.*
 import org.json.JSONObject
 
@@ -75,11 +70,7 @@ class ServiceAdapter(var context : Context) : RecyclerView.Adapter<ServiceAdapte
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
 
-       init {
-           view.setOnClickListener {
-               println("Rami")
-           }
-       }
+       // itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
 
 }

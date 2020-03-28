@@ -13,13 +13,14 @@ import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import club.handiman.genie.Utils.putExtraJson
 import com.bumptech.glide.Glide
 import com.example.genie_cl.MainActivity
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.R
+import com.example.genie_cl.Utils.putExtraJson
 import com.example.genie_cl.adapter.HomeAdapter
 import com.example.genie_cl.requestForm2
+import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
 import org.json.JSONObject
 
@@ -47,13 +48,13 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             .load(Utils.BASE_IMAGE_URL.plus(image_url))
             .into(pro_image_profile_frag)
         activity!!.runOnUiThread {
-            var ob: JSONObject? = JSONObject()
+            val ob: JSONObject ? = JSONObject()
             ob!!.put("service_id", id!!)
             ob!!.put("employee_id", (data as JSONObject).optString("_id", "id").toString())
             requestbt.setOnClickListener {
-                val i = Intent(this.context, requestForm2::class.java)
+                val i = Intent(context!!, requestForm2::class.java)
 
-               i!!.putExtraJson("object", ob)
+                i!!.putExtraJson("object", ob)
                 startActivity(i)
             } }
 //      }

@@ -21,12 +21,19 @@ class TestingActivity : AppCompatActivity() {
     private val aLBReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             try {
-                var msg = JSONObject(intent!!.extras!!.getString(Constants.PARAM_NOTIFICATION_INFO))
+
+                var msg:JSONObject = JSONObject(intent!!.extras!!.getString(Constants.PARAM_NOTIFICATION_INFO))
+                var dataJson = msg.getString("type")
+
+                var ob = JSONObject()
+
+                Toast.makeText(context,dataJson.toString() , Toast.LENGTH_LONG).show()
+                ob!!.put("description", "des")
+                adapter.setItem(ob)
 
 
-                Toast.makeText(context,msg.optString("email") , Toast.LENGTH_LONG).show()
 
-                adapter.setItem(msg)
+
 
                 // the activity is notified that there is a new message in the intent
 

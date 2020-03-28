@@ -1,6 +1,5 @@
 package com.example.genie_cl.Fragments
 
-
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,12 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.adapter.HandymanListAdapter
-<<<<<<< HEAD
-import com.example.genie_cl.adapter.HomeAdapter
 import com.example.genie_cl.requestForm2
-=======
-//import com.example.genie_cl.requestForm2
->>>>>>> parent of 7c04743... .
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
@@ -28,13 +22,8 @@ import org.json.JSONObject
  * A simple [Fragment] subclass.
  */
 class handymanlist(var data: Any) : Fragment() {
-<<<<<<< HEAD
-
-    var adapter : HandymanListAdapter? = null
-
-=======
-var id:String ?=null
->>>>>>> parent of 7c04743... .
+    var adapter: HandymanListAdapter? = null
+    var id:String ?=null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,26 +35,26 @@ var id:String ?=null
             container,
             false
         )
-       // onCreateView
 
-    }
+    } // onCreateView
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-<<<<<<< HEAD
         activity!!.runOnUiThread {
-        sort_price.setOnClickListener {
-            adapter?.sort("price","asc")
+            sort_price.setOnClickListener {
+                adapter?.sort("price", "asc")
 
-        }}
-        adapter =  HandymanListAdapter(context!!)
-=======
-      id=(data as JSONObject).getString("_id")
+            }
+        }
+
+
+        id=(data as JSONObject).getString("_id")
         val adapter = HandymanListAdapter(context!!,id!!)
->>>>>>> parent of 7c04743... .
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val id:String= (data as JSONObject).getString("_id")
+
+        val id: String = (data as JSONObject).getString("_id")
         handymanlist_recycler.setAdapter(adapter)
-//"http://handiman.club/api/getHandymenByService/5e406490278c5d484036f010
         Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
             .header(
                 "accept" to "application/json"
