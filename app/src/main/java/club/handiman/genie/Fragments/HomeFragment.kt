@@ -11,6 +11,7 @@ import android.content.Intent
 import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
+import kotlinx.android.synthetic.main.activity_account_settings.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
 
         initRecyclerView()
         requestbt.setOnClickListener {
-            val intent = Intent(context!!, TestingActivity::class.java)
+            val intent = Intent(context!!, location::class.java)
             intent.flags =
                 Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
