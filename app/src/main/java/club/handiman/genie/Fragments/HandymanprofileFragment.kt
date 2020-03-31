@@ -12,21 +12,21 @@ import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
 import androidx.recyclerview.widget.LinearLayoutManager
-
-import com.bumptech.glide.Glide
-
-import com.example.genie_cl.MainActivity
-
+import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.R
+import com.example.genie_cl.Utils.putExtraJson
+import kotlinx.android.synthetic.main.fragment_handymanprofile.*
+import org.json.JSONObject
+import com.bumptech.glide.Glide
+import com.example.genie_cl.MainActivity
 import com.example.genie_cl.Utils.putExtraJson
 import com.example.genie_cl.adapter.HomeAdapter
 import com.example.genie_cl.requestForm2
 import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.fragment_handymanprofile.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 
-class HandymanprofileFragment : Fragment() {
+
+class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

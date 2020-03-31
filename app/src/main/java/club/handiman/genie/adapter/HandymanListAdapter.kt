@@ -111,7 +111,7 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
 
         }
 
-    }
+
 
 
     fun sort(value: String, order: String = "asc") {

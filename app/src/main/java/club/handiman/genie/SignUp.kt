@@ -17,7 +17,7 @@ import android.util.Log
 import java.util.*
 import android.provider.MediaStore
 import com.google.firebase.auth.FirebaseAuth
-import com.example.genie_cl.Models.User
+
 
 class SignUp : AppCompatActivity() {
 

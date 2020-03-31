@@ -29,7 +29,7 @@ class HomeAdapter(val context: Context, val fragmentName: String) : RecyclerView
 
             holder.mainCardView.setOnClickListener {
 
-                (context as MainActivity).navigateToFragment(HandymanprofileFragment())
+              //  (context as MainActivity).navigateToFragment(HandymanprofileFragment())
 
             }
 
