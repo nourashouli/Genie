@@ -27,11 +27,6 @@
         <activity android:name=".requestForm2" />
         <activity android:name="club.handiman.genie.TestingActivity" />
 
-        <activity android:name=".requestForm2"></activity>
-
-
-        <activity android:name="club.handiman.genie.TestingActivity"></activity>
-
         <activity android:name=".SignUp" />
         <activity android:name=".Login">
             <intent-filter>
@@ -39,7 +34,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <activity android:name=".AccountSettingsActivity" /> -->
+        </activity>
         <activity android:name=".AccountSettingActivity" />
 
         <activity android:name=".MainActivity" />

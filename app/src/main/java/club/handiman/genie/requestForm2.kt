@@ -43,7 +43,6 @@ class requestForm2 : AppCompatActivity() {
     var object2 =JSONObject(obje.getString("nameValuePairs"))
     val employee_id: String = (object2 as JSONObject).optString("employee_id")
     val service_id: String = (object2 as JSONObject).optString("service_id")
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
