@@ -53,17 +53,17 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
                 (list[position] as JSONObject).getString("name")
 
 
+        }
 
 
 
-            if (((list[position] as JSONObject).has("image"))) {
 
 
-                val image_url = (list[position] as JSONObject).getString("image")
+                val image_url = (list[position] as JSONObject).optString("image")
                 Glide
                     .with(holder.itemView)
                     .load(Utils.BASE_IMAGE_URL.plus(image_url))
-                    .into(holder.itemView.handyman_profile_picture)}
+                    .into(holder.itemView.handyman_profile_picture)
             holder.itemView.setOnClickListener {
 
                 // {itemClick(layoutPosition)}
@@ -75,7 +75,7 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
                 )
 //           this.listener!!.onAction(list[position])
             }
-        }
+
 
     }
 

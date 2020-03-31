@@ -1,6 +1,5 @@
 package com.example.genie_cl.Fragments
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.content.Intent
 import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.HomeAdapter
-import com.example.genie_cl.requestForm
 import kotlinx.android.synthetic.main.fragment_home.*
 
 

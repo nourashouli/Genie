@@ -16,7 +16,8 @@ import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.android.libraries.places.api.model.Place
+import com.rtchagas.pingplacepicker.PingPlacePicker
 class Login : AppCompatActivity() {
 
 

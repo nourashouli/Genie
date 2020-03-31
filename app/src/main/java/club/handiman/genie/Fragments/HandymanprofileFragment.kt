@@ -41,7 +41,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
 
         initRecyclerView()
         username.text = (data as JSONObject).getString("name")
-        val image_url = (data as JSONObject).getString("image")
+        val image_url = (data as JSONObject).optString("image")
 
         Glide
             .with(this)
