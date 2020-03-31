@@ -7,13 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+
 import com.example.genie_cl.Fragments.HandymanprofileFragment
 import com.example.genie_cl.MainActivity
+
+import com.example.genie_cl.Fragments.HomeFragment
+import com.example.genie_cl.Fragments.handymanlist
+
 import com.example.genie_cl.Utils.Utils
 import com.example.genie_cl.R
-//import com.example.genie_cl.requestForm2
+import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.handyman_row.view.*
 import org.json.JSONObject
+
 
 
 class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Adapter<HandymanListAdapter.ViewHolder>() {
@@ -24,7 +30,6 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
     // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
-        sortedlist.add(ob)
         notifyItemInserted(list.size - 1)
     }
 
@@ -49,11 +54,13 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if ((list[position] as JSONObject).getString("name") != "") {
-            holder.itemView.handyman_name.text =
-                (list[position] as JSONObject).getString("name")
 
+            holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
 
         }
+
+        if (((list[position] as JSONObject).has("image"))) {
+
 
 
 
@@ -102,6 +109,24 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
 
 
 
+        }
+
+    }
+
+
+    fun sort(value: String, order: String = "asc") {
+        if (order == "asc") {
+            list.sortBy {
+                (it as JSONObject).getString(value)
+            }
+        } else {
+            list.sortByDescending {
+                (it as JSONObject).getString(value)
+            }
+        }
+        // [long , latit]
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return list.size
@@ -111,4 +136,3 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
         //itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
 }
-

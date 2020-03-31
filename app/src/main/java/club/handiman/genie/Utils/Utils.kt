@@ -25,11 +25,13 @@ import java.util.*
 
 class Utils {
     companion object {
+
         private const val BASE_CLIENT_URL = "https://handiman.club/api/client"
         private const val BASE_URL = "https://handiman.club/api"
         const val API_MAKE_REQUEST="$BASE_CLIENT_URL/make-request"
         const val BASE_IMAGE_URL = "https://handiman.club/public/storage/"
         const val AUTHORIZATION = "Authorization"
+
         const val API_CHECK_DISTRIBUTOR = "$BASE_URL/check-distributor/"
         const val API_LOGIN = "$BASE_URL/login"
         const val API_Register ="$BASE_URL/register"

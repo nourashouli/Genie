@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.genie_cl">
+
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="@string/google_maps_key" />
@@ -11,6 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <dist:module dist:instant="true" />
 
     <application
@@ -20,9 +22,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="club.handiman.genie.location"></activity>
         <activity android:name=".requestForm2" />
         <activity android:name="club.handiman.genie.TestingActivity" />
+
+        <activity android:name=".requestForm2"></activity>
+
+
+        <activity android:name="club.handiman.genie.TestingActivity"></activity>
+
         <activity android:name=".SignUp" />
         <activity android:name=".Login">
             <intent-filter>
@@ -32,7 +41,11 @@
             </intent-filter>
         </activity> <!-- <activity android:name=".AccountSettingsActivity" /> -->
         <activity android:name=".AccountSettingActivity" />
+
         <activity android:name=".MainActivity" />
+
+
+
 
         <service android:name=".Utils.Firebase">
             <intent-filter>

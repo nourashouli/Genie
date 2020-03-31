@@ -23,7 +23,9 @@ import org.json.JSONObject
  */
 class handymanlist(var data: Any) : Fragment() {
     var adapter: HandymanListAdapter? = null
+
     var id:String ?=null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,8 +50,12 @@ class handymanlist(var data: Any) : Fragment() {
         }
 
 
+
         id=(data as JSONObject).getString("_id")
         val adapter = HandymanListAdapter(context!!,id!!)
+
+
+
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 

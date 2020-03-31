@@ -1,4 +1,5 @@
 package com.example.genie_cl
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,7 @@ class requestForm2 : AppCompatActivity() {
     var object2 =JSONObject(obje.getString("nameValuePairs"))
     val employee_id: String = (object2 as JSONObject).optString("employee_id")
     val service_id: String = (object2 as JSONObject).optString("service_id")
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -56,13 +58,16 @@ class requestForm2 : AppCompatActivity() {
                 selectedDate.set(Calendar.YEAR,year)
                 selectedDate.set(Calendar.MONTH,month)
                 selectedDate.set(Calendar.DAY_OF_MONTH,dayOfMonth)
+
                  date = formate.format(selectedDate.time)
+
                 Toast.makeText(this,"date : " + date,Toast.LENGTH_SHORT).show()
             },
                 now.get(Calendar.YEAR),now.get(Calendar.MONTH),now.get(Calendar.DAY_OF_MONTH))
             datePicker.show()
             try {
                 if(btn_date.text != "Show Dialog") {
+
                     Date = timeFormat.parse(btn_date.text.toString())
                     now.time = Date
                 }
@@ -246,3 +251,5 @@ fun save(){
 }
 }
 
+
+            
