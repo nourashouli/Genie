@@ -44,7 +44,7 @@ class handymanlist(var data: Any) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity!!.runOnUiThread {
             sort_price.setOnClickListener {
-             //   adapter?.sort("price", "asc")
+                adapter?.sort("price", "asc")
 
             }
         }

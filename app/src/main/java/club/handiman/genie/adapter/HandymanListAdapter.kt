@@ -59,13 +59,6 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
 
         }
 
-        if (((list[position] as JSONObject).has("image"))) {
-
-
-
-
-
-
                 val image_url = (list[position] as JSONObject).optString("image")
                 Glide
                     .with(holder.itemView)
@@ -84,7 +77,7 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
             }
 
 
-    }
+
 
     //generic sort
     fun sort(value: String, order: String = "asc") {

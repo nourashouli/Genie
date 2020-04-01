@@ -1,2 +1,2 @@
 include ':app'
-//rootProject.name='Genie_Cl'
+rootProject.name='Genie_Cl'

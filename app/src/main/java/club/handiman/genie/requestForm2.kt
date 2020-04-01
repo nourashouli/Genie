@@ -15,8 +15,9 @@ import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import android.content.Intent
 import android.content.IntentFilter
-import com.example.genie_cl.R
 import android.Manifest
+import com.google.android.libraries.places.api.model.Place
+import com.rtchagas.pingplacepicker.PingPlacePicker
 import android.app.Activity
 import android.content.ContentValues
 import android.net.Uri
@@ -31,25 +32,31 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_request_form.*
 import java.text.SimpleDateFormat
 import java.util.*
-
+import org.jetbrains.anko.toast
 class requestForm2 : AppCompatActivity() {
     var fileUri: Uri? = null
-    var date:String="g"
-    var selectedTime:Calendar=Calendar.getInstance();
+    var date: String = "g"
+    var selectedTime: Calendar = Calendar.getInstance();
     var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
     var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-
-    var obje:JSONObject = JSONObject(intent!!.extras!!.getString("object"))
-    var object2 =JSONObject(obje.getString("nameValuePairs"))
-    val employee_id: String = (object2 as JSONObject).optString("employee_id")
-    val service_id: String = (object2 as JSONObject).optString("service_id")
+    private val pingActivityRequestCode = 1001
+    var employee_id: String ="HH"
+    var service_id: String = "HH"
+   var location= doubleArrayOf()
     override fun onCreate(savedInstanceState: Bundle?) {
+
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
-        var Date:Date
+        var Date: Date
+        var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
+        var object2 = JSONObject(obje.getString("nameValuePairs"))
+         employee_id = (object2 as JSONObject).optString("employee_id")
+         service_id= (object2 as JSONObject).optString("service_id")
 
-
+        btnOpenPlacePicker.setOnClickListener {
+            showPlacePicker()
+        }
         btn_date.setOnClickListener {
             val now = Calendar.getInstance()
             val datePicker = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -118,6 +125,25 @@ class requestForm2 : AppCompatActivity() {
         }
 
                 }
+    private fun showPlacePicker() {
+
+        val builder = PingPlacePicker.IntentBuilder()
+        builder.setAndroidApiKey(getString(R.string.android))
+            .setMapsApiKey(getString(R.string.maps))
+
+//         If you want to set a initial location
+//         rather then the current device location.
+       // pingBuilder.setLatLng(LatLng(37.4219999, -122.0862462))
+
+        try {
+            val placeIntent = builder.build(this)
+            startActivityForResult(placeIntent, pingActivityRequestCode)
+        } catch (ex: Exception) {
+            toast("Google Play Services is not Available")
+        }
+    }
+
+
     //pick a photo from gallery
     private fun pickPhotoFromGallery() {
         val pickImageIntent = Intent(Intent.ACTION_PICK,
@@ -185,8 +211,17 @@ class requestForm2 : AppCompatActivity() {
     }
     //
     //override function that is called once the photo has been taken
-    override fun onActivityResult(requestCode: Int, resultCode: Int,
+ override fun onActivityResult(requestCode: Int, resultCode: Int,
                                   data: Intent?) {
+        if ((requestCode == pingActivityRequestCode) && (resultCode == Activity.RESULT_OK)) {
+           val place:Place?= PingPlacePicker.getPlace(data!!)
+           toast("You selected: ${place?.name}")
+
+           location.plus(place?.latLng?.latitude!!)
+            location.plus(place.latLng?.longitude!!)
+
+            }
+
         if (resultCode == Activity.RESULT_OK
             && requestCode == Constants.TAKE_PHOTO_REQUEST) {
             //photo from camera
@@ -211,7 +246,7 @@ fun save(){
         Utils.API_MAKE_REQUEST, listOf(
             "description" to des,
             "date" to date, "employee_id" to employee_id,
-            "service_id" to service_id, "time" to selectedTime.toString(),"photo" to fileUri.toString()        )
+            "service_id" to service_id, "from" to selectedTime.toString(),"to" to selectedTime.toString(),"photo" to fileUri.toString(),"location" to location    )
     )
         .header("accept" to "application/json")
         .responseJson { _, _, result ->
@@ -247,8 +282,20 @@ fun save(){
                 }
             }
         }
+    val intent = Intent(this@requestForm2, MainActivity::class.java)
+    Toast.makeText(
+        this@requestForm2,
+        "Request Send",
+        Toast.LENGTH_LONG
+    )
+        .show()
+    intent.flags =
+        Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+    startActivity(intent)
+
 }
-}
+
+    }
 
 
             

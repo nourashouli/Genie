@@ -6,7 +6,11 @@
         <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
         <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
         <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+        <bool name="enable_nearby_search">true</bool>
       </set>
+      <bool name="enable_nearby_search">true</bool>
     </option>
+    <bool name="enable_nearby_search">true</bool>
   </component>
+  <bool name="enable_nearby_search">true</bool>
 </project>
