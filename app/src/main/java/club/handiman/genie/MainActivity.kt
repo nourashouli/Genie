@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import club.handiman.genie.Fragments.notiFragment
 import com.example.genie_cl.Fragments.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,11 +26,13 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_add_post ->{
               //  val intent = Intent(this, LatestMessagesActivity::class.java)
                // startActivity(intent)
-                navigateToFragment(notiFragment())
+               // navigateToFragment(notiFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications ->{
-                navigateToFragment(notiFragment())
+                  val intent = Intent(this, notiFragment::class.java)
+                 startActivity(intent)
+                //navigateToFragment(handymanlist())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile ->{

@@ -1,44 +1,84 @@
-package com.example.genie_cl.Fragments
+package club.handiman.genie.Fragments
 
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.genie_cl.MainActivity
-
 import com.example.genie_cl.R
-import com.example.genie_cl.adapter.HomeAdapter
-import com.example.handymanapplication.adapters.NotificationAdapter
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.example.genie_cl.Utils.Constants
+import club.handiman.genie.adapter.notiAdapter
 import kotlinx.android.synthetic.main.fragment_noti.*
+import org.json.JSONObject
 
-/**
- * A simple [Fragment] subclass.
- */
-class notiFragment : Fragment() {
+class notiFragment : AppCompatActivity() {
+    val adapter = notiAdapter(this)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val aLBReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            try {
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_noti, container, false)
+                var msg:JSONObject = JSONObject(intent!!.extras!!.getString(Constants.PARAM_NOTIFICATION_INFO))
+                var dataJson = msg.getString("type")
+
+                var ob = JSONObject()
+
+                Toast.makeText(context,dataJson.toString() , Toast.LENGTH_LONG).show()
+                ob!!.put("description", "des")
+                adapter.setItem(ob)
+
+
+
+
+
+                // the activity is notified that there is a new message in the intent
+
+            } catch (e: Exception) {
+
+            }
+
+        }
+
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initRecycler()
-
+    override fun onPause() {
+        unregisterReceiver(aLBReceiver)
+        super.onPause()
     }
 
-    private fun initRecycler(){
-        recycler_view_notifications.layoutManager = LinearLayoutManager(context as MainActivity,
-            LinearLayoutManager.VERTICAL,false)
-        recycler_view_notifications.adapter = NotificationAdapter(context as MainActivity)
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(aLBReceiver, IntentFilter().apply {
+            addAction(Constants.NOTIFICATION_BROADCAST_RECEIVER_MESSAGE_EVENT)
+        })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_noti)
+        registerReceiver(aLBReceiver, IntentFilter().apply {
+            addAction(Constants.NOTIFICATION_BROADCAST_RECEIVER_MESSAGE_EVENT)
+        })
+
+
+
+        recycler_view_notifications.layoutManager = LinearLayoutManager(this@notiFragment,
+            LinearLayoutManager.VERTICAL, true)
+        recycler_view_notifications.adapter = adapter
+        var ob = JSONObject()
+        ob!!.put("description", "des")
+        adapter.setItem(ob)
+        adapter.setItem(ob)
+
+
+
+
+
     }
 
 

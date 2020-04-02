@@ -9,16 +9,15 @@ import android.content.Context
 import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import club.handiman.genie.TestingActivity
+import club.handiman.genie.Fragments.notiFragment
 import com.example.genie_cl.R
 import java.util.*
 
 
-import com.google.gson.Gson
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 
@@ -40,6 +39,8 @@ class Firebase : FirebaseMessagingService() {
                     sendRegularNotification(dataJson, Intent(baseContext, TestingActivity::class.java))
                 }
                 "request" -> {
+                    sendBrodcastNotification(dataJson)
+                            sendRegularNotification(dataJson, Intent(baseContext, notiFragment::class.java))
 
                 }
                 "announcement" -> {
