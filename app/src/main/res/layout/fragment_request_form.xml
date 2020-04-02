@@ -43,22 +43,33 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-
     <EditText
-        android:id="@+id/description"
-        android:layout_width="400dp"
+        android:id="@+id/dscription"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:backgroundTint="@android:color/transparent"
-        android:hint="Description"
-        android:inputType="text"
+        android:hint="Password"
         android:padding="15dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorBlack"
-        android:textColorHint="@color/cardview_dark_background"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="84dp" />
+        android:textColor="#292929"
+        android:textColorHint="#797979" />
+
+
+<!--    <EditText-->
+<!--        android:id="@+id/description"-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="@android:color/transparent"-->
+<!--        android:hint="Description"-->
+<!--        android:inputType="text"-->
+<!--        android:padding="15dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:textColor="@color/colorBlack"-->
+<!--        android:textColorHint="@color/cardview_dark_background"-->
+<!--        android:textStyle="bold"-->
+<!--        tools:layout_editor_absoluteX="6dp"-->
+<!--        tools:layout_editor_absoluteY="84dp" />-->
 
     <Button
         android:id="@+id/btn_date"
