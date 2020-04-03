@@ -98,6 +98,12 @@ class SignUp : AppCompatActivity() {
             }
 
 
+
+        }
+
+    }
+
+
         }
 
     }
