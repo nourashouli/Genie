@@ -117,7 +117,7 @@ else {
                 "password_confirmation" to passwordConfirmation,
                 "name" to name, "email" to email,
                 "password" to password, "phone" to phone,
-                "role" to "user_employee"
+                "role" to "user"
 
             )
         )

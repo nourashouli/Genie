@@ -74,13 +74,13 @@ class handymanlist(var data: Any) : Fragment() {
 
                     if (res.optString("status", "error") == "success") {
 
-//                       Toast.makeText(
-//                            activity,
-//                            res.getJSONArray("handymen").toString(),
-//                            Toast.LENGTH_LONG
-//                        ).show()}
-                        activity!!.runOnUiThread {
 
+                        activity!!.runOnUiThread {
+//                                Toast.makeText(
+//                                    activity,
+//                                    res.getJSONArray("handymen").toString(),
+//                                    Toast.LENGTH_LONG
+//                                ).show()
 
                             val items = res.getJSONArray("handymen")
 
@@ -105,13 +105,7 @@ class handymanlist(var data: Any) : Fragment() {
                         .show()
                 }
             }
-//        handymanlist_recycler.setOnClickListener {
-//            val i = Intent(this.context, requestForm2::class.java)
-//            i.putExtra(id,id)
-//            startActivity(i)
-//
-//
-//        }
+
     }
 
 

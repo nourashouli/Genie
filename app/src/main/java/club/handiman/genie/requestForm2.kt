@@ -38,14 +38,12 @@ import org.jetbrains.anko.toast
 class requestForm2 : AppCompatActivity() {
     var fileUri: Uri? = null
     var date: String = "g"
-    var selectedTime: Calendar = Calendar.getInstance();
+    var time: String="h"
     private val pingActivityRequestCode = 1001
-    var employee_id: String = "HH"
-    var service_id: String = "HH"
+    var employee_id: String = "H"
+    var service_id: String = "H"
     var location = DoubleArray(2)
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
         var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
@@ -66,9 +64,7 @@ class requestForm2 : AppCompatActivity() {
                     selectedDate.set(Calendar.YEAR, year)
                     selectedDate.set(Calendar.MONTH, month)
                     selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
                     date = formate.format(selectedDate.time)
-
                     Toast.makeText(this, "date : " + date, Toast.LENGTH_SHORT).show()
                 },
                 now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
@@ -76,7 +72,6 @@ class requestForm2 : AppCompatActivity() {
             datePicker.show()
             try {
                 if (btn_date.text != "Show Dialog") {
-
                     Date = timeFormat.parse(btn_date.text.toString())
                     now.time = Date
                 }
@@ -85,41 +80,23 @@ class requestForm2 : AppCompatActivity() {
             }
             val timePicker = TimePickerDialog(
                 this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                    selectedTime = Calendar.getInstance()
+                  var selectedTime = Calendar.getInstance()
                     selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                     selectedTime.set(Calendar.MINUTE, minute)
                     btn_date.text = timeFormat.format(selectedTime.time)
+                    time=timeFormat.format(selectedTime.time)
                 },
                 now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false
             )
             timePicker.show()
 
         }
-//        Fuel.get(Utils.API_timeline.plus(employee_id))
-//            .header(
-//                "accept" to "application/json"
-//            )
-//            .responseJson { _, _, result ->
-//
-//                result.success {
-//                    //
-//                    var res = it.obj()
-//
-//
-//                    if (res.optString("status", "error") == "success") {
-//
-//                        Toast.makeText(
-//                            this,
-//                            res.getJSONArray("timeline").toString(),
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//                    }
-//                }
-//            }
+
 
         save_infor_profile_btn.setOnClickListener {
             save()
         }
+
         //listen to gallery button click
         gallery.setOnClickListener {
             pickPhotoFromGallery()
@@ -263,6 +240,28 @@ class requestForm2 : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+    fun gettime() {
+        Fuel.get(Utils.API_timeline.plus(employee_id))
+            .header(
+                "accept" to "application/json"
+            )
+            .responseJson { _, _, result ->
+
+                result.success {
+                    //
+                    var res = it.obj()
+                    if (res.optString("status", "error") == "success") {
+                        runOnUiThread {
+                            Toast.makeText(
+                                this,
+                                res.getJSONArray("timeline").toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                }
+            }
+    }
 
 fun save() {
     var des :String= description!!.text!!.toString()
@@ -272,8 +271,8 @@ fun save() {
     Fuel.post(
         Utils.API_MAKE_REQUEST, listOf(
             "employee_id" to employee_id, "service_id" to service_id
-            ,"description" to des,"role" to role,"location" to location, "date" to date.toString(),
-            "to" to selectedTime.toString(),"from" to selectedTime.toString(),"image" to fileUri.toString()
+            ,"description" to des,"role" to role,"location" to location, "date" to date,
+            "to" to time,"from" to time,"image" to fileUri.toString()
 
         )
     ).header(
@@ -289,7 +288,7 @@ fun save() {
                     Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
                 }
             }
-            val intent=Intent(this,requestForm::class.java)
+            val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
 
