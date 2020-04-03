@@ -1,4 +1,5 @@
 package com.example.genie_cl
+
 import android.view.View
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -25,9 +26,9 @@ class SignUp : AppCompatActivity() {
     var code: String = ""
     var callback = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-code=p0.smsCode.toString()
+//code=p0.smsCode.toString()
             edt_verify_code.setText(p0.smsCode)
-            btn_verify.performClick()
+            //btn_verify.performClick()
         }
 
         override fun onVerificationFailed(p0: FirebaseException) {
@@ -56,7 +57,7 @@ code=p0.smsCode.toString()
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.fragment_registration)
         super.onCreate(savedInstanceState)
-        sign_in_button.setOnClickListener{
+        sign_in_button.setOnClickListener {
             openloginPage()
         }
         btn_verify.setOnClickListener {
@@ -88,7 +89,6 @@ code=p0.smsCode.toString()
             ) {
                 return@setOnClickListener
 
-
                 fauth.verifyPhoneNumber(
                     edt_phone.text.toString(), // Phone number to verify
                     60, // Timeout duration
@@ -106,7 +106,7 @@ code=p0.smsCode.toString()
 
     private fun register() {
         val name = name.text.toString()
-        val email =email_reg.text.toString()
+        val email = email_reg.text.toString()
         val phone = edt_phone.text.toString()
         val password = reg_password.text.toString()
         val passwordConfirmation = confirm.text.toString()
@@ -159,7 +159,7 @@ code=p0.smsCode.toString()
                         startActivity(intent)
 
 
-                      SharedPreferences.clearPreferences(this, Constants.FILE_USER)
+                        SharedPreferences.clearPreferences(this, Constants.FILE_USER)
                     } else {
                         Toast.makeText(
                             this@SignUp,
