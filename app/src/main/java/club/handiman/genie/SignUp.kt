@@ -79,6 +79,7 @@ code=p0.smsCode.toString()
         fbtn_register.setOnClickListener {
             //make registration
 
+
             if (edt_phone.text.toString().isEmpty() ||
                 name.text.toString().isEmpty() ||
                 email_reg.text.toString().isEmpty() ||
@@ -86,8 +87,8 @@ code=p0.smsCode.toString()
                 confirm.text.toString().isEmpty()
             ) {
                 return@setOnClickListener
-            }
-else {
+
+
                 fauth.verifyPhoneNumber(
                     edt_phone.text.toString(), // Phone number to verify
                     60, // Timeout duration
@@ -97,10 +98,10 @@ else {
                 ) // OnVerificationStateChangedCallbacks
             }
 
-
+        }
         }
 
-    }
+
 
 
     private fun register() {
