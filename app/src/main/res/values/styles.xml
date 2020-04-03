@@ -67,7 +67,7 @@
 
     -<style parent="viewParent" name="loginButton">
 
-    <item name="android:background">@drawable/button_background_blue</item>
+<!--    <item name="android:background">@drawable/button_background_blue</item>-->
 
     <item name="android:textColor">@color/whiteTextColor</item>
 
