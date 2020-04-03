@@ -29,7 +29,6 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import android.widget.Toast
-import kotlinx.android.synthetic.main.fragment_handymanlist.*
 import kotlinx.android.synthetic.main.fragment_request_form.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import java.text.SimpleDateFormat
@@ -43,8 +42,7 @@ class requestForm2 : AppCompatActivity() {
     private val pingActivityRequestCode = 1001
     var employee_id: String = "HH"
     var service_id: String = "HH"
-    var location = doubleArrayOf()
-    var des:String="gg"
+    var location = DoubleArray(2)
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -55,9 +53,8 @@ class requestForm2 : AppCompatActivity() {
         var Date: Date
         var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
-        employee_id = (object2 as JSONObject).optString("employee_id")
-        service_id = (object2 as JSONObject).optString("service_id")
-     //  des=description.text.toString()
+        employee_id = (object2 ).optString("employee_id")
+        service_id = (object2).optString("service_id")
         btnOpenPlacePicker.setOnClickListener {
             showPlacePicker()
         }
@@ -244,11 +241,10 @@ class requestForm2 : AppCompatActivity() {
     ) {
         if ((requestCode == pingActivityRequestCode) && (resultCode == Activity.RESULT_OK)) {
             val place: Place? = PingPlacePicker.getPlace(data!!)
-            toast("You selected: ${place?.name}")
+            toast("You selected: ${place!!.name}")
 
-            location.plus(place?.latLng?.latitude!!)
-            location.plus(place.latLng?.longitude!!)
-
+            location[0]=place!!.latLng!!.latitude!!.toDouble()
+           location[1]=place!!.latLng!!.longitude!!.toDouble()
         }
 
         if (resultCode == Activity.RESULT_OK
@@ -268,62 +264,35 @@ class requestForm2 : AppCompatActivity() {
         }
     }
 
-
-//        fun save() {
-//
-//            save_infor_profile_btn.isEnabled = false
-//            var des = dscription.text.toString()
-//Toast.makeText(this,des,Toast.LENGTH_SHORT).show()
-//            Fuel.post(
-//                Utils.API_MAKE_REQUEST, listOf(
-//                    "employee_id" to "5e7d3968e8deab6cd0066972", "service_id" to "5e7d3f12e8deab7f6e142ef2"
-//                    ,"description" to "ff"
-//
-//                )
-//            ).header(
-//                "accept" to "application/json",
-//                Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
-//            )
-//                .responseJson {  _, _, result ->
-//                    result.success {
-//                        val intent=Intent(this!!,requestForm::class.java)
-//                        startActivity(intent)
-//                    }
-//                    result.failure {
-//                        runOnUiThread {
-//                            Toast.makeText(this!!, it.localizedMessage.toString(), Toast.LENGTH_SHORT)
-//                        }
-//                    }
-//                }
-//
-//        }
 fun save() {
-
-    var f :String="5e7d3968e8deab6cd0066972"
-    var r :String="5e7d3f12e8deab7f6e142ef2"
-
-    save_infor_profile_btn.isEnabled = false
+    var des :String= description!!.text!!.toString()
+    val role="user"
+  //  save_infor_profile_btn.isEnabled = false
+    Toast.makeText(this,fileUri.toString(),Toast.LENGTH_SHORT).show()
     Fuel.post(
         Utils.API_MAKE_REQUEST, listOf(
-            "employee_id" to f, "service_id" to r
-            ,"description" to "any thing"
+            "employee_id" to employee_id, "service_id" to service_id
+            ,"description" to des,"role" to role,"location" to location, "date" to date.toString(),
+            "to" to selectedTime.toString(),"from" to selectedTime.toString(),"image" to fileUri.toString()
 
         )
     ).header(
         "accept" to "application/json",
-        Utils.AUTHORIZATION to SharedPreferences.getToken(this@requestForm2).toString()
+        Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
     )
         .responseJson {  _, _, result ->
             result.success {
-                val intent=Intent(this@requestForm2,requestForm::class.java)
-                startActivity(intent)
+
             }
             result.failure {
                 runOnUiThread {
-                    Toast.makeText(this@requestForm2, it.localizedMessage.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
                 }
             }
+            val intent=Intent(this,requestForm::class.java)
+            startActivity(intent)
         }
+
 
 }
 }
