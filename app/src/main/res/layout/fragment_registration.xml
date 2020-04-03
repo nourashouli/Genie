@@ -48,7 +48,7 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-z   <LinearLayout
+   <LinearLayout
                 android:id="@+id/ll_signup_form"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
