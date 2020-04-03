@@ -80,7 +80,6 @@ class SignUp : AppCompatActivity() {
         fbtn_register.setOnClickListener {
             //make registration
 
-
             if (edt_phone.text.toString().isEmpty() ||
                 name.text.toString().isEmpty() ||
                 email_reg.text.toString().isEmpty() ||
@@ -88,7 +87,7 @@ class SignUp : AppCompatActivity() {
                 confirm.text.toString().isEmpty()
             ) {
                 return@setOnClickListener
-
+            } else {
                 fauth.verifyPhoneNumber(
                     edt_phone.text.toString(), // Phone number to verify
                     60, // Timeout duration
@@ -98,8 +97,10 @@ class SignUp : AppCompatActivity() {
                 ) // OnVerificationStateChangedCallbacks
             }
 
+
         }
-        }
+
+    }
 
 
 
