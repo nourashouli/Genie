@@ -75,7 +75,6 @@ class AccountSettingActivity : AppCompatActivity() {
                 MediaStore.Images.Media.getBitmap(this.contentResolver, selectedPhotoUri)
             profilei.setImageBitmap(bitmap)
             change_image_text_btn.alpha = 0f
-            // when image is not null so u have an image
             image= Utils.encodeToBase64(bitmap)
 
         }
