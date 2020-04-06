@@ -79,7 +79,6 @@ class SignUp : AppCompatActivity() {
 
         fbtn_register.setOnClickListener {
             //make registration
-
             if (edt_phone.text.toString().isEmpty() ||
                 name.text.toString().isEmpty() ||
                 email_reg.text.toString().isEmpty() ||
@@ -98,15 +97,11 @@ class SignUp : AppCompatActivity() {
             }
 
 
-
         }
 
     }
 
 
-        }
-
-    }
 
 
     private fun register() {

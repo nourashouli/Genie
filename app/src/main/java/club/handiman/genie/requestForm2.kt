@@ -94,7 +94,8 @@ class requestForm2 : AppCompatActivity() {
 
 
         save_infor_profile_btn.setOnClickListener {
-            save()
+          save()
+           // gettime()
         }
 
         //listen to gallery button click
@@ -245,11 +246,14 @@ class requestForm2 : AppCompatActivity() {
             .header(
                 "accept" to "application/json"
             )
+
             .responseJson { _, _, result ->
 
                 result.success {
-                    //
+
+
                     var res = it.obj()
+
                     if (res.optString("status", "error") == "success") {
                         runOnUiThread {
                             Toast.makeText(
@@ -258,9 +262,12 @@ class requestForm2 : AppCompatActivity() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
+
                     }
                 }
+
             }
+
     }
 
 fun save() {

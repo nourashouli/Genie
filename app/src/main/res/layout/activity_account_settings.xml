@@ -54,7 +54,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image_edt_profile"
+        android:id="@+id/profilei"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="15dp"
@@ -74,7 +74,7 @@
         android:textStyle="bold"
         android:textSize="16dp"
         android:textColor="@color/colorPrimary"
-        android:layout_below="@+id/profile_image_edt_profile"
+        android:layout_below="@+id/profilei"
         />
 
 
@@ -112,8 +112,9 @@
         android:inputType="text"
         android:hint="password"
         />
+
     <EditText
-        android:id="@+id/confirm_edt_profile"
+        android:id="@+id/biography"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -121,30 +122,19 @@
         android:layout_marginTop="16dp"
         android:layout_below="@id/password_edt_profile"
         android:inputType="text"
-        android:hint="confirm password"
-        />
-    <EditText
-        android:id="@+id/bio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/confirm_edt_profile"
-        android:inputType="text"
         android:hint="bio"
         />
-    <EditText
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_below="@id/bio"
-        android:inputType="text"
-        android:hint="Location"
-        />
+<!--    <EditText-->
+<!--        android:id="@+id/location"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="20dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_below="@id/bio"-->
+<!--        android:inputType="text"-->
+<!--        android:hint="Location"-->
+<!--        />-->
     <Button
         android:id="@+id/delete_account_btn"
         android:layout_width="match_parent"
