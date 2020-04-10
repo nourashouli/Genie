@@ -1,21 +1,19 @@
-package com.example.genie_cl
+package club.handiman.genie
 
-import android.content.Context
-import android.view.View
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.genie_cl.Utils.Constants
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Constants
+import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.Utils.Utils
+import com.example.genie_cl.R
+import club.handiman.genie.SignUp
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_login.*
-import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
 

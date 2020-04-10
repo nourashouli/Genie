@@ -1,4 +1,4 @@
-package com.example.genie_cl.Utils
+package club.handiman.genie.Utils
 
 
 interface IOnBackPressed {

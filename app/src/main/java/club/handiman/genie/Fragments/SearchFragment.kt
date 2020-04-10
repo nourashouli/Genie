@@ -1,4 +1,4 @@
-package com.example.genie_cl.Fragments
+package club.handiman.genie.Fragments
 
 
 import android.os.Bundle
@@ -6,30 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.genie_cl.Models.CardView
 
-import com.example.genie_cl.adapter.ServiceAdapter
+import club.handiman.genie.adapter.ServiceAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.util.TypedValue
-import android.R.attr.top
-import android.R.attr.right
-import android.R.attr.left
-import android.R.attr.bottom
-import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.graphics.Rect
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.DefaultItemAnimator
-import android.R
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.example.genie_cl.Fragments.SearchFragment.GridSpacingItemDecoration
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Utils
 import com.example.genie_cl.adapter.utils.AdapterListener
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson

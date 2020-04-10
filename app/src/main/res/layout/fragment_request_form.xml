@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".requestForm"
+    tools:context="club.handiman.genie.requestForm"
     android:background="@drawable/request"
     android:orientation="vertical">
 
@@ -58,7 +58,7 @@
         tools:layout_editor_absoluteY="84dp" />
 
     <Button
-        android:id="@+id/btn_date"
+        android:id="@+id/button_datepicker"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_below="@+id/description"

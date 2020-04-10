@@ -1,21 +1,21 @@
-package com.example.genie_cl
-import com.example.genie_cl.R
+package club.handiman.genie
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.genie_cl.Fragments.ProfileFragment
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.Utils.Utils
+import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
-import android.provider.MediaStore
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.activity_account_settings.*
-import androidx.fragment.app.Fragment
-import android.net.Uri
+
+
 class AccountSettingActivity : AppCompatActivity() {
     private var image: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +62,7 @@ class AccountSettingActivity : AppCompatActivity() {
                 }
 
             }
-        val i = Intent(this,ProfileFragment::class.java)
-        startActivity(i)
-        }
+    }
     var selectedPhotoUri: Uri? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

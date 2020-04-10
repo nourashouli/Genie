@@ -1,30 +1,29 @@
-package com.example.genie_cl.Fragments
-
+package club.handiman.genie.Fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.genie_cl.MainActivity
+import club.handiman.genie.MainActivity
 import android.content.Intent
 import android.widget.Toast
 import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
-import com.example.genie_cl.adapter.HomeAdapter
-import com.example.genie_cl.requestForm
+import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.Utils.Utils
+import club.handiman.genie.adapter.HomeAdapter
+import club.handiman.genie.requestForm
+import com.example.genie_cl.adapter.utils.AdapterListener
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.runOnUiThread
-
-
 class HomeFragment : Fragment() {
 
+    var adapter: HomeAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,53 +32,63 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     } // onCreateView
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-     requestbt.setOnClickListener {save()}
-        initRecyclerView()
-//        requestbt.setOnClickListener {
-//            val intent = Intent(context!!, TestingActivity::class.java)
-//            intent.flags =
-//                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            startActivity(intent)
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-    } // onActivityCreated
 
-    private fun initRecyclerView(){
-
-        home_recycler_view.layoutManager = LinearLayoutManager(context as MainActivity,LinearLayoutManager.VERTICAL,false)
-        home_recycler_view.adapter = HomeAdapter(context as MainActivity,"home")
+        home_recycler_view.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        adapter = HomeAdapter(context!!)
+        gethandyman()
+        home_recycler_view.adapter = adapter
 
     }
-    fun save() {
-
-var f :String="5e7d3968e8deab6cd0066972"
-        var r :String="5e7d3968e8deab6cd0066972"
-       requestbt.isEnabled = false
-        Fuel.post(
-            Utils.API_MAKE_REQUEST, listOf(
-                "employee_id" to f, "service_id" to r
-            ,"description" to "descriptionnn of the request"
-
+        //TODO
+    fun gethandyman(){
+        Fuel.get(Utils.API_getHandymanList)
+            .header(
+                "accept" to "application/json"
             )
-        ).header(
-            "accept" to "application/json",
-            Utils.AUTHORIZATION to SharedPreferences.getToken(context!!).toString()
-        )
-            .responseJson {  _, _, result ->
+            .responseJson { _, _, result ->
+
                 result.success {
-                    val intent=Intent(context!!,requestForm::class.java)
-                    startActivity(intent)
+//
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+                        Toast.makeText(
+                            activity,
+                            res.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        activity!!.runOnUiThread {
+
+
+                            val items = res.getJSONArray("handyman")
+
+                            for (i in 0 until items.length()) {
+                                adapter!!.setItem(items.getJSONObject(i))
+                            }
+
+
+                        }
+                    } else {
+
+                        Toast.makeText(
+                            activity,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
                 result.failure {
-                    runOnUiThread {
-                        Toast.makeText(context!!, it.localizedMessage.toString(), Toast.LENGTH_SHORT)
-                    }
+
+                    Toast.makeText(activity, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
                 }
             }
 
-    }
+    }}
 
-} // HomeFragment
+// HomeFragment

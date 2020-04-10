@@ -31,7 +31,7 @@
                 >
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/handymanImage"
                     android:layout_width="50dp"
                     android:layout_height="50sp"
                     android:layout_marginTop="12dp"
@@ -41,20 +41,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/HandymaName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="Ali mohammed"
                     android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    app:layout_constraintStart_toEndOf="@+id/handymanImage"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.506" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
+                android:id="@+id/HandymaUpload"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"

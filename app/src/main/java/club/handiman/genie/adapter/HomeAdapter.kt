@@ -1,54 +1,64 @@
-package com.example.genie_cl.adapter
+package club.handiman.genie.adapter
 
 import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.genie_cl.Fragments.HandymanprofileFragment
-import com.example.genie_cl.MainActivity
+import club.handiman.genie.Utils.Utils
+import com.bumptech.glide.Glide
 import com.example.genie_cl.R
+import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.home_row.view.*
+import org.json.JSONObject
 
-class HomeAdapter(val context: Context, val fragmentName: String) : RecyclerView.Adapter<HomeAdapter.HomeAdapterViewHolder>() {
+class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+    var list: ArrayList<Any> = ArrayList()
+    var listener: AdapterListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeAdapterViewHolder {
-        return HomeAdapterViewHolder(LayoutInflater.from(context).inflate(R.layout.home_row, parent, false))
+    fun setItem(ob: Any) {
+        list.add(ob)
+        notifyItemInserted(list.size - 1)
+    }
+
+    fun getItem(index: Int) = list[index]
+
+    fun removeItem(index: Int) {
+        list.removeAt(index)
+        notifyItemRemoved(index)
+    }
+
+    fun removeItems() {
+        list.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getItems() = list
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.home_row, parent, false)
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.HandymaName.text =
+            (list[position] as JSONObject).getString("name")
+        val url =  (list[position] as JSONObject).optString("image","image.png")
+        Glide
+            .with(holder.itemView)
+            .load(Utils.BASE_IMAGE_URL.plus(url))
+            .into(holder.itemView.handymanImage)
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return list.size
     }
 
-    override fun onBindViewHolder(holder: HomeAdapterViewHolder, position: Int) {
-
-
-        if (fragmentName == "home"){
-
-            holder.mainCardView.setOnClickListener {
-
-              //  (context as MainActivity).navigateToFragment(HandymanprofileFragment())
-
-            }
-
-        } else if("handyman" == fragmentName){
-
-            holder.image.visibility = View.GONE
-            holder.txt.visibility = View.GONE
-
-        }
-
-    }
-
-    inner class HomeAdapterViewHolder(view: View): RecyclerView.ViewHolder(view){
-
-        val mainCardView = view.main_card_view
-        val image = view.imageView2
-        val txt = view.textView
-
-
-    }
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 }
+

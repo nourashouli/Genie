@@ -1,4 +1,4 @@
-package com.example.genie_cl.Utils
+package club.handiman.genie.Utils
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

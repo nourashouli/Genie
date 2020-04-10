@@ -24,25 +24,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="club.handiman.genie.Fragments.notiFragment"></activity>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/android" /> <!-- <intent-filter> -->
-        <activity android:name=".requestForm2" />
+        <activity android:name="club.handiman.genie.requestForm2" />
         <activity android:name="club.handiman.genie.TestingActivity" /> <!-- <activity android:name="club.handiman.genie.location" /> -->
-        <activity android:name=".SignUp" />
-        <activity android:name=".Login">
+        <activity android:name="club.handiman.genie.SignUp" />
+        <activity android:name="club.handiman.genie.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AccountSettingActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="club.handiman.genie.AccountSettingActivity" />
+        <activity android:name="club.handiman.genie.MainActivity" />
 
-        <service android:name=".Utils.Firebase">
+        <service android:name="club.handiman.genie.Utils.Firebase">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

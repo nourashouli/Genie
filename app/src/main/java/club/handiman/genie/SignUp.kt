@@ -1,16 +1,15 @@
-package com.example.genie_cl
+package club.handiman.genie
 
 import android.view.View
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.genie_cl.Utils.Constants
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Constants
+import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.Utils.Utils
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
-import com.example.genie_cl.MainActivity
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_registration.*
@@ -19,6 +18,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.FirebaseException
 import android.util.Log
+import com.example.genie_cl.R
 
 import java.util.concurrent.TimeUnit
 

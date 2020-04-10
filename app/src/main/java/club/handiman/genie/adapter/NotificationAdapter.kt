@@ -1,18 +1,15 @@
-package com.example.handymanapplication.adapters
+package club.handiman.genie.adapter
 
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Utils
 import kotlinx.android.synthetic.main.notification_row.view.*
 import org.json.JSONObject
 

@@ -1,13 +1,15 @@
-package com.example.genie_cl
+package club.handiman.genie
 
-import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import club.handiman.genie.Fragments.notiFragment
-import com.example.genie_cl.Fragments.*
+import club.handiman.genie.Fragments.HomeFragment
+import club.handiman.genie.Fragments.ProfileFragment
+import club.handiman.genie.Fragments.SearchFragment
+import club.handiman.genie.ui.dashboard.DashboardFragment
+import com.example.genie_cl.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,15 +26,11 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_add_post ->{
-              //  val intent = Intent(this, LatestMessagesActivity::class.java)
-               // startActivity(intent)
-               // navigateToFragment(notiFragment())
+
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications ->{
-                  val intent = Intent(this, notiFragment::class.java)
-                 startActivity(intent)
-                //navigateToFragment(handymanlist())
+                navigateToFragment(DashboardFragment())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_profile ->{

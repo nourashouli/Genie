@@ -10,8 +10,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.genie_cl.R
-import com.example.genie_cl.Utils.Constants
-import com.example.handymanapplication.adapters.NotificationAdapter
+import club.handiman.genie.Utils.Constants
+import club.handiman.genie.adapter.NotificationAdapter
 import kotlinx.android.synthetic.main.activity_chat_log.*
 import org.json.JSONObject
 

@@ -1,4 +1,4 @@
-package com.example.genie_cl.adapter
+package club.handiman.genie.adapter
 
 
 import android.content.Context
@@ -8,15 +8,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-import com.example.genie_cl.Fragments.HandymanprofileFragment
-import com.example.genie_cl.MainActivity
+import club.handiman.genie.Fragments.HandymanprofileFragment
+import club.handiman.genie.MainActivity
 
-import com.example.genie_cl.Fragments.HomeFragment
-import com.example.genie_cl.Fragments.handymanlist
-
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Utils
 import com.example.genie_cl.R
-import com.example.genie_cl.requestForm2
 import kotlinx.android.synthetic.main.handyman_row.view.*
 import org.json.JSONObject
 

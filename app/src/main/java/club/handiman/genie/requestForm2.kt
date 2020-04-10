@@ -1,101 +1,87 @@
-package com.example.genie_cl
-
+package club.handiman.genie
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentValues
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import org.json.JSONObject
-import com.example.genie_cl.Utils.Constants
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Constants
+import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.Utils.Utils
+import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
-import android.content.Intent
-import android.content.IntentFilter
-import android.Manifest
 import com.google.android.libraries.places.api.model.Place
-import com.rtchagas.pingplacepicker.PingPlacePicker
-import android.app.Activity
-import android.content.ContentValues
-import android.net.Uri
-import android.provider.MediaStore
-import android.app.AlertDialog
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import android.widget.Toast
+import com.rtchagas.pingplacepicker.PingPlacePicker
 import kotlinx.android.synthetic.main.fragment_request_form.*
-import org.jetbrains.anko.support.v4.runOnUiThread
-import java.text.SimpleDateFormat
-import java.util.*
 import org.jetbrains.anko.toast
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.*
 
-class requestForm2 : AppCompatActivity() {
+  class requestForm2 : AppCompatActivity(),
+    com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener,
+    com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener {
+    var datePickerDialog: com.wdullaer.materialdatetimepicker.date.DatePickerDialog? = null
+    var timePickerDialog: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
+    var Year = 0
+    var Month = 0
+    var Day = 0
+    var Hour = 0
+    var Minute = 0
+    var array : JSONArray? =null
+    var day:JSONObject?=null
+    var calendar: Calendar? = null
     var fileUri: Uri? = null
-    var date: String = "g"
+      var Dat ="j"
     var time: String="h"
+      var timee: String="h"
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
     var location = DoubleArray(2)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
-        var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
-        var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
         var Date: Date
         var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
         employee_id = (object2 ).optString("employee_id")
         service_id = (object2).optString("service_id")
+        calendar = Calendar.getInstance()
+        Year = calendar!!.get(Calendar.YEAR)
+        Month = calendar!!.get(Calendar.MONTH)
+        Day = calendar!!.get(Calendar.DAY_OF_MONTH)
+        Hour = calendar!!.get(Calendar.HOUR_OF_DAY)
+        Minute = calendar!!.get(Calendar.MINUTE)
+        gettime()
+        button_datepicker.setOnClickListener {
+            timee()
+            datee()
+        }
         btnOpenPlacePicker.setOnClickListener {
             showPlacePicker()
         }
-        btn_date.setOnClickListener {
-            val now = Calendar.getInstance()
-            val datePicker = DatePickerDialog(
-                this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(Calendar.YEAR, year)
-                    selectedDate.set(Calendar.MONTH, month)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    date = formate.format(selectedDate.time)
-                    Toast.makeText(this, "date : " + date, Toast.LENGTH_SHORT).show()
-                },
-                now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
-            try {
-                if (btn_date.text != "Show Dialog") {
-                    Date = timeFormat.parse(btn_date.text.toString())
-                    now.time = Date
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            val timePicker = TimePickerDialog(
-                this, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                  var selectedTime = Calendar.getInstance()
-                    selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    selectedTime.set(Calendar.MINUTE, minute)
-                    btn_date.text = timeFormat.format(selectedTime.time)
-                    time=timeFormat.format(selectedTime.time)
-                },
-                now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false
-            )
-            timePicker.show()
-
-        }
-
 
         save_infor_profile_btn.setOnClickListener {
-          save()
-           // gettime()
+
+            save()
         }
 
         //listen to gallery button click
@@ -115,10 +101,6 @@ class requestForm2 : AppCompatActivity() {
         val builder = PingPlacePicker.IntentBuilder()
         builder.setAndroidApiKey(getString(R.string.android))
             .setMapsApiKey(getString(R.string.maps))
-
-//         If you want to set a initial location
-//         rather then the current device location.
-        // pingBuilder.setLatLng(LatLng(37.4219999, -122.0862462))
 
         try {
             val placeIntent = builder.build(this)
@@ -185,11 +167,9 @@ class requestForm2 : AppCompatActivity() {
                     //show alert dialog with permission options
                     AlertDialog.Builder(this@requestForm2)
                         .setTitle(
-                            "Permissions Error!"
-                        )
+                            "Permissions Error!")
                         .setMessage(
-                            "Please allow permissions to take photo with camera"
-                        )
+                            "Please allow permissions to take photo with camera")
                         .setNegativeButton(
                             android.R.string.cancel,
                             { dialog, _ ->
@@ -204,15 +184,9 @@ class requestForm2 : AppCompatActivity() {
                         .setOnDismissListener({
                             token?.cancelPermissionRequest()
                         })
-                        .show()
-                }
-
+                        .show() }
             }).check()
-
     }
-
-    //
-    //override function that is called once the photo has been taken
     override fun onActivityResult(
         requestCode: Int, resultCode: Int,
         data: Intent?
@@ -241,33 +215,123 @@ class requestForm2 : AppCompatActivity() {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+      fun datee(){
+          datePickerDialog =
+              com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+                  this@requestForm2,
+                  Year,
+                  Month,
+                  Day
+              )
+          datePickerDialog!!.setThemeDark(false)
+          datePickerDialog!!.showYearPickerFirst(false)
+          datePickerDialog!!.setTitle("Date Picker")
+
+
+          // Setting Min Date to today date
+          val min_date_c = Calendar.getInstance()
+          datePickerDialog!!.setMinDate(min_date_c)
+
+
+          // Setting Max Date to next 2 years
+          val max_date_c = Calendar.getInstance()
+          max_date_c[Calendar.YEAR] = Year + 2
+          datePickerDialog!!.setMaxDate(max_date_c)
+
+          var hint= IntArray(7)
+          for (index in 0..6) {
+              day = array!!.getJSONObject(index)
+              var counter = 0
+              for (i in 0..23) {
+                  var item = String.format("%02d", index) + "00"
+                  if (day!!.optBoolean(item)) {
+
+                      counter++
+                  } else {
+                      var p=1 }
+              }
+              if (counter == 24) {
+                  hint[index] = 0
+              } else {
+                  hint[index] = 1
+              }
+          }
+          var loopdate = min_date_c
+          while (min_date_c.before(max_date_c)) {
+              val dayOfWeek = loopdate[Calendar.DAY_OF_WEEK]
+
+              if ((dayOfWeek==Calendar.MONDAY&& hint[0]==0 )||(dayOfWeek==Calendar.TUESDAY&& hint[1]==0)||(dayOfWeek==Calendar.WEDNESDAY&& hint[2]==0)||(dayOfWeek==Calendar.THURSDAY&& hint[3]==0 )||(dayOfWeek==Calendar.FRIDAY&& hint[4]==0)||(dayOfWeek==Calendar.SATURDAY&& hint[5]==0)||(dayOfWeek==Calendar.SUNDAY&& hint[6]==0)) {
+                  val disabledDays =
+                      arrayOfNulls<Calendar>(1)
+                  disabledDays[0] = loopdate
+                  datePickerDialog!!.setDisabledDays(disabledDays)
+              }
+              min_date_c.add(Calendar.DATE, 1)
+              loopdate = min_date_c
+          }
+          datePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
+              Toast.makeText(this@requestForm2, "canceled", Toast.LENGTH_SHORT)
+                  .show()
+          })
+          datePickerDialog!!.show(fragmentManager, "DatePickerDialog")
+      }
+      fun timee(){
+          timePickerDialog =
+              com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                  this@requestForm2,
+                  Hour,
+                  Minute,
+                  false
+              )
+          timePickerDialog!!.setThemeDark(false)
+          timePickerDialog!!.setTitle("Time Picker")
+          timePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
+              Toast.makeText(this@requestForm2, "Timepicker Canceled", Toast.LENGTH_SHORT)
+                  .show()
+          })
+          timePickerDialog!!.show(fragmentManager, "TimePickerDialog")
+      }
+
+
+      override fun onDateSet(
+
+          view: com.wdullaer.materialdatetimepicker.date.DatePickerDialog,
+          Year: Int,
+          Month: Int,
+          Day: Int
+      ) {
+          Dat = "      " + Day + "/" + (Month + 1) + "/" + Year
+
+      }
+
+      override fun onTimeSet(
+          view: com.wdullaer.materialdatetimepicker.time.TimePickerDialog,
+          hourOfDay: Int,
+          minute: Int,
+          second: Int
+      ) {
+           time = "Time: " + hourOfDay + "h" + minute + "m" + second +  Dat
+          timee="" +  hourOfDay + "h" + minute + "m" + second
+          Toast.makeText(this@requestForm2, time, Toast.LENGTH_LONG).show()
+          val text_timepicker =
+              findViewById<View>(R.id.button_datepicker) as TextView
+          text_timepicker.text = time
+      }
+      @SuppressLint("WrongConstant")
     fun gettime() {
         Fuel.get(Utils.API_timeline.plus(employee_id))
             .header(
-                "accept" to "application/json"
+                "accept" to "application/json",
+                Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
             )
-
             .responseJson { _, _, result ->
-
                 result.success {
-
-
                     var res = it.obj()
-
                     if (res.optString("status", "error") == "success") {
-                        runOnUiThread {
-                            Toast.makeText(
-                                this,
-                                res.getJSONArray("timeline").toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
+                        array = res.getJSONArray("timeline")
                     }
                 }
-
             }
-
     }
 
 fun save() {
@@ -278,8 +342,8 @@ fun save() {
     Fuel.post(
         Utils.API_MAKE_REQUEST, listOf(
             "employee_id" to employee_id, "service_id" to service_id
-            ,"description" to des,"role" to role,"location" to location, "date" to date,
-            "to" to time,"from" to time,"image" to fileUri.toString()
+            ,"description" to des,"role" to role,"latitude" to location[0],"longitude" to location[1], "date" to Dat,
+            "to" to timee,"from" to timee,"image" to fileUri.toString()
 
         )
     ).header(
@@ -295,10 +359,8 @@ fun save() {
                     Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
                 }
             }
-            val intent=Intent(this,MainActivity::class.java)
+            val intent=Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
-
 }
 }

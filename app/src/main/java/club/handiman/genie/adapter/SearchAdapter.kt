@@ -1,4 +1,4 @@
-package com.example.genie_cl.adapter
+package club.handiman.genie.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

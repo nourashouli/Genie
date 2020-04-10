@@ -1,4 +1,4 @@
-package com.example.genie_cl.Utils
+package club.handiman.genie.Utils
 
 
 
@@ -13,7 +13,6 @@ import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import club.handiman.genie.TestingActivity
-import club.handiman.genie.Fragments.notiFragment
 import com.example.genie_cl.R
 import java.util.*
 
@@ -39,8 +38,8 @@ class Firebase : FirebaseMessagingService() {
                     sendRegularNotification(dataJson, Intent(baseContext, TestingActivity::class.java))
                 }
                 "request" -> {
-                    sendBrodcastNotification(dataJson)
-                            sendRegularNotification(dataJson, Intent(baseContext, notiFragment::class.java))
+//                    sendBrodcastNotification(dataJson)
+//                            sendRegularNotification(dataJson, Intent(baseContext, notiFragment::class.java))
 
                 }
                 "announcement" -> {

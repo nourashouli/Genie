@@ -1,4 +1,4 @@
-package com.example.genie_cl.Utils
+package club.handiman.genie.Utils
 
 import android.Manifest
 import android.app.Activity
@@ -11,7 +11,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
-import com.example.genie_cl.Login
+import club.handiman.genie.Login
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
@@ -35,7 +35,7 @@ class Utils {
         const val API_LOGIN = "$BASE_URL/login"
         const val API_Register ="$BASE_URL/register"
         const val  API_Services="$BASE_URL/getServices"
-        const val API_timeline="$BASE_URL/timeline-view"
+        const val API_timeline="$BASE_URL/timeline-view/"
         const val API_HANDYMAN_BY_SERVICE="$BASE_URL/getHandymenByService/"
         const val API_EDIT_PROFILE = "$BASE_URL/profile-edit"
         const val API_DEVICE_TOKEN = "$BASE_URL/device-token"
@@ -59,6 +59,7 @@ class Utils {
         const val API_REQUEST_PASSWORD = "$BASE_URL/request-password"
         const val API_RESET_PASSWORD = "$BASE_URL/reset-password"
         const val API_getHandymanList="$BASE_URL/getHandymanList"
+        const val API_get_ongoing_request="$BASE_CLIENT_URL/ongoing-requests"
 
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
@@ -70,7 +71,7 @@ class Utils {
                         API_DEVICE_TOKEN,
                         listOf("client_device_token" to it.token, "device_platform" to "android")
                     )
-                        .header(Utils.AUTHORIZATION to SharedPreferences.getToken(context).toString())
+                        .header(AUTHORIZATION to SharedPreferences.getToken(context).toString())
                         .responseJson { _, _, result ->
                             result.success {
                                 Log.i("Firebase reg", it.content)

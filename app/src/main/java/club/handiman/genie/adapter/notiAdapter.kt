@@ -1,35 +1,33 @@
 package club.handiman.genie.adapter
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.Models.RequestModel
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
-import com.example.genie_cl.Utils.SharedPreferences
-import com.example.genie_cl.Utils.Utils
+import club.handiman.genie.Utils.Utils
 import kotlinx.android.synthetic.main.notification_row.view.*
-import org.json.JSONObject
 
 class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewHolder>() {
 
-    var list : ArrayList<Any> = ArrayList()
+    var list: ArrayList<RequestModel> = ArrayList()
 
-    fun setItem( ob: Any){
+    fun setItem(ob: RequestModel) {
         list.add(ob)
-        notifyItemInserted(list.size -1)
+        notifyItemInserted(list.size - 1)
     }
-    fun getItem( index : Int) = list[index]
 
-    fun removeItem (index: Int){
+    fun getItem(index: Int) = list[index]
+
+    fun removeItem(index: Int) {
         list.removeAt(index)
-        notifyItemRemoved( index )
+        notifyItemRemoved(index)
     }
-    fun removeItems (){
+
+    fun removeItems() {
         list.clear()
         notifyDataSetChanged()
     }
@@ -37,33 +35,25 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
     fun getItems() = list
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.notification_row,parent,false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.notification_row, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.itemView.setOnClickListener {
-//          //  if ((list[position] as JSONObject).)
-//        }
-
-        holder.itemView.textView.text=
-            (list[position] as JSONObject).optString("handyman accept", "title")
-        holder.itemView.name.text=
-            (list[position] as JSONObject).optString("ali", "name")
-        val url = (list[position] as JSONObject).optString("image", "image.png")
-
-        Toast.makeText(context,
-            (list[position]).toString()  ,
-            Toast.LENGTH_LONG
-        ).show()
+        holder.itemView.name.text =
+            (list[position]).handyman
+        holder.itemView.textView.text =
+            (list[position]).request
+        val url = (list[position]).image
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(url))
             .into(holder.itemView.imageView2)
-//
-//      //
+
+        //
 //        if ( query == null )
 //        holder.itemView.text1.text = (_list[position] as JSONObject).optString("name","unknown")
 //        else
@@ -74,7 +64,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
         return list.size
     }
 
-    inner class ViewHolder(view: View):RecyclerView.ViewHolder(view)
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 }
 
