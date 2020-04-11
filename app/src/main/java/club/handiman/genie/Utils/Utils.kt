@@ -60,6 +60,7 @@ class Utils {
         const val API_RESET_PASSWORD = "$BASE_URL/reset-password"
         const val API_getHandymanList="$BASE_URL/getHandymanList"
         const val API_get_ongoing_request="$BASE_CLIENT_URL/ongoing-requests"
+        const val API_CANCEL_REQUEST="$BASE_CLIENT_URL/cancel-request/"
 
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
