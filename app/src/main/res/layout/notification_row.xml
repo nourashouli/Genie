@@ -33,39 +33,50 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginTop="12dp"
                     android:src="@drawable/painterpro"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/name"
-                    android:layout_marginStart="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="Name field is here"
-                app:layout_constraintEnd_toEndOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Name field is here"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView"
-                   android:layout_marginBottom="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.197"
+                    app:layout_constraintStart_toStartOf="parent"
                     />
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:text="The handyman has accepted"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.506" />
+                    android:textSize="15dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintBottom_toTopOf="@+id/cancel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.36"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-<!--             -->
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:text="Cancel request"
+                    app:layout_constraintBottom_toBottomOf="@id/textView"
+                    app:layout_constraintStart_toEndOf="@+id/imageView2"
+                    />
+                <!--             -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

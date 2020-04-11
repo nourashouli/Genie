@@ -53,11 +53,13 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             .load(Utils.BASE_IMAGE_URL.plus(url))
             .into(holder.itemView.imageView2)
 
-        //
-//        if ( query == null )
-//        holder.itemView.text1.text = (_list[position] as JSONObject).optString("name","unknown")
-//        else
-//        holder.itemView.text1.text = (list[position] as JSONObject).optString("name","unknown")
+        holder.itemView.cancel.setOnClickListener {
+
+               Helpers.RequestHelper.cancel((list[position]).request_id,context!!)
+            list.remove(list[position])
+            notifyDataSetChanged()
+        }
+
     }
 
     override fun getItemCount(): Int {

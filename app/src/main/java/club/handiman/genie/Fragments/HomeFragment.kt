@@ -51,10 +51,10 @@ class HomeFragment : Fragment() {
                         activity!!.runOnUiThread {
                             Toast.makeText(activity, res.toString(), Toast.LENGTH_LONG)
                                 .show()
-                          val items = res.getJSONArray("post")
-                            for (i in 0 until items.length()) {
-                                adapter!!.setItem(items.getJSONObject(i))
-                           }
+//                          val items = res.getJSONArray("post")
+//                            for (i in 0 until items.length()) {
+//                                adapter!!.setItem(items.getJSONObject(i))
+//                           }
                         }
 
                     } else {

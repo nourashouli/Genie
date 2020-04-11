@@ -1,10 +1,11 @@
 package club.handiman.genie.Models
 
 class RequestModel(
+    var request_id:String,
     var handyman: String?,
     var image: String,
     var request :String
-//    var created_at_date: String,
+    //var created_at_date: String,
 //    var request_to_date: String,
 //    var head_image: String,
 //    var service_image: String,
