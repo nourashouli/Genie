@@ -50,16 +50,16 @@ class HomeFragment : Fragment() {
                     var res = it.obj()
                     if (res.optString("status", "error") == "success") {
 
-//                        activity!!.runOnUiThread {
-//
-//                            val items = res.getJSONArray("post")
-//
-//                            for (i in 0 until items.length()) {
-//                                adapter!!.setItem(items.getJSONObject(i))
-//                           }
-//
-//
-//                        }
+                        activity!!.runOnUiThread {
+
+                            val items = res.getJSONArray("post")
+
+                            for (i in 0 until items.length()) {
+                                adapter!!.setItem(items.getJSONObject(i))
+                           }
+
+
+                        }
 
                     } else {
                         Toast.makeText(
