@@ -15,8 +15,9 @@ import org.json.JSONObject
 
 class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
-    var listener: AdapterListener? = null
+    var sortedlist: ArrayList<Any> = ArrayList()
 
+    // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
         notifyItemInserted(list.size - 1)
@@ -34,9 +35,6 @@ class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.View
         notifyDataSetChanged()
     }
 
-    fun getItems() = list
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
@@ -45,20 +43,27 @@ class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.View
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.HandymaName.text =
-            (list[position] as JSONObject).getString("name")
-        val url =  (list[position] as JSONObject).optString("image","image.png")
+        if ((list[position] as JSONObject).getString("name") != "") {
+
+            holder.itemView.HandymaName.text = (list[position] as JSONObject).getString("name")
+
+        }
+
+        val image_url = (list[position] as JSONObject).optString("image")
         Glide
             .with(holder.itemView)
-            .load(Utils.BASE_IMAGE_URL.plus(url))
+            .load(Utils.BASE_IMAGE_URL.plus(image_url))
             .into(holder.itemView.handymanImage)
-    }
+//        holder.itemView.setOnClickListener {
 
+//        }
+            notifyDataSetChanged()
+        }
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
-
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        //itemView.setOnClickListener( {itemClick(layoutPosition)} )
+    }
 }
-

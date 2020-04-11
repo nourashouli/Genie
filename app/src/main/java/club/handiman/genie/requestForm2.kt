@@ -86,7 +86,7 @@ class requestForm2 : AppCompatActivity(),
         button_datepicker.setOnClickListener {
 
             datee()
-            // timee()
+           //  timee()
         }
         btnOpenPlacePicker.setOnClickListener {
             showPlacePicker()
@@ -247,7 +247,6 @@ class requestForm2 : AppCompatActivity(),
         datePickerDialog!!.showYearPickerFirst(false)
         datePickerDialog!!.setTitle("Date Picker")
 
-
         // Setting Min Date to today date
         val min_date_c = Calendar.getInstance()
         datePickerDialog!!.setMinDate(min_date_c)
@@ -337,7 +336,7 @@ class requestForm2 : AppCompatActivity(),
             if (working_hours_and_hours[day_of_week_currenctselection!!][i] == 0) {
                 arr.add(i)
                 counter++
-                // timepointArray!![counter++] = Timepoint(i)
+                //timepointArray!![counter++] = Timepoint(i)
             }
         }
         var timepointArray = Array<Timepoint>(counter) { i -> Timepoint(i) }
