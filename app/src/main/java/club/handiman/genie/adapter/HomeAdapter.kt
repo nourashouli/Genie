@@ -13,11 +13,11 @@ import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.home_row.view.*
 import org.json.JSONObject
 
-class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
     var listener: AdapterListener? = null
 
-    constructor(  context: Context , listener: AdapterListener) : this(context) {
+    constructor(context: Context, listener: AdapterListener) : this(context) {
         this.listener = listener
     }
 
@@ -49,16 +49,34 @@ class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.itemView.HandymaName.text = (list[position] as JSONObject).getString("name")
+        var handyman =
+            (list[position] as JSONObject).getJSONObject("handyman").optString("name", "handyman")
+
+        holder.itemView.HandymaName.text = handyman
 
 
-        val image_url = (list[position] as JSONObject).optString("image","image.png")
+        if ((list[position] as JSONObject).has("images")) {
+            //for post images
+            var images_array = (list[position] as JSONObject).getJSONArray("images")
+            val url = images_array.get(0).toString()
 
+
+            Glide
+                .with(holder.itemView)
+                .load(Utils.BASE_IMAGE_URL.plus(url))
+                .into(holder.itemView.HandymaUpload)
+        }
+
+
+        val image_url =
+            (list[position] as JSONObject).getJSONObject("handyman").optString("image", "image.png")
+
+
+//
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.handymanImage)
-        holder.itemView.handymanImage.setOnClickListener{
-        }
+
     }
 
 
@@ -66,7 +84,7 @@ class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.View
         return list.size
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         // itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }

@@ -20,6 +20,8 @@ import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.runOnUiThread
+import org.json.JSONObject
+
 class HomeFragment : Fragment() {
     var adapter: HomeAdapter? = null
     override fun onCreateView(
@@ -51,10 +53,10 @@ class HomeFragment : Fragment() {
                         activity!!.runOnUiThread {
                             Toast.makeText(activity, res.toString(), Toast.LENGTH_LONG)
                                 .show()
-//                          val items = res.getJSONArray("post")
-//                            for (i in 0 until items.length()) {
-//                                adapter!!.setItem(items.getJSONObject(i))
-//                           }
+                          val items = res.getJSONArray("posts")
+                            for (i in 0 until items.length()) {
+                                adapter!!.setItem(items.getJSONObject(i))
+                           }
                         }
 
                     } else {
