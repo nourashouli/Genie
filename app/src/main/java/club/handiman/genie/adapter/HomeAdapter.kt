@@ -48,7 +48,10 @@ class HomeAdapter(var context : Context) : RecyclerView.Adapter<HomeAdapter.View
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         holder.itemView.HandymaName.text = (list[position] as JSONObject).getString("name")
+
+
         val image_url = (list[position] as JSONObject).optString("image","image.png")
 
         Glide

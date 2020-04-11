@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         adapter = HomeAdapter(context!!)
       getRequest()
        home_recycler_view.adapter = adapter
-
    }
     fun getRequest() {
         Fuel.get(Utils.API_POST)
@@ -46,19 +45,16 @@ class HomeFragment : Fragment() {
             .responseJson { _, _, result ->
 
                 result.success {
-
                     var res = it.obj()
                     if (res.optString("status", "error") == "success") {
 
                         activity!!.runOnUiThread {
-
-                            val items = res.getJSONArray("post")
-
+                            Toast.makeText(activity, res.toString(), Toast.LENGTH_LONG)
+                                .show()
+                          val items = res.getJSONArray("post")
                             for (i in 0 until items.length()) {
                                 adapter!!.setItem(items.getJSONObject(i))
                            }
-
-
                         }
 
                     } else {
