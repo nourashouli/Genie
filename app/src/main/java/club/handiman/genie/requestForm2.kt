@@ -1,4 +1,5 @@
 package club.handiman.genie
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -28,13 +29,15 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.rtchagas.pingplacepicker.PingPlacePicker
+import com.wdullaer.materialdatetimepicker.time.Timepoint
 import kotlinx.android.synthetic.main.fragment_request_form.*
 import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
-  class requestForm2 : AppCompatActivity(),
+class requestForm2 : AppCompatActivity(),
     com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener,
     com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener {
     var datePickerDialog: com.wdullaer.materialdatetimepicker.date.DatePickerDialog? = null
@@ -44,13 +47,13 @@ import java.util.*
     var Day = 0
     var Hour = 0
     var Minute = 0
-    var array : JSONArray? =null
-    var day:JSONObject?=null
+    var array: JSONArray? = null
+    var day: JSONObject? = null
     var calendar: Calendar? = null
     var fileUri: Uri? = null
-      var Dat ="j"
-    var time: String="h"
-      var timee: String="h"
+    var Dat = "j"
+    var time: String = "h"
+    var timee: String = "h"
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
@@ -59,10 +62,21 @@ import java.util.*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
+        var days = arrayOf<Array<Int>>()
+        for (i in 0..7) {
+            var hours = arrayOf<Int>()
+            for (j in 0..24) {
+                hours += 0
+            }
+            days += hours
+        }
+        Toast.makeText(this,days[0][0].toString(),Toast.LENGTH_LONG).show()
+
+
         var Date: Date
         var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
-        employee_id = (object2 ).optString("employee_id")
+        employee_id = (object2).optString("employee_id")
         service_id = (object2).optString("service_id")
         calendar = Calendar.getInstance()
         Year = calendar!!.get(Calendar.YEAR)
@@ -167,9 +181,11 @@ import java.util.*
                     //show alert dialog with permission options
                     AlertDialog.Builder(this@requestForm2)
                         .setTitle(
-                            "Permissions Error!")
+                            "Permissions Error!"
+                        )
                         .setMessage(
-                            "Please allow permissions to take photo with camera")
+                            "Please allow permissions to take photo with camera"
+                        )
                         .setNegativeButton(
                             android.R.string.cancel,
                             { dialog, _ ->
@@ -184,9 +200,11 @@ import java.util.*
                         .setOnDismissListener({
                             token?.cancelPermissionRequest()
                         })
-                        .show() }
+                        .show()
+                }
             }).check()
     }
+
     override fun onActivityResult(
         requestCode: Int, resultCode: Int,
         data: Intent?
@@ -195,8 +213,8 @@ import java.util.*
             val place: Place? = PingPlacePicker.getPlace(data!!)
             toast("You selected: ${place!!.name}")
 
-            location[0]=place!!.latLng!!.latitude!!.toDouble()
-           location[1]=place!!.latLng!!.longitude!!.toDouble()
+            location[0] = place!!.latLng!!.latitude!!.toDouble()
+            location[1] = place!!.latLng!!.longitude!!.toDouble()
         }
 
         if (resultCode == Activity.RESULT_OK
@@ -215,109 +233,123 @@ import java.util.*
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-      fun datee(){
-          datePickerDialog =
-              com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
-                  this@requestForm2,
-                  Year,
-                  Month,
-                  Day
-              )
-          datePickerDialog!!.setThemeDark(false)
-          datePickerDialog!!.showYearPickerFirst(false)
-          datePickerDialog!!.setTitle("Date Picker")
+
+    fun datee() {
+        datePickerDialog =
+            com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+                this@requestForm2,
+                Year,
+                Month,
+                Day
+            )
+        datePickerDialog!!.setThemeDark(false)
+        datePickerDialog!!.showYearPickerFirst(false)
+        datePickerDialog!!.setTitle("Date Picker")
 
 
-          // Setting Min Date to today date
-          val min_date_c = Calendar.getInstance()
-          datePickerDialog!!.setMinDate(min_date_c)
+        // Setting Min Date to today date
+        val min_date_c = Calendar.getInstance()
+        datePickerDialog!!.setMinDate(min_date_c)
 
 
-          // Setting Max Date to next 2 years
-          val max_date_c = Calendar.getInstance()
-          max_date_c[Calendar.YEAR] = Year + 2
-          datePickerDialog!!.setMaxDate(max_date_c)
+        // Setting Max Date to next 2 years
+        val max_date_c = Calendar.getInstance()
+        max_date_c[Calendar.YEAR] = Year + 2
+        datePickerDialog!!.setMaxDate(max_date_c)
 
-          var hint= IntArray(7)
-          for (index in 0..6) {
-              day = array!!.getJSONObject(index)
-              var counter = 0
-              for (i in 0..23) {
-                  var item = String.format("%02d", index) + "00"
-                  if (day!!.optBoolean(item)) {
+        var hint = IntArray(7)
+        for (index in 0..6) {
+            day = array!!.getJSONObject(index)
+            var counter = 0
+            for (i in 0..23) {
+                var item = String.format("%02d", index) + "00"
+                if (day!!.optBoolean(item)) {
 
-                      counter++
-                  } else {
-                      var p=1 }
-              }
-              if (counter == 24) {
-                  hint[index] = 0
-              } else {
-                  hint[index] = 1
-              }
-          }
-          var loopdate = min_date_c
-          while (min_date_c.before(max_date_c)) {
-              val dayOfWeek = loopdate[Calendar.DAY_OF_WEEK]
+                    counter++
+                } else {
+                    var p = 1
+                }
+            }
+            if (counter == 24) {
+                hint[index] = 0
+            } else {
+                hint[index] = 1
+            }
+        }
+        var loopdate = min_date_c
+        while (min_date_c.before(max_date_c)) {
+            val dayOfWeek = loopdate[Calendar.DAY_OF_WEEK]
 
-              if ((dayOfWeek==Calendar.MONDAY&& hint[0]==0 )||(dayOfWeek==Calendar.TUESDAY&& hint[1]==0)||(dayOfWeek==Calendar.WEDNESDAY&& hint[2]==0)||(dayOfWeek==Calendar.THURSDAY&& hint[3]==0 )||(dayOfWeek==Calendar.FRIDAY&& hint[4]==0)||(dayOfWeek==Calendar.SATURDAY&& hint[5]==0)||(dayOfWeek==Calendar.SUNDAY&& hint[6]==0)) {
-                  val disabledDays =
-                      arrayOfNulls<Calendar>(1)
-                  disabledDays[0] = loopdate
-                  datePickerDialog!!.setDisabledDays(disabledDays)
-              }
-              min_date_c.add(Calendar.DATE, 1)
-              loopdate = min_date_c
-          }
-          datePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
-              Toast.makeText(this@requestForm2, "canceled", Toast.LENGTH_SHORT)
-                  .show()
-          })
-          datePickerDialog!!.show(fragmentManager, "DatePickerDialog")
-      }
-      fun timee(){
-          timePickerDialog =
-              com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
-                  this@requestForm2,
-                  Hour,
-                  Minute,
-                  false
-              )
-          timePickerDialog!!.setThemeDark(false)
-          timePickerDialog!!.setTitle("Time Picker")
-          timePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
-              Toast.makeText(this@requestForm2, "Timepicker Canceled", Toast.LENGTH_SHORT)
-                  .show()
-          })
-          timePickerDialog!!.show(fragmentManager, "TimePickerDialog")
-      }
+            if ((dayOfWeek == Calendar.MONDAY && hint[0] == 0) || (dayOfWeek == Calendar.TUESDAY && hint[1] == 0) || (dayOfWeek == Calendar.WEDNESDAY && hint[2] == 0) || (dayOfWeek == Calendar.THURSDAY && hint[3] == 0) || (dayOfWeek == Calendar.FRIDAY && hint[4] == 0) || (dayOfWeek == Calendar.SATURDAY && hint[5] == 0) || (dayOfWeek == Calendar.SUNDAY && hint[6] == 0)) {
+                val disabledDays =
+                    arrayOfNulls<Calendar>(1)
+                disabledDays[0] = loopdate
+                datePickerDialog!!.setDisabledDays(disabledDays)
+            }
+            min_date_c.add(Calendar.DATE, 1)
+            loopdate = min_date_c
+        }
+        datePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
+            Toast.makeText(this@requestForm2, "canceled", Toast.LENGTH_SHORT)
+                .show()
+        })
+
+        datePickerDialog!!.show(fragmentManager, "DatePickerDialog")
+    }
+
+    fun timee() {
+        timePickerDialog =
+            com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                this@requestForm2,
+                Hour,
+                Minute,
+                false
+            )
+        timePickerDialog!!.setThemeDark(false)
+        timePickerDialog!!.setTitle("Time Picker")
+        var timepointArray = Array<Timepoint>(2) {i->Timepoint(i) }
+
+        var t: Timepoint = Timepoint(4, 5)
+
+        var t2: Timepoint = Timepoint(4, 10)
+        timepointArray!![0]=t
+        timepointArray!![1]=t2
+        //Timepoint!![1] = Timepoint(1)
+        timePickerDialog!!.setDisabledTimes(timepointArray)
+        timePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
+            Toast.makeText(this@requestForm2, "Timepicker Canceled", Toast.LENGTH_SHORT)
+                .show()
+        })
+        timePickerDialog!!.show(fragmentManager, "TimePickerDialog")
+    }
 
 
-      override fun onDateSet(
+    override fun onDateSet(
 
-          view: com.wdullaer.materialdatetimepicker.date.DatePickerDialog,
-          Year: Int,
-          Month: Int,
-          Day: Int
-      ) {
-          Dat = "      " + Day + "/" + (Month + 1) + "/" + Year
+        view: com.wdullaer.materialdatetimepicker.date.DatePickerDialog,
+        Year: Int,
+        Month: Int,
+        Day: Int
+    ) {
+        Dat = "      " + Day + "/" + (Month + 1) + "/" + Year
 
-      }
+    }
 
-      override fun onTimeSet(
-          view: com.wdullaer.materialdatetimepicker.time.TimePickerDialog,
-          hourOfDay: Int,
-          minute: Int,
-          second: Int
-      ) {
-           time = "Time: " + hourOfDay + "h" + minute + "m" + second +  Dat
-          timee="" +  hourOfDay + "h" + minute + "m" + second
-          Toast.makeText(this@requestForm2, time, Toast.LENGTH_LONG).show()
-          val text_timepicker =
-              findViewById<View>(R.id.button_datepicker) as TextView
-          text_timepicker.text = time
-      }
-      @SuppressLint("WrongConstant")
+    override fun onTimeSet(
+        view: com.wdullaer.materialdatetimepicker.time.TimePickerDialog,
+        hourOfDay: Int,
+        minute: Int,
+        second: Int
+    ) {
+        time = "Time: " + hourOfDay + "h" + minute + "m" + second + Dat
+        timee = "" + hourOfDay + "h" + minute + "m" + second
+        Toast.makeText(this@requestForm2, time, Toast.LENGTH_LONG).show()
+        val text_timepicker =
+            findViewById<View>(R.id.button_datepicker) as TextView
+        text_timepicker.text = time
+    }
+
+    @SuppressLint("WrongConstant")
     fun gettime() {
         Fuel.get(Utils.API_timeline.plus(employee_id))
             .header(
@@ -334,33 +366,41 @@ import java.util.*
             }
     }
 
-fun save() {
-    var des :String= description!!.text!!.toString()
-    val role="user"
-  //  save_infor_profile_btn.isEnabled = false
-    Toast.makeText(this,fileUri.toString(),Toast.LENGTH_SHORT).show()
-    Fuel.post(
-        Utils.API_MAKE_REQUEST, listOf(
-            "employee_id" to employee_id, "service_id" to service_id
-            ,"description" to des,"role" to role,"latitude" to location[0],"longitude" to location[1], "date" to Dat,
-            "to" to timee,"from" to timee,"image" to fileUri.toString()
+    fun save() {
+        var des: String = description!!.text!!.toString()
+        val role = "user"
+        //  save_infor_profile_btn.isEnabled = false
+        Toast.makeText(this, fileUri.toString(), Toast.LENGTH_SHORT).show()
+        Fuel.post(
+            Utils.API_MAKE_REQUEST, listOf(
+                "employee_id" to employee_id,
+                "service_id" to service_id
+                ,
+                "description" to des,
+                "role" to role,
+                "latitude" to location[0],
+                "longitude" to location[1],
+                "date" to Dat,
+                "to" to timee,
+                "from" to timee,
+                "image" to fileUri.toString()
 
+            )
+        ).header(
+            "accept" to "application/json",
+            Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
         )
-    ).header(
-        "accept" to "application/json",
-        Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
-    )
-        .responseJson {  _, _, result ->
-            result.success {
+            .responseJson { _, _, result ->
+                result.success {
 
-            }
-            result.failure {
-                runOnUiThread {
-                    Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
                 }
+                result.failure {
+                    runOnUiThread {
+                        Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
+                    }
+                }
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
-            val intent=Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-}
+    }
 }
