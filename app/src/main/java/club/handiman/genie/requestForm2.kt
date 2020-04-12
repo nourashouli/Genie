@@ -38,6 +38,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.sql.Time
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -48,6 +49,7 @@ class requestForm2 : AppCompatActivity(),
     com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener {
     var datePickerDialog: com.wdullaer.materialdatetimepicker.date.DatePickerDialog? = null
     var timePickerDialog: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
+    var timePickerDialogTo: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
     var Year = 0
     var Month = 0
     var Day = 0
@@ -63,9 +65,15 @@ class requestForm2 : AppCompatActivity(),
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
+
     var location = DoubleArray(2)
-    var working_hours_and_hours = arrayOf<Array<Int>>()
+    var working_hours = arrayOf<Array<Int>>()
     var day_of_week_currenctselection: Int? = null
+    var request_date: String? = null
+    var time_fromAsString: String? = null
+    var time_fromAsInt: Int? = null
+
+    var time_to: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
@@ -75,7 +83,9 @@ class requestForm2 : AppCompatActivity(),
         employee_id = (object2).optString("employee_id")
         service_id = (object2).optString("service_id")
         initTimeline()
+
         calendar = Calendar.getInstance()
+        calendar!!.firstDayOfWeek = Calendar.MONDAY
         Year = calendar!!.get(Calendar.YEAR)
         Month = calendar!!.get(Calendar.MONTH)
         Day = calendar!!.get(Calendar.DAY_OF_MONTH)
@@ -85,8 +95,8 @@ class requestForm2 : AppCompatActivity(),
 
         button_datepicker.setOnClickListener {
 
-            datee()
-           //  timee()
+            selectDate()
+            //  timee()
         }
         btnOpenPlacePicker.setOnClickListener {
             showPlacePicker()
@@ -235,7 +245,7 @@ class requestForm2 : AppCompatActivity(),
         }
     }
 
-    fun datee() {
+    private fun selectDate() {
         datePickerDialog =
             com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
                 this@requestForm2,
@@ -257,6 +267,47 @@ class requestForm2 : AppCompatActivity(),
         max_date_c[Calendar.YEAR] = Year + 2
         datePickerDialog!!.setMaxDate(max_date_c)
 
+
+        var hint = IntArray(7)
+        for (index in 0..6) {
+
+            var counter = 0
+            for (i in 0..23) {
+
+                if (working_hours[index][i] == 0) {
+
+                    counter++
+                } else {
+                    break
+                }
+            }
+            if (counter == 24) {
+                hint[index] = 0
+            } else {
+                hint[index] = 1
+            }
+        }
+        var loopdate = min_date_c
+        while (min_date_c.before(max_date_c)) {
+            val dayOfWeek = loopdate[Calendar.DAY_OF_WEEK]
+
+            if ((dayOfWeek == Calendar.MONDAY && hint[0] == 0)
+                || (dayOfWeek == Calendar.TUESDAY && hint[1] == 0)
+                || (dayOfWeek == Calendar.WEDNESDAY && hint[2] == 0)
+                || (dayOfWeek == Calendar.THURSDAY && hint[3] == 0)
+                || (dayOfWeek == Calendar.FRIDAY && hint[4] == 0)
+                || (dayOfWeek == Calendar.SATURDAY && hint[5] == 0)
+                || (dayOfWeek == Calendar.SUNDAY && hint[6] == 0)
+            ) {
+                val disabledDays =
+                    arrayOfNulls<Calendar>(1)
+                disabledDays[0] = loopdate
+                datePickerDialog!!.setDisabledDays(disabledDays)
+            }
+            min_date_c.add(Calendar.DATE, 1)
+            loopdate = min_date_c
+        }
+
         datePickerDialog!!.setOnCancelListener(DialogInterface.OnCancelListener {
             Toast.makeText(this@requestForm2, "canceled", Toast.LENGTH_SHORT)
                 .show()
@@ -265,58 +316,51 @@ class requestForm2 : AppCompatActivity(),
         })
         datePickerDialog!!.setOnDateSetListener { i, j, k, l ->
 
-            var c: Calendar = Calendar.getInstance();
 
-            c.set(l, k+1, j)
-
-            Toast.makeText(this, "" + i + "\n" + j + "\n" + k + "\n" + l, Toast.LENGTH_LONG).show()
+            calendar!!.set(l, k, j)
 
 
-            var dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-             //thurs is two
-            //friday is one
-            // saturday is two
-            // sunday is four
-            //monday is five
-            // tuesday six
-            //wed is seven
+            var sdf2 = SimpleDateFormat("EEEE")
 
-          //  day_of_week_currenctselection = dayOfWeek - 2
-            when (dayOfWeek) {
-                0 -> {
+            var stringDate2: String = sdf2.format(Date(j, k, l - 1));
+            request_date = stringDate2
 
+            when (stringDate2) {
+                "Monday" -> {
+                    day_of_week_currenctselection = 0
                 }
-                1 -> {
-
+                "Tuesday" -> {
+                    day_of_week_currenctselection = 1
                 }
-                2 -> {
-
+                "Wednesday" -> {
+                    day_of_week_currenctselection = 2
                 }
-                3 -> {
-
+                "Thursday" -> {
+                    day_of_week_currenctselection = 3
                 }
-                4 -> {
+                "Friday" -> {
 
+                    day_of_week_currenctselection = 4
                 }
-                5 -> {
+                "Saturday" -> {
 
+                    day_of_week_currenctselection = 5
                 }
-                6 -> {
+                "Sunday" -> {
 
+                    day_of_week_currenctselection = 6
                 }
-                7 -> {
 
-                }
             }
+            Toast.makeText(this, day_of_week_currenctselection.toString(), Toast.LENGTH_LONG).show()
 
-
-          //  timee()
+            selectTimeFrom()
         }
 
         datePickerDialog!!.show(fragmentManager, "DatePickerDialog")
     }
 
-    fun timee() {
+    private fun selectTimeFrom() {
 
 
         timePickerDialog =
@@ -333,7 +377,7 @@ class requestForm2 : AppCompatActivity(),
         var arr: ArrayList<Int> = ArrayList<Int>()
         var counter = 0
         for (i in 0..23) {
-            if (working_hours_and_hours[day_of_week_currenctselection!!][i] == 0) {
+            if (working_hours[day_of_week_currenctselection!!][i] == 0) {
                 arr.add(i)
                 counter++
                 //timepointArray!![counter++] = Timepoint(i)
@@ -350,9 +394,66 @@ class requestForm2 : AppCompatActivity(),
             Toast.makeText(this@requestForm2, "Timepicker Canceled", Toast.LENGTH_SHORT)
                 .show()
         })
+        timePickerDialog!!.setOnTimeSetListener { view, hourOfDay, minute, second ->
+            time_fromAsInt = hourOfDay
+            time_fromAsString = hourOfDay.toString()
+            selectTimeTo()
+
+        }
         timePickerDialog!!.show(fragmentManager, "TimePickerDialog")
     }
 
+    private fun selectTimeTo() {
+
+        timePickerDialogTo =
+            com.wdullaer.materialdatetimepicker.time.TimePickerDialog.newInstance(
+                this@requestForm2,
+                time_fromAsInt!!,
+                Minute,
+                true
+            )
+        timePickerDialogTo!!.setThemeDark(false)
+        timePickerDialogTo!!.enableMinutes(false)
+        timePickerDialogTo!!.setTitle("Time Picker To")
+        //
+        var arr: ArrayList<Int> = ArrayList<Int>()
+        var counter = 0
+        var index = 0
+        for (i in time_fromAsInt!!..23) {
+            if (working_hours[day_of_week_currenctselection!!][i] == 0) {
+                index = i
+                break
+            }
+        }
+        for (i in 0..time_fromAsInt!!) {
+            counter++
+            arr.add(i)
+        }
+
+        for (i in index!!..23) {
+            counter++
+            arr.add(i)
+        }
+        var timepointArray = Array<Timepoint>(counter) { i -> Timepoint(i) }
+        counter--
+        for (i in 0..counter) {
+            timepointArray!![i] = Timepoint(arr.get(i))
+        }
+
+        timePickerDialogTo!!.setDisabledTimes(timepointArray)
+        timePickerDialogTo!!.setOnCancelListener(DialogInterface.OnCancelListener {
+            Toast.makeText(this@requestForm2, "Timepicker Canceled", Toast.LENGTH_SHORT)
+                .show()
+        })
+        timePickerDialogTo!!.setOnTimeSetListener { view, hourOfDay, minute, second ->
+            //            time_fromAsInt = hourOfDay
+//            time_fromAsString = hourOfDay.toString()
+            time_to = hourOfDay.toString()
+
+
+        }
+        timePickerDialogTo!!.show(fragmentManager, "TimePickerDialog")
+    }
 
     override fun onDateSet(
 
@@ -361,7 +462,7 @@ class requestForm2 : AppCompatActivity(),
         Month: Int,
         Day: Int
     ) {
-        Dat = "      " + Day + "/" + (Month + 1) + "/" + Year
+        Dat = "" + Year + "-" + (Month + 1) + "-" + Day
 
     }
 
@@ -399,13 +500,13 @@ class requestForm2 : AppCompatActivity(),
                                 var hours = arrayOf<Int>()
                                 for (j in 0 until day_in_values.length()) {
                                     if (day_in_values.optBoolean(j)) {
-                                        hours += 0
-                                    } else {
                                         hours += 1
+                                    } else {
+                                        hours += 0
                                     }
 
                                 }
-                                working_hours_and_hours += hours
+                                working_hours += hours
 
 //
 //
@@ -426,20 +527,21 @@ class requestForm2 : AppCompatActivity(),
     fun save() {
         var des: String = description!!.text!!.toString()
         val role = "user"
+        val subject: String = subject!!.text!!.toString()
         //  save_infor_profile_btn.isEnabled = false
         Toast.makeText(this, fileUri.toString(), Toast.LENGTH_SHORT).show()
         Fuel.post(
             Utils.API_MAKE_REQUEST, listOf(
                 "employee_id" to employee_id,
-                "service_id" to service_id
-                ,
+                "service_id" to service_id,
                 "description" to des,
                 "role" to role,
+                "subject" to subject,
                 "latitude" to location[0],
                 "longitude" to location[1],
                 "date" to Dat,
-                "to" to timee,
-                "from" to timee,
+                "to" to time_to,
+                "from" to time_fromAsString,
                 "image" to fileUri.toString()
 
             )
@@ -454,6 +556,7 @@ class requestForm2 : AppCompatActivity(),
                 result.failure {
                     runOnUiThread {
                         Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 val intent = Intent(this, MainActivity::class.java)
