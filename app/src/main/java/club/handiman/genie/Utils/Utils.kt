@@ -62,6 +62,7 @@ class Utils {
         const val API_get_ongoing_request="$BASE_CLIENT_URL/ongoing-requests"
         const val API_CANCEL_REQUEST="$BASE_CLIENT_URL/request-cancel/"
         const val API_POST="$BASE_CLIENT_URL/post"
+        const val  API_HANDYMAN_REQUESTS="$BASE_URL/jobs/"
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
                 //is it working fine ?
