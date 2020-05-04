@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/viewBg"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        tools:ignore="InvalidId">
+
         <Button
-            android:text="Time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/sort_time"
-            android:layout_weight="1"
-           />
-
-        <Button
-            android:text="Price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Time" />
+
+        <Button
             android:id="@+id/sort_price"
-            android:layout_weight="1"
-           />
-
-        <Button
-            android:text="Location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/sort_year"
             android:layout_weight="1"
-        />
+            android:text="Price" />
+
+        <Button
+            android:id="@+id/sort_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Location" />
 
 
     </LinearLayout>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+
+
+        android:layout_above="@+id/handymanlist_recycler"
+        android:layout_marginBottom="-100dp">
+
+        <EditText
+            android:id="@+id/sss"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:hint="Search..."></EditText>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="60dp"
         android:id="@+id/handymanlist_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 

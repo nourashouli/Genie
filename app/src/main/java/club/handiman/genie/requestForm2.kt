@@ -62,18 +62,24 @@ class requestForm2 : AppCompatActivity(),
     var Dat = "j"
     var time: String = "h"
     var timee: String = "h"
+
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
-
+    var stringDate1: String? = null
     var location = DoubleArray(2)
     var working_hours = arrayOf<Array<Int>>()
     var day_of_week_currenctselection: Int? = null
     var request_date: String? = null
     var time_fromAsString: String? = null
     var time_fromAsInt: Int? = null
-
+    var ex: String? = null
     var time_to: String? = null
+
+    data class request(var date: String, var from: String, var to: String)
+
+    var request_array: ArrayList<request>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
@@ -83,6 +89,8 @@ class requestForm2 : AppCompatActivity(),
         employee_id = (object2).optString("employee_id")
         service_id = (object2).optString("service_id")
         initTimeline()
+        getHandymanRequests(employee_id)
+        request_array = ArrayList<request>()
 
         calendar = Calendar.getInstance()
         calendar!!.firstDayOfWeek = Calendar.MONDAY
@@ -124,8 +132,8 @@ class requestForm2 : AppCompatActivity(),
     private fun showPlacePicker() {
 
         val builder = PingPlacePicker.IntentBuilder()
-        builder.setAndroidApiKey(getString(R.string.android))
-            .setMapsApiKey(getString(R.string.maps))
+        builder.setAndroidApiKey("AIzaSyDnGiz0xHyB0ktZ5Kt5L4BzNCAdE-qbB6w")
+            .setMapsApiKey("AIzaSyAvIuv88TNm5f5M76GC3Or4k5OBRjfcJK0")
 
         try {
             val placeIntent = builder.build(this)
@@ -318,11 +326,20 @@ class requestForm2 : AppCompatActivity(),
 
 
             calendar!!.set(l, k, j)
+            var dateofl: String? = (l.toString())
+            var monthofk: String? = ((k + 1).toString())
+            if (dateofl!!.length == 1) {
+                dateofl = "0".plus((l.toString()))
+            }
+            if (monthofk!!.length == 1) {
+                monthofk = "0".plus(((k + 1).toString()))
+            }
+            ex = j.toString().plus("-").plus(monthofk).plus("-").plus(dateofl)
+            stringDate1 = LocalDate.parse(ex).toString()
 
+            val sdf2 = SimpleDateFormat("EEEE")
 
-            var sdf2 = SimpleDateFormat("EEEE")
-
-            var stringDate2: String = sdf2.format(Date(j, k, l - 1));
+            val stringDate2: String = sdf2.format(Date(j, k, l - 1))
             request_date = stringDate2
 
             when (stringDate2) {
@@ -373,8 +390,28 @@ class requestForm2 : AppCompatActivity(),
         timePickerDialog!!.setThemeDark(false)
         timePickerDialog!!.enableMinutes(false)
         timePickerDialog!!.setTitle("Time Picker")
-        //
+
         var arr: ArrayList<Int> = ArrayList<Int>()
+
+        var arr2: ArrayList<Int> = ArrayList<Int>()
+        var count = 0
+        for (i in 0 until request_array!!.size) {
+            val sdf2 = SimpleDateFormat("yyyy-MM-dd")
+            val cc = sdf2.parse(request_array!!.get(i).date)
+            val exco = sdf2.parse(ex)
+
+
+            if (cc == exco) {
+                for (j in request_array!!.get(i).from.toInt() until request_array!!.get(i).to.toInt()) {
+                    arr2.add(j)
+                    count++
+                }
+            }
+
+
+        }
+
+
         var counter = 0
         for (i in 0..23) {
             if (working_hours[day_of_week_currenctselection!!][i] == 0) {
@@ -383,10 +420,14 @@ class requestForm2 : AppCompatActivity(),
                 //timepointArray!![counter++] = Timepoint(i)
             }
         }
-        var timepointArray = Array<Timepoint>(counter) { i -> Timepoint(i) }
+        var timepointArray = Array<Timepoint>(counter + count) { i -> Timepoint(i) }
         counter--
         for (i in 0..counter) {
             timepointArray!![i] = Timepoint(arr.get(i))
+        }
+        count--
+        for (i in 0..count) {
+            timepointArray!![i] = Timepoint(arr2.get(i))
         }
 
         timePickerDialog!!.setDisabledTimes(timepointArray)
@@ -534,14 +575,13 @@ class requestForm2 : AppCompatActivity(),
                 "employee_id" to employee_id,
                 "service_id" to service_id,
                 "description" to des,
-                "role" to role,
+                "timezone" to "Asia/Beirut",
                 "subject" to subject,
-                "latitude" to location[0],
-                "longitude" to location[1],
-                "date" to Dat,
-                "to" to time_to,
-                "from" to time_fromAsString,
-                "image" to fileUri.toString()
+                "latitude" to location[0].toString(),
+                "longitude" to location[1].toString(),
+                "date" to stringDate1.toString(),
+                "to" to time_to.toString(),
+                "from" to time_fromAsString.toString()
 
             )
         ).header(
@@ -550,16 +590,75 @@ class requestForm2 : AppCompatActivity(),
         )
             .responseJson { _, _, result ->
                 result.success {
-
+                    runOnUiThread {
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
                 result.failure {
                     runOnUiThread {
-                        Toast.makeText(this, it.localizedMessage.toString()!!, Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            it.localizedMessage.toString()!!,
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+
             }
     }
+
+
+    private fun getHandymanRequests(id: String) {
+        Fuel.get(Utils.API_HANDYMAN_REQUESTS.plus(id))
+            .header(
+                "accept" to "application/json",
+                Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
+            )
+            .responseJson { _, _, result ->
+
+                result.success {
+
+                    val res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+                        var list = res.getJSONArray("requests")
+
+                        for (i in 0 until list.length()) {
+                            val request = list.getJSONObject(i)
+                            runOnUiThread {
+                                request_array!!.add(
+                                    request(
+                                        request.optString("date", ""),
+                                        request.optString("from", ""),
+                                        request.optString("to", "")
+                                    )
+
+                                )
+                            }
+
+                        }
+
+
+                    } else {
+
+                        Toast.makeText(
+                            this,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+
+
+            }
+
+    }
+
 }

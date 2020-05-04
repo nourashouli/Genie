@@ -21,6 +21,6 @@
     string in this file.
     -->
     <bool name="enable_nearby_search">true</bool>
-    <string name="android" templateMergeStrategy="preserve" translatable="false">AIzaSyAcVTeyuhn6PEeAAk64O1NC99e72Uh7Aus</string>
-    <string name="maps" templateMergeStrategy="preserve" translatable="false">AIzaSyCCPjyVFFvhj4CLL-mknqHnRTpYAgEqPY0</string>
+    <string name="android" templateMergeStrategy="preserve" translatable="false">AIzaSyDnGiz0xHyB0ktZ5Kt5L4BzNCAdE-qbB6w</string>
+    <string name="maps" templateMergeStrategy="preserve" translatable="false">AIzaSyAvIuv88TNm5f5M76GC3Or4k5OBRjfcJK0</string>
 </resources>

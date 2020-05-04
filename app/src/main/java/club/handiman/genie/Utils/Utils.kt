@@ -64,6 +64,7 @@ class Utils {
         const val API_ANY_REQUEST="$BASE_CLIENT_URL/request-any/"
         const val API_REQUEST_Done="$BASE_CLIENT_URL/request-done/"
         const val API_POST="$BASE_CLIENT_URL/post"
+        const val  API_HANDYMAN_REQUESTS="$BASE_URL/jobs/"
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
                 //is it working fine ?
