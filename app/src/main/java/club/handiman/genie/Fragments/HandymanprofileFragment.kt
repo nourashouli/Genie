@@ -1,19 +1,20 @@
 package club.handiman.genie.Fragments
 
+import Helpers.DownloadTask
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
-import com.example.genie_cl.R
 import club.handiman.genie.Utils.putExtraJson
+import club.handiman.genie.requestForm2
+import com.bumptech.glide.Glide
+import com.example.genie_cl.R
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
 import org.json.JSONObject
-import com.bumptech.glide.Glide
-import club.handiman.genie.requestForm2
 
 
 class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
@@ -30,66 +31,40 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
-
+        bio.text = (data as JSONObject).getString("biography")
         username.text = (data as JSONObject).getString("name")
         val image_url = (data as JSONObject).optString("image")
-
+        val cv = (data as JSONObject).optString("cv").toString()
+        val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
+        val certificatess = (data as JSONObject).optString("certificate").toString()
+        certificates.setOnClickListener {
+            DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
+        }
         Glide
             .with(this)
             .load(Utils.BASE_IMAGE_URL.plus(image_url))
             .into(pro_image_profile_frag)
         activity!!.runOnUiThread {
-            val ob: JSONObject ? = JSONObject()
+            val ob: JSONObject? = JSONObject()
             ob!!.put("service_id", id!!)
             ob!!.put("employee_id", (data as JSONObject).optString("_id", "id").toString())
             requestbt.setOnClickListener {
                 val i = Intent(context!!, requestForm2::class.java)
-
                 i!!.putExtraJson("object", ob)
                 startActivity(i)
-            } }
-//      }
-
-
-
+            }
+        }
     }
 
-    private fun initRecyclerView(){
-        images_recycle_view_id.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+    private fun initRecyclerView() {
+        images_recycle_view_id.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         //images_recycle_view_id.adapter = HomeAdapter(context as MainActivity, "handyman")
     }
 
-//    private fun handleDisqus(){
-//
-//        val htmlComments = htmlComment("yourId", "yourShortName")
-//
-//        val webDisqus = web_view_comment_system_id
-//        // set up disqus
-//        val webSettings2 = webDisqus.settings
-//        webSettings2.javaScriptEnabled = true
-//        webSettings2.builtInZoomControls = true
-//        webDisqus.requestFocusFromTouch()
-//        webDisqus.webViewClient = WebViewClient()
-//        webDisqus.webChromeClient = WebChromeClient()
-//        webDisqus.loadData(htmlComments, "text/html", null)
-//
-//    } // handleDisqus
+// Add your downolde file URL
 
-//    private fun htmlComment(idPost: String, shortName: String): String {
-//
-//        return ("<div id='disqus_thread'></div>"
-//                + "<script type='text/javascript'>"
-//                + "var disqus_identifier = '"
-//                + idPost
-//                + "';"
-//                + "var disqus_shortname = '"
-//                + shortName
-//                + "';"
-//                + " (function() { var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;"
-//                + "dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';"
-//                + "(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq); })();"
-//                + "</script>")
-
-//    } // htmlComment
 
 }
+
+

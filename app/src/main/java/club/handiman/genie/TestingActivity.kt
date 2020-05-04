@@ -1,6 +1,4 @@
 package club.handiman.genie
-
-
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -24,26 +22,17 @@ class TestingActivity : AppCompatActivity() {
 
                 var msg:JSONObject = JSONObject(intent!!.extras!!.getString(Constants.PARAM_NOTIFICATION_INFO))
                 var dataJson = msg.getString("type")
-
                 var ob = JSONObject()
-
                 Toast.makeText(context,dataJson.toString() , Toast.LENGTH_LONG).show()
                 ob!!.put("description", "des")
                 adapter.setItem(ob)
-
-
-
-
 
                 // the activity is notified that there is a new message in the intent
 
             } catch (e: Exception) {
 
             }
-
         }
-
-
     }
 
     override fun onPause() {
@@ -65,8 +54,6 @@ class TestingActivity : AppCompatActivity() {
             addAction(Constants.NOTIFICATION_BROADCAST_RECEIVER_MESSAGE_EVENT)
         })
 
-
-
         recyclerview_chat_log.layoutManager = LinearLayoutManager(this@TestingActivity,
             LinearLayoutManager.VERTICAL, true)
         recyclerview_chat_log.adapter = adapter
@@ -76,10 +63,6 @@ class TestingActivity : AppCompatActivity() {
         adapter.setItem(ob)
 
 
-
-
-
     }
-
 
 }

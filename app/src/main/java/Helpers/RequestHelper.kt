@@ -10,11 +10,8 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import org.jetbrains.anko.support.v4.runOnUiThread
-
 class RequestHelper {
     companion object {
-
-
         fun cancel(id:String,context:Context) {
             Fuel.post(Utils.API_CANCEL_REQUEST.plus(id))
                 .header(

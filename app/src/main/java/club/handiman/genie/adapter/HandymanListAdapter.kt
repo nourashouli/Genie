@@ -73,8 +73,6 @@ class HandymanListAdapter(var context : Context,var id:String) : RecyclerView.Ad
             }
 
 
-
-
     //generic sort
     fun sort(value: String, order: String = "asc") {
         if (order == "asc") {

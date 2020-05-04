@@ -42,17 +42,9 @@
             android:textStyle="bold"
             android:textColor="@android:color/black"
             />
-<!--        <TextView-->
-<!--            android:id="@+id/jobname"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Job name"-->
-<!--            android:textSize="18dp"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textColor="@android:color/black"-->
-<!--            />-->
 
         <TextView
+            android:id="@+id/bio"
             android:layout_margin="5sp"
             android:text="I do blalaallalablalla ......"
             android:layout_width="wrap_content"
@@ -66,21 +58,44 @@
             android:numStars="5"
             android:stepSize="0.5"
             android:theme="@style/Widget.AppCompat.RatingBar" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <Button
+            android:id="@+id/certificates"
             android:layout_margin="5sp"
-            android:text="@string/download_certificate"
+            android:text="certificates"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:textSize="15dp"/>
-
- 
-        <TextView
-            android:text="Images"
-            android:textStyle="bold"
-            android:textSize="20dp"
+        <Button
+            android:layout_margin="5sp"
+            android:text="criminal record"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="40dp"
+            android:textSize="15dp"/>
+        <Button
+            android:layout_margin="5sp"
+            android:text="cv"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="15dp"/>
+    </LinearLayout>
+        <ImageView
+            android:id="@+id/imagee"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="invisible"
+           />
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Images"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/images_recycle_view_id"

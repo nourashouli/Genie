@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import club.handiman.genie.MainActivity
 import android.content.Intent
 import android.widget.Toast
+import club.handiman.genie.*
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.adapter.HomeAdapter
-import club.handiman.genie.requestForm
 import com.example.genie_cl.adapter.utils.AdapterListener
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -32,6 +31,11 @@ class HomeFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+                requestbt.setOnClickListener {
+            val intent = Intent(context!!, requestForm::class.java)
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)}
         home_recycler_view.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = HomeAdapter(context!!)
@@ -51,8 +55,6 @@ class HomeFragment : Fragment() {
                     if (res.optString("status", "error") == "success") {
 
                         activity!!.runOnUiThread {
-                            Toast.makeText(activity, res.toString(), Toast.LENGTH_LONG)
-                                .show()
                           val items = res.getJSONArray("posts")
                             for (i in 0 until items.length()) {
                                 adapter!!.setItem(items.getJSONObject(i))

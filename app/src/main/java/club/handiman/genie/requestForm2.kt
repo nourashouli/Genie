@@ -479,7 +479,6 @@ class requestForm2 : AppCompatActivity(),
             findViewById<View>(R.id.button_datepicker) as TextView
         text_timepicker.text = time
     }
-
     private fun initTimeline() {
         Fuel.get(Utils.API_timeline.plus(employee_id))
             .header(
