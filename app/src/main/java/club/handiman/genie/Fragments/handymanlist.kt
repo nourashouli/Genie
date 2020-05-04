@@ -121,7 +121,7 @@ class handymanlist(var data: Any) : Fragment() {
         }
 
 
-            sss.addTextChangedListener(object : TextWatcher {
+        sss.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -194,47 +194,47 @@ class handymanlist(var data: Any) : Fragment() {
 
     fun sortByLocation() {
         activity!!.runOnUiThread {
-        val dialog = getActivity()?.let { it1 -> Dialog(it1) }
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-        dialog?.setContentView(R.layout.dialogue_map)
-        val mapView =
-            dialog.findViewById<View>(R.id.dialogue_map) as MapView
-        MapsInitializer.initialize(getActivity())
-        mapView.onCreate(dialog.onSaveInstanceState())
-        mapView.onResume()
-        mapView.getMapAsync { googleMap ->
-            val rmayle = LatLng(33.61112, 35.4007)
-            googleMap.addMarker(MarkerOptions().position(rmayle).title("rami"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(rmayle))
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(rmayle, 13f))
-            googleMap.setOnMapClickListener { latLng ->
-                val marker = MarkerOptions()
-                marker.position(latLng)
-                latitude = latLng.latitude
-                longitude = latLng.longitude
-                marker.title(latLng.latitude.toString() + ":" + latLng.longitude)
-                googleMap.clear()
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13f))
-                googleMap.addMarker(marker)
-            }
-        }
-        val b =
-            dialog.findViewById<View>(R.id.dialogue_submit) as Button
-        b.setOnClickListener {
-            dialog.dismiss()
-            latitude?.let { it1 ->
-                longitude?.let { it2 ->
-                    adapter?.locationsort(
-                        it1,
-                        it2, "location", "location", "asc"
-                    )
+            val dialog = getActivity()?.let { it1 -> Dialog(it1) }
+            dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            dialog?.setContentView(R.layout.dialogue_map)
+            val mapView =
+                dialog.findViewById<View>(R.id.dialogue_map) as MapView
+            MapsInitializer.initialize(getActivity())
+            mapView.onCreate(dialog.onSaveInstanceState())
+            mapView.onResume()
+            mapView.getMapAsync { googleMap ->
+                val rmayle = LatLng(33.61112, 35.4007)
+                googleMap.addMarker(MarkerOptions().position(rmayle).title("rami"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(rmayle))
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(rmayle, 13f))
+                googleMap.setOnMapClickListener { latLng ->
+                    val marker = MarkerOptions()
+                    marker.position(latLng)
+                    latitude = latLng.latitude
+                    longitude = latLng.longitude
+                    marker.title(latLng.latitude.toString() + ":" + latLng.longitude)
+                    googleMap.clear()
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13f))
+                    googleMap.addMarker(marker)
                 }
             }
+            val b =
+                dialog.findViewById<View>(R.id.dialogue_submit) as Button
+            b.setOnClickListener {
+                dialog.dismiss()
+                latitude?.let { it1 ->
+                    longitude?.let { it2 ->
+                        adapter?.locationsort(
+                            it1,
+                            it2, "location", "location", "asc"
+                        )
+                    }
+                }
 
 
-        }
-        dialog.show()
+            }
+            dialog.show()
 
-    }}
+        }}
 }

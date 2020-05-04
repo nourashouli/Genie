@@ -88,6 +88,8 @@ class HandymanListAdapter(var context: Context, var id: String) :
 //           this.listener!!.onAction(list[position])
         }
 
+    }
+
 
     fun sort(value: String, order: String = "asc") {
         if (order == "asc") {
@@ -136,7 +138,7 @@ class HandymanListAdapter(var context: Context, var id: String) :
                 )
             }
         }
-            notifyDataSetChanged()
+        notifyDataSetChanged()
 
 
     }
