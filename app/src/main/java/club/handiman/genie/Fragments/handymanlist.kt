@@ -22,6 +22,7 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_handymanlist.*
+import kotlinx.android.synthetic.main.search_location.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -77,9 +78,9 @@ class handymanlist(var data: Any) : Fragment() {
                 val dialog = getActivity()?.let { it1 -> Dialog(it1) }
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-                dialog?.setContentView(R.layout.dialogue_map)
+                dialog?.setContentView(R.layout.search_location)
                 val mapView =
-                    dialog.findViewById<View>(R.id.dialogue_map) as MapView
+                    dialog.findViewById<View>(R.id.dialogue_mapp) as MapView
                 MapsInitializer.initialize(getActivity())
                 mapView.onCreate(dialog.onSaveInstanceState())
                 mapView.onResume()
@@ -197,9 +198,9 @@ class handymanlist(var data: Any) : Fragment() {
             val dialog = getActivity()?.let { it1 -> Dialog(it1) }
             dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            dialog?.setContentView(R.layout.dialogue_map)
+            dialog?.setContentView(R.layout.search_location)
             val mapView =
-                dialog.findViewById<View>(R.id.dialogue_map) as MapView
+                dialog.findViewById<View>(R.id.dialogue_mapp) as MapView
             MapsInitializer.initialize(getActivity())
             mapView.onCreate(dialog.onSaveInstanceState())
             mapView.onResume()

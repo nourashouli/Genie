@@ -14,7 +14,7 @@
         />
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/dialogue_map"
+        android:id="@+id/dialogue_mapp"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="500dp"/>
