@@ -59,6 +59,12 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
 
         holder.itemView.name.text =
             (list[position]).handyman
+        holder.itemView.date.text =
+            (list[position]).date
+        holder.itemView.from.text =
+            (list[position]).from
+        holder.itemView.to.text =
+            (list[position]).to
         holder.itemView.textView.text =
             (list[position]).request
         val url = (list[position]).image
