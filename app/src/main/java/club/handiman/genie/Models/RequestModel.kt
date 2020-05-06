@@ -4,9 +4,11 @@ class RequestModel(
     var request_id:String,
     var handyman: String?,
     var image: String,
-    var request :String
+    var request :String,
     //var created_at_date: String,
-//    var request_to_date: String,
+    var date: String,
+    var from: String,
+    var to: String
 //    var head_image: String,
 //    var service_image: String,
 //    var request_title: String,

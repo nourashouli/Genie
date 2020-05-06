@@ -40,6 +40,13 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         certificates.setOnClickListener {
             DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
         }
+        criminal.setOnClickListener {
+            DownloadTask(context!!,criminalrecord)
+        }
+
+        Cv.setOnClickListener {
+            DownloadTask(context!!,cv)
+        }
         Glide
             .with(this)
             .load(Utils.BASE_IMAGE_URL.plus(image_url))

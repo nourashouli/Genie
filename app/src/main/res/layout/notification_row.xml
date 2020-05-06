@@ -48,12 +48,43 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:text="Name field is here"
-                    android:layout_marginTop="12dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.197"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    app:layout_constraintHorizontal_bias="0.278"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/from"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.262"
+                    app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="to"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/cancel"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.262"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="from"
+                    android:textSize="15dp"
+                    app:layout_constraintBottom_toTopOf="@+id/to"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.262"
+                    app:layout_constraintStart_toStartOf="parent" />
+
 
                 <TextView
                     android:id="@+id/textView"
@@ -61,10 +92,9 @@
                     android:layout_height="wrap_content"
                     android:text="The handyman has accepted"
                     android:textSize="15dp"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cancel"
+                    app:layout_constraintBottom_toTopOf="@+id/date"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.36"
+                    app:layout_constraintHorizontal_bias="0.496"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
@@ -72,10 +102,10 @@
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
                     android:text="Cancel request"
                     app:layout_constraintBottom_toBottomOf="@id/textView"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    />
+                    app:layout_constraintStart_toEndOf="@+id/imageView2" />
                 <!--             -->
 
             </androidx.constraintlayout.widget.ConstraintLayout>

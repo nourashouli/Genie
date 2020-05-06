@@ -59,7 +59,8 @@ class OngoingRequestsFragment : Fragment() {
                                 request.optString("_id","id"),
                                 //try
                                 handyman.optString("name"),
-                                handyman.optString("image"), request.optString("description")
+                                handyman.optString("image"), request.optString("description"),request.optString("date"),request.optString("from"),
+                                        request.optString("to")
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)
@@ -67,7 +68,6 @@ class OngoingRequestsFragment : Fragment() {
                         }
 
                     } else {
-
                         Toast.makeText(
                             activity,
                             res.getString("status"),
