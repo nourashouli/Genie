@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.Fragments.HandymanprofileFragment
+import club.handiman.genie.Fragments.PaymentFragment
+import club.handiman.genie.MainActivity
 import club.handiman.genie.Models.RequestModel
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
@@ -43,6 +46,17 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if ((list[position]).has_receipt == true) {
+            holder.itemView.payment_btn.visibility = View.VISIBLE
+        }
+        holder.itemView.payment_btn.setOnClickListener {
+            (context as MainActivity).navigateToFragment(
+               PaymentFragment(
+                    (list[position])
+                )
+            )
+        }
+
         holder.itemView.name.text =
             (list[position]).handyman
         holder.itemView.textView.text =
@@ -55,7 +69,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
 
         holder.itemView.cancel.setOnClickListener {
 
-               Helpers.RequestHelper.cancel((list[position]).request_id,context!!)
+            Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
             list.remove(list[position])
             notifyDataSetChanged()
         }

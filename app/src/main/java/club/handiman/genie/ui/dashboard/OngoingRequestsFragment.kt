@@ -1,4 +1,5 @@
 package club.handiman.genie.ui.dashboard
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ class OngoingRequestsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_noti, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_view_notifications.layoutManager =
@@ -56,10 +58,12 @@ class OngoingRequestsFragment : Fragment() {
                             var handyman = request.getJSONObject("handyman")
                             var service = request.getJSONObject("service")
                             var model: RequestModel = RequestModel(
-                                request.optString("_id","id"),
+                                request.optString("_id", "id"),
                                 //try
                                 handyman.optString("name"),
-                                handyman.optString("image"), request.optString("description")
+                                handyman.optString("image"),
+                                request.optString("description"),
+                                false
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)
