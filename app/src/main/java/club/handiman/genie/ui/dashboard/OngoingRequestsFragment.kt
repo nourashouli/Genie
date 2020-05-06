@@ -63,9 +63,10 @@ class OngoingRequestsFragment : Fragment() {
                                 handyman.optString("name"),
                                 handyman.optString("image"),
                                 request.optString("description"),
-                                false
-                                handyman.optString("image"), request.optString("description"),request.optString("date"),request.optString("from"),
-                                        request.optString("to")
+                                false,
+                                request.optString("date"),
+                                request.optString("from"),
+                                request.optString("to")
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)

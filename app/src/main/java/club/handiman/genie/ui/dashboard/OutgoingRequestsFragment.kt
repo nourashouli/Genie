@@ -81,7 +81,9 @@ class OutgoingRequestsFragment : Fragment() {
                                 //try
                                 handyman.optString("name"),
                                 handyman.optString("image"), request.optString("description"),
-                                flag
+                                flag, request.optString("date"),
+                                request.optString("from"),
+                                request.optString("to")
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)

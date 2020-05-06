@@ -5,7 +5,7 @@ class RequestModel(
     var handyman: String?,
     var image: String,
     var request :String,
-    var has_receipt:Boolean
+    var has_receipt:Boolean,
     //var created_at_date: String,
     var date: String,
     var from: String,
