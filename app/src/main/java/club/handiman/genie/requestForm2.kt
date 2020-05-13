@@ -8,24 +8,17 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.transition.Slide
-import android.transition.TransitionManager
 import android.util.AttributeSet
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Constants
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
-import club.handiman.genie.adapter.locationAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -40,7 +33,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.rtchagas.pingplacepicker.PingPlacePicker
 import com.wdullaer.materialdatetimepicker.time.Timepoint
 import kotlinx.android.synthetic.main.fragment_request_form.*
-import kotlinx.android.synthetic.main.view.*
 import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
@@ -70,7 +62,7 @@ class requestForm2 : AppCompatActivity(),
     var Dat = "j"
     var time: String = "h"
     var timee: String = "h"
-    var adapter: locationAdapter? = null
+
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
@@ -99,10 +91,7 @@ class requestForm2 : AppCompatActivity(),
         initTimeline()
         getHandymanRequests(employee_id)
         request_array = ArrayList<request>()
-        var arr: JSONArray? = null
-        var arrayy: JSONArray? = null
-        var clientlat: Double? = 0.0
-        var clientLon: Double? = 0.0
+
         calendar = Calendar.getInstance()
         calendar!!.firstDayOfWeek = Calendar.MONDAY
         Year = calendar!!.get(Calendar.YEAR)
@@ -117,118 +106,9 @@ class requestForm2 : AppCompatActivity(),
             selectDate()
             //  timee()
         }
-
-        btnOpenPlacePicker.setOnClickListener{
-            location_recycler.layoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            adapter = locationAdapter(this!!)
-            location_recycler.adapter = adapter
-            Fuel.get(Utils.API_EDIT_PROFILE)
-                .header(
-                    "accept" to "application/json",
-                    Utils.AUTHORIZATION to SharedPreferences.getToken(this!!.baseContext).toString()
-                )
-                .responseJson { _, _, result ->
-
-                    result.success {
-
-                        var res = it.obj()
-
-
-                        if (res.optString("status", "error") == "success") {
-
-
-                            this!!.runOnUiThread {
-                                val items = res.getJSONArray("handymen")
-
-                                for (i in 0 until items.length()) {
-                                    adapter?.setItem(items.getJSONObject(i))
-                                    arr = items.getJSONObject(i).getJSONArray("addresses")
-                                    for (i in 0 until items.length()) {
-                                        arrayy = arr!!.getJSONObject(i).getJSONArray("Array")
-                                        clientlat = arrayy?.get(0) as Double
-                                        clientLon = arrayy?.get(1) as Double
-
-                                    }
-
-                                }
-                        } }
-                        else {
-
-                            Toast.makeText(
-                                this,
-                                res.getString("status"),
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                    result.failure {
-
-                        Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-
-            val inflater:LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.view,null)
-            val popupWindow = PopupWindow(
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
-                LinearLayout.LayoutParams.WRAP_CONTENT // Window height
-            )
-
-            // Set an elevation for the popup window
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                popupWindow.elevation = 10.0F
-            }
-
-
-            // If API level 23 or higher then execute the code
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                // Create a new slide animation for popup window enter transition
-                val slideIn = Slide()
-                slideIn.slideEdge = Gravity.TOP
-                popupWindow.enterTransition = slideIn
-
-                // Slide animation for popup window exit transition
-                val slideOut = Slide()
-                slideOut.slideEdge = Gravity.RIGHT
-                popupWindow.exitTransition = slideOut
-
-            }
-
-            // Get the widgets reference from custom view
-            val tv = view.findViewById<TextView>(R.id.selectlocation)
-            val buttonPopup = view.findViewById<Button>(R.id.button_popup)
-
-            // Set click listener for popup window's text view
-            tv.setOnClickListener{
-                // Change the text color of popup window's text view
-              showPlacePicker()
-            }
-
-            // Set a click listener for popup's button widget
-            buttonPopup.setOnClickListener{
-                // Dismiss the popup window
-                popupWindow.dismiss()
-            }
-
-            // Set a dismiss listener for popup window
-            popupWindow.setOnDismissListener {
-                Toast.makeText(applicationContext,"Popup closed",Toast.LENGTH_SHORT).show()
-            }
-
-
-            // Finally, show the popup window on app
-            TransitionManager.beginDelayedTransition(root_layout)
-            popupWindow.showAtLocation(
-                root_layout, // Location to display popup window
-                Gravity.CENTER, // Exact position of layout to display popup
-                0, // X offset
-                0 // Y offset
-            )
+        btnOpenPlacePicker.setOnClickListener {
+            showPlacePicker()
         }
-
-
 
         save_infor_profile_btn.setOnClickListener {
 
@@ -668,6 +548,9 @@ class requestForm2 : AppCompatActivity(),
                                 }
                                 working_hours += hours
 
+//
+//
+//                            }
                             }
                         }
                     }
@@ -722,7 +605,8 @@ class requestForm2 : AppCompatActivity(),
                             .show()
                     }
                 }
-    }
+
+            }
     }
 
 
@@ -750,6 +634,7 @@ class requestForm2 : AppCompatActivity(),
                                         request.optString("from", ""),
                                         request.optString("to", "")
                                     )
+
                                 )
                             }
 

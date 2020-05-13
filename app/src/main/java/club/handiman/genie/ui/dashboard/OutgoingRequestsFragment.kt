@@ -73,15 +73,18 @@ class OutgoingRequestsFragment : Fragment() {
                             var handyman = request.getJSONObject("handyman")
                             var service = request.getJSONObject("service")
                             var flag = false
+                            var flag2 = false
                             if (request.has("receipt")) {
                                 flag = true
                             }
+                            if (request.has("paid")) {
+                                flag2 = request.optBoolean("paid")
+                            }
                             var model: RequestModel = RequestModel(
                                 request.optString("_id", "id"),
-                                //try
                                 handyman.optString("name"),
                                 handyman.optString("image"), request.optString("description"),
-                                flag, request.optString("date"),
+                                flag, flag2, request.optString("date"),
                                 request.optString("from"),
                                 request.optString("to")
                             )

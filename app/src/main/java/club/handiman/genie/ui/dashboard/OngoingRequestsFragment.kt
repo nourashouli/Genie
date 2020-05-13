@@ -63,7 +63,7 @@ class OngoingRequestsFragment : Fragment() {
                                 handyman.optString("name"),
                                 handyman.optString("image"),
                                 request.optString("description"),
-                                false,
+                                false,false,
                                 request.optString("date"),
                                 request.optString("from"),
                                 request.optString("to")

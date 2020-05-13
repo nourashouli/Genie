@@ -1,6 +1,7 @@
 package club.handiman.genie.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,15 +48,23 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if ((list[position]).has_receipt == true) {
-            holder.itemView.payment_btn.visibility = View.VISIBLE
+            if (list[position].has_paid == true) {
+                holder.itemView.payment_btn.visibility = View.VISIBLE
+                holder.itemView.payment_btn.text="Paid"
+                holder.itemView.payment_btn.setBackgroundColor(Color.GREEN)
+
+            } else {
+                holder.itemView.payment_btn.visibility = View.VISIBLE
+                holder.itemView.payment_btn.setOnClickListener {
+                    (context as MainActivity).navigateToFragment(
+                        PaymentFragment(
+                            (list[position])
+                        )
+                    )
+                }
+            }
         }
-        holder.itemView.payment_btn.setOnClickListener {
-            (context as MainActivity).navigateToFragment(
-               PaymentFragment(
-                    (list[position])
-                )
-            )
-        }
+
 
         holder.itemView.name.text =
             (list[position]).handyman
