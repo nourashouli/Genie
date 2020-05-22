@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#A459F7</color>
-    <color name="colorPrimaryDark">#A459F7</color>
-    <color name="colorAccent">#A459F7</color>
-    <color name="colorBlack">#A459F7</color>
-    <color name="colorBlue">#A459F7</color>
+    <color name="colorPrimary">#28D6C0</color>
+    <color name="colorPrimaryDark">#28D6C0</color>
+    <color name="colorAccent">#28D6C0</color>
+    <color name="colorBlack">#28D6C0</color>
+    <color name="colorBlue">#28D6C0</color>
 
     <color name="viewBg">#f1f5f8</color>
     <color name="album_title">#4c4c4c</color>

@@ -84,21 +84,12 @@ class requestForm : AppCompatActivity(),
             showPlacePicker()
         }
 
-        save_infor_profile_btn.setOnClickListener {
+        submit_request.setOnClickListener {
 
             save()
         }
 
-        //listen to gallery button click
-        gallery.setOnClickListener {
-            pickPhotoFromGallery()
-        }
 
-        //listen to take photo button click
-        takePhoto.setOnClickListener {
-            askCameraPermission()
-        }
-        // initTimeline()
 
     }
 
@@ -215,13 +206,13 @@ class requestForm : AppCompatActivity(),
         ) {
             //photo from camera
             //display the photo on the imageview
-            imageView.setImageURI(fileUri)
+            //imageView.setImageURI(fileUri)
         } else if (resultCode == Activity.RESULT_OK
             && requestCode == Constants.PICK_PHOTO_REQUEST
         ) {
             //photo from gallery
             fileUri = data?.data
-            imageView.setImageURI(fileUri)
+          //  imageView.setImageURI(fileUri)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }

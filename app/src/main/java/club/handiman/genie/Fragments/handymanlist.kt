@@ -26,9 +26,6 @@ import kotlinx.android.synthetic.main.search_location.*
 import org.json.JSONArray
 import org.json.JSONObject
 
-/**
- * A simple [Fragment] subclass.
- */
 class handymanlist(var data: Any) : Fragment() {
     var adapter: HandymanListAdapter? = null
 

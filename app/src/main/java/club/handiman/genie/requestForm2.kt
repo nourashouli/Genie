@@ -8,17 +8,26 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.AttributeSet
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import club.handiman.genie.Utils.Constants
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
+import club.handiman.genie.adapter.RequestImagesAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -51,6 +60,13 @@ class requestForm2 : AppCompatActivity(),
     var timePickerDialog: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
     var timePickerDialogTo: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
     var Year = 0
+    lateinit var imagePath: String
+    var counter = 0
+    var listOfImages = ArrayList<String>()
+    val adapter = RequestImagesAdapter(this)
+    var imagesPathList: MutableList<String> = arrayListOf()
+
+    var PICK_IMAGE_MULTIPLE = 1
     var Month = 0
     var Day = 0
     var Hour = 0
@@ -83,6 +99,7 @@ class requestForm2 : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
+        initAdapter()
         var Date: Date
         var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
@@ -110,22 +127,29 @@ class requestForm2 : AppCompatActivity(),
             showPlacePicker()
         }
 
-        save_infor_profile_btn.setOnClickListener {
+        submit_request.setOnClickListener {
 
             save()
         }
+        select_request_images.setOnClickListener {
+            if (Build.VERSION.SDK_INT < 19) {
 
-        //listen to gallery button click
-        gallery.setOnClickListener {
-            pickPhotoFromGallery()
+                var intent = Intent()
+                intent.type = "image/*"
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.action = Intent.ACTION_GET_CONTENT
+                startActivityForResult(
+                    Intent.createChooser(intent, "Select Picture")
+                    , PICK_IMAGE_MULTIPLE
+                )
+            } else {
+                var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                intent.type = "image/*"
+                startActivityForResult(intent, PICK_IMAGE_MULTIPLE);
+            }
         }
-
-        //listen to take photo button click
-        takePhoto.setOnClickListener {
-            askCameraPermission()
-        }
-        // initTimeline()
-
     }
 
 
@@ -145,84 +169,7 @@ class requestForm2 : AppCompatActivity(),
 
 
     //pick a photo from gallery
-    private fun pickPhotoFromGallery() {
-        val pickImageIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        startActivityForResult(pickImageIntent, Constants.PICK_PHOTO_REQUEST)
-    }
 
-    //launch the camera to take photo via intent
-    private fun launchCamera() {
-        val values = ContentValues(1)
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-        fileUri = contentResolver
-            .insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                values
-            )
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(packageManager) != null) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri)
-            intent.addFlags(
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            )
-            startActivityForResult(intent, Constants.TAKE_PHOTO_REQUEST)
-        }
-    }
-
-    //ask for permission to take photo
-    fun askCameraPermission() {
-        Dexter.withActivity(this)
-            .withPermissions(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ).withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {/* ... */
-                    if (report.areAllPermissionsGranted()) {
-                        //once permissions are granted, launch the camera
-                        launchCamera()
-                    } else {
-                        Toast.makeText(
-                            this@requestForm2,
-                            "All permissions need to be granted to take photo",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
-                ) {/* ... */
-                    //show alert dialog with permission options
-                    AlertDialog.Builder(this@requestForm2)
-                        .setTitle(
-                            "Permissions Error!"
-                        )
-                        .setMessage(
-                            "Please allow permissions to take photo with camera"
-                        )
-                        .setNegativeButton(
-                            android.R.string.cancel,
-                            { dialog, _ ->
-                                dialog.dismiss()
-                                token?.cancelPermissionRequest()
-                            })
-                        .setPositiveButton(android.R.string.ok,
-                            { dialog, _ ->
-                                dialog.dismiss()
-                                token?.continuePermissionRequest()
-                            })
-                        .setOnDismissListener({
-                            token?.cancelPermissionRequest()
-                        })
-                        .show()
-                }
-            }).check()
-    }
 
     override fun onActivityResult(
         requestCode: Int, resultCode: Int,
@@ -235,21 +182,70 @@ class requestForm2 : AppCompatActivity(),
             location[0] = place!!.latLng!!.latitude!!.toDouble()
             location[1] = place!!.latLng!!.longitude!!.toDouble()
         }
+        if (requestCode == PICK_IMAGE_MULTIPLE && resultCode == Activity.RESULT_OK
+            && null != data
+        ) {
 
-        if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.TAKE_PHOTO_REQUEST
-        ) {
-            //photo from camera
-            //display the photo on the imageview
-            imageView.setImageURI(fileUri)
-        } else if (resultCode == Activity.RESULT_OK
-            && requestCode == Constants.PICK_PHOTO_REQUEST
-        ) {
-            //photo from gallery
-            fileUri = data?.data
-            imageView.setImageURI(fileUri)
+            adapter.setItem(data.data!!)
+
+            val bitmap =
+                MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+            listOfImages.add(Utils.encodeToBase64(bitmap))
+            if (data.getClipData() != null) {
+
+                var count = data.clipData!!.itemCount
+                for (i in 0..count - 1) {
+                    var imageUri: Uri = data!!.clipData!!.getItemAt(i).uri
+                    getPathFromURI(imageUri)
+                }
+            } else if (data.getData() != null) {
+                var imagePath: String? = data!!.data!!.path
+                Log.e("imagePath", imagePath);
+            }
+
+
         } else {
             super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun getPathFromURI(uri: Uri) {
+        var path: String? = uri.path // uri = any content Uri
+
+        val databaseUri: Uri
+        val selection: String?
+        val selectionArgs: Array<String>?
+        if (path!!.contains("/document/image:")) { // files selected from "Documents"
+            databaseUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            selection = "_id=?"
+            selectionArgs = arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1])
+        } else { // files selected from all other sources, especially on Samsung devices
+            databaseUri = uri
+            selection = null
+            selectionArgs = null
+        }
+        try {
+            val projection = arrayOf(
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.ORIENTATION,
+                MediaStore.Images.Media.DATE_TAKEN
+            ) // some example data you can query
+            val cursor = contentResolver.query(
+                databaseUri,
+                projection, selection, selectionArgs, null
+            )
+            if (cursor!!.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(projection[0])
+                imagePath = cursor.getString(columnIndex)
+                // Log.e("path", imagePath);
+                imagesPathList.add(imagePath)
+
+
+            }
+            cursor.close()
+        } catch (e: Exception) {
+            Log.e("exception", e.message, e)
         }
     }
 
@@ -520,6 +516,7 @@ class requestForm2 : AppCompatActivity(),
             findViewById<View>(R.id.button_datepicker) as TextView
         text_timepicker.text = time
     }
+
     private fun initTimeline() {
         Fuel.get(Utils.API_timeline.plus(employee_id))
             .header(
@@ -568,22 +565,29 @@ class requestForm2 : AppCompatActivity(),
         var des: String = description!!.text!!.toString()
         val role = "user"
         val subject: String = subject!!.text!!.toString()
-        //  save_infor_profile_btn.isEnabled = false
+
+
+        var params = HashMap<String, String>()
+        params.put("employee_id", employee_id)
+        params.put("service_id", service_id)
+        params.put("description", des)
+        params.put("timezone", "Asia/Beirut")
+        params.put("subject", subject)
+        params.put("latitude", location[0].toString())
+        params.put("longitude", location[1].toString())
+        params.put("date", stringDate1.toString())
+        params.put("to", time_to.toString())
+        params.put("from", time_fromAsString.toString())
+        for (x in 0 until listOfImages.size) {
+            params.put("images[$x]", listOfImages.get(x))
+        }
+
         Toast.makeText(this, fileUri.toString(), Toast.LENGTH_SHORT).show()
         Fuel.post(
-            Utils.API_MAKE_REQUEST, listOf(
-                "employee_id" to employee_id,
-                "service_id" to service_id,
-                "description" to des,
-                "timezone" to "Asia/Beirut",
-                "subject" to subject,
-                "latitude" to location[0].toString(),
-                "longitude" to location[1].toString(),
-                "date" to stringDate1.toString(),
-                "to" to time_to.toString(),
-                "from" to time_fromAsString.toString()
+            Utils.API_MAKE_REQUEST,
+                params.toList()
 
-            )
+
         ).header(
             "accept" to "application/json",
             Utils.AUTHORIZATION to SharedPreferences.getToken(this).toString()
@@ -661,4 +665,75 @@ class requestForm2 : AppCompatActivity(),
 
     }
 
+    fun initAdapter() {
+
+        val mLayoutManager = GridLayoutManager(this, 2)
+
+        recycler_request_images.setLayoutManager(mLayoutManager)
+
+        recycler_request_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+
+        recycler_request_images.setItemAnimator(DefaultItemAnimator())
+
+        recycler_request_images.setAdapter(adapter)
+
+
+        recycler_request_images.setLayoutManager(mLayoutManager)
+
+        recycler_request_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+
+        recycler_request_images.setItemAnimator(DefaultItemAnimator())
+
+
+    }
+
+    inner class GridSpacingItemDecoration(
+        private val spanCount: Int,
+        private val spacing: Int,
+        private val includeEdge: Boolean
+    ) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val position = parent.getChildAdapterPosition(view) // item position
+            val column = position % spanCount // item column
+
+            if (includeEdge) {
+                outRect.left =
+                    spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    (column) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing
+                }
+                outRect.bottom = spacing // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    spacing - (column) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing // item top
+                }
+            }
+        }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private fun dpToPx(dp: Int): Int {
+        val r = resources
+        return Math.round(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                r.displayMetrics
+            )
+        )
+    }
 }

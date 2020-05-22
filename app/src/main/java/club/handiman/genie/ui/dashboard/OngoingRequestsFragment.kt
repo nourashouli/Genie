@@ -18,6 +18,7 @@ import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_noti.*
 import org.jetbrains.anko.support.v4.runOnUiThread
+import org.json.JSONObject
 
 
 class OngoingRequestsFragment : Fragment() {
@@ -34,8 +35,9 @@ class OngoingRequestsFragment : Fragment() {
         recycler_view_notifications.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         adapter = notiAdapter(context!!)
-        getRequest()
+
         recycler_view_notifications.adapter = adapter
+        getRequest()
     }
 
     fun getRequest() {
@@ -51,27 +53,36 @@ class OngoingRequestsFragment : Fragment() {
                     var res = it.obj()
 
                     if (res.optString("status", "error") == "success") {
-                        var list = res.getJSONArray("requests")
+                        activity!!.runOnUiThread {
+                            var list = res.getJSONArray("requests")
 
-                        for (i in 0 until list.length()) {
-                            var request = list.getJSONObject(i)
-                            var handyman = request.getJSONObject("handyman")
-                            var service = request.getJSONObject("service")
-                            var model: RequestModel = RequestModel(
-                                request.optString("_id", "id"),
-                                //try
-                                handyman.optString("name"),
-                                handyman.optString("image"),
-                                request.optString("description"),
-                                false,false,
-                                request.optString("date"),
-                                request.optString("from"),
-                                request.optString("to")
-                            )
-                            runOnUiThread {
-                                adapter!!.setItem(model!!)
+                            for (i in 0 until list.length()) {
+                                var request = list.getJSONObject(i)
+                                var handyman = request.optJSONObject("handyman")
+                                var service = request.getJSONObject("service")
+                                if (!request.has("handyman")) {
+                                    handyman = JSONObject()
+                                    handyman.put("name", " The engine is searching for a name")
+                                    handyman.put("image","services/service_1585417538.png")
+                                }
+                                adapter!!.setItem(
+                                    RequestModel(
+                                        request.optString("_id", "id"),
+                                        //try
+                                        handyman.optString("name", "w"),
+                                        handyman.optString("image", "a"),
+                                        request.optString("description"),
+                                        false, false,
+                                        request.optString("date"),
+                                        request.optString("from"),
+                                        request.optString("to")
+                                    )
+                                )
+
+
                             }
                         }
+
 
                     } else {
                         Toast.makeText(

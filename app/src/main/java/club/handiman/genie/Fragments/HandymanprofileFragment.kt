@@ -36,6 +36,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         val image_url = (data as JSONObject).optString("image")
         val cv = (data as JSONObject).optString("cv").toString()
         val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
+        rBar.rating=(data as JSONObject).optDouble("rating").toFloat()
         val certificatess = (data as JSONObject).optString("certificate").toString()
         certificates.setOnClickListener {
             DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
