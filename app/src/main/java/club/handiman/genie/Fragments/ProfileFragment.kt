@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.AccountSettingActivity
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
@@ -17,12 +18,14 @@ import com.github.kittinunf.result.failure
 import com.bumptech.glide.Glide
 import com.github.kittinunf.result.success
 import club.handiman.genie.Utils.SharedPreferences
+import club.handiman.genie.adapter.locationAdapter
+import org.json.JSONArray
 
 /**
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
-
+    var adapter: locationAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +36,11 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+    adapter = locationAdapter(context!!)
+        //try
+        locations.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        locations.setAdapter(adapter)
 viewProfile()
         edit_account_settings_btn.setOnClickListener {
             val i = Intent(this.context, AccountSettingActivity::class.java)
@@ -71,14 +79,21 @@ viewProfile()
                             Glide
                                 .with(this)
                                 .load(url).into(pro_image_profile_frag)
-//                            }
+
+                            val items:JSONArray ?= profile.optJSONArray("client_addresses")
+
+                            for (i in 0 until items!!.length()) {
+                                adapter!!.setItem(items.getJSONObject(i))
+                            }
+                        adapter!!.notifyDataSetChanged()
                         }
+
                     } else {
 
                         Toast.makeText(
                             activity,
                             res.getString("status"),
-                            Toast.LENGTH_LONG
+                            Toast.LENGTH_LONG!!
                         ).show()
                     }
                 }

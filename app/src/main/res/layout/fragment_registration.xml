@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/violet">
+    android:background="@drawable/login">
 
     <LinearLayout
         android:id="@+id/ll_verify_code"
@@ -130,7 +130,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="@android:color/transparent"
-        android:hint="Password"
+        android:hint="Confirm Password"
         android:inputType="textEmailAddress"
         android:padding="15dp"
         android:textColor="@android:color/white"
@@ -170,21 +170,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/fbtn_register"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="27dp"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="#4E525B"
-            android:elevation="0dp"
-            android:src="@drawable/lamp1" />
 
         <TextView
+            android:id="@+id/fbtn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

@@ -65,7 +65,6 @@ class requestForm2 : AppCompatActivity(),
     var listOfImages = ArrayList<String>()
     val adapter = RequestImagesAdapter(this)
     var imagesPathList: MutableList<String> = arrayListOf()
-
     var PICK_IMAGE_MULTIPLE = 1
     var Month = 0
     var Day = 0
@@ -78,7 +77,6 @@ class requestForm2 : AppCompatActivity(),
     var Dat = "j"
     var time: String = "h"
     var timee: String = "h"
-
     private val pingActivityRequestCode = 1001
     var employee_id: String = "H"
     var service_id: String = "H"
@@ -108,7 +106,6 @@ class requestForm2 : AppCompatActivity(),
         initTimeline()
         getHandymanRequests(employee_id)
         request_array = ArrayList<request>()
-
         calendar = Calendar.getInstance()
         calendar!!.firstDayOfWeek = Calendar.MONDAY
         Year = calendar!!.get(Calendar.YEAR)

@@ -10,15 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/genie1"
+        android:src="@drawable/login"
    />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/logo"
+        android:layout_width="130dp"
+        android:layout_height="120dp"
+        android:src="@drawable/download"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/rounded_select_photo_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
-
+    />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="bottom"
+        android:layout_marginTop="270dp"
         android:orientation="vertical">
 
         <EditText
@@ -33,6 +47,8 @@
             android:padding="15dp"
             android:textColor="#292929"
             android:textColorHint="#797979" />
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,7 +70,6 @@
             android:padding="15dp"
             android:textColor="#292929"
             android:textColorHint="#797979" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -62,7 +77,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="30dp"
             android:background="#999999" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
@@ -115,7 +129,7 @@
                 android:text="Sign up"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#AD6FF2"/>
+                android:textColor="#191919"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,9 +140,11 @@
                 android:padding="15dp"
                 android:text="Forgot Password"
                 android:textSize="18sp"
-                android:textColor="#AD6FF2"
+                android:textColor="#191919"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+
     </LinearLayout>
 
 
