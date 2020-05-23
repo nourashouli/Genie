@@ -12,6 +12,7 @@ import com.google.firebase.messaging.RemoteMessage
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import club.handiman.genie.Fragments.ChatLog.ChatLogActivity
 import club.handiman.genie.TestingActivity
 import com.example.genie_cl.R
 import java.util.*
@@ -23,26 +24,19 @@ import java.text.SimpleDateFormat
 class Firebase : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        //any notification reach here so
-        //so here if type is comment  u send notification and broadcast to the chat activity and
-        //append the chat list
         if (remoteMessage.data.isNotEmpty()) {
-            //there is a new notification
-//            // to be notified to the device
-            var dataJson :JSONObject= JSONObject(remoteMessage.data["data"].toString())
+            var dataJson = JSONObject(remoteMessage.data["data"].toString())
             var type = dataJson.getString("type")
             when(type) {
+
                 "comment" -> {
-                    // sending broadcast using broadcast receiver to refresh the chat list
-                    sendBrodcastNotification(dataJson)
-                    sendRegularNotification(dataJson, Intent(baseContext, TestingActivity::class.java))
-                }
+                   }
                 "request" -> {
-//                    sendBrodcastNotification(dataJson)
-//                            sendRegularNotification(dataJson, Intent(baseContext, notiFragment::class.java))
 
                 }
-                "announcement" -> {
+                "message" -> {
+                    sendBrodcastNotification(dataJson)
+                    sendRegularNotification(dataJson, Intent(baseContext, ChatLogActivity::class.java))
 
                 }
             }
@@ -54,6 +48,7 @@ class Firebase : FirebaseMessagingService() {
 
 
     }
+
 
     override fun onNewToken(token: String) {
 
