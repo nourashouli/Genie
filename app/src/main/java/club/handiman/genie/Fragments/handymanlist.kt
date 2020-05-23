@@ -1,7 +1,6 @@
 package club.handiman.genie.Fragments
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,9 +10,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
-import club.handiman.genie.Utils.putExtraJson
 import club.handiman.genie.adapter.HandymanListAdapter
-import club.handiman.genie.requestForm
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -60,13 +57,6 @@ class handymanlist(var data: Any) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         id = (data as JSONObject).getString("_id")
-        open_urgent_request.setOnClickListener {
-            val intent = Intent(context!!, requestForm::class.java)
-            var ob=JSONObject()
-            ob.put("id",id!!)
-            intent.putExtraJson("object", ob!!)
-            startActivity(intent)
-        }
         val adapter = HandymanListAdapter(context!!, id!!)
 
         handymanlist_recycler.layoutManager =
@@ -148,8 +138,7 @@ class handymanlist(var data: Any) : Fragment() {
                 adapter?.filter("name", s.toString())
             }
 
-        }
-        )
+        })
 
         Fuel.get(Utils.API_HANDYMAN_BY_SERVICE.plus(id))
             .header(
@@ -245,6 +234,5 @@ class handymanlist(var data: Any) : Fragment() {
             }
             dialog.show()
 
-        }
-    }
+        }}
 }

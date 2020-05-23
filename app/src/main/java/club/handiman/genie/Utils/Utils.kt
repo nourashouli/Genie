@@ -41,7 +41,6 @@ class Utils {
         const val API_DEVICE_TOKEN = "$BASE_URL/device-token"
         const val API_PROFILE = "$BASE_URL/profile"
 
-        const val API_SEND_MESSAGE = "$BASE_URL/message/"
         const val API_Addresses = "$BASE_URL/addresses"
         const val API_Address = "$BASE_URL/address"
         const val API_Address_DELETE = "$BASE_URL/address-delete"
@@ -54,10 +53,9 @@ class Utils {
         const val API_getHandymanList = "$BASE_URL/getHandymanList"
         const val API_get_ongoing_request = "$BASE_CLIENT_URL/ongoing-requests"
 
-        const val API_CHAT_REQUESTS = "$BASE_CLIENT_URL/chat-requests"
         const val API_OUTGOING_REQUESTS = "$BASE_CLIENT_URL/outgoing-requests"
         const val API_CANCEL_REQUEST = "$BASE_CLIENT_URL/request-cancel/"
-        const val API_ANY_REQUEST = "$BASE_CLIENT_URL/make-request/"
+        const val API_ANY_REQUEST = "$BASE_CLIENT_URL/request-any/"
         const val API_REQUEST_Done = "$BASE_CLIENT_URL/request-done/"
         const val API_POST = "$BASE_CLIENT_URL/post"
         const val API_HANDYMAN_REQUESTS = "$BASE_URL/jobs/"
