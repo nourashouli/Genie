@@ -25,8 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="club.handiman.genie.Fragments.ChatLog.ChatLogActivity"></activity>
-        <activity android:name="club.handiman.genie.Rating" />
+        <activity android:name="club.handiman.genie.Rating"></activity>
         <activity android:name="club.handiman.genie.rating" />
         <activity android:name="club.handiman.genie.DownloadTask" />
         <activity android:name="club.handiman.genie.CheckoutActivity" />
