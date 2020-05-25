@@ -2,32 +2,44 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linear_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="400dp"
+    android:layout_height="350dp"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@color/colorPrimary"
-    >
 
-    <Button
-        android:id="@+id/selectlocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Location"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/location_recycler"
+    >
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/titlee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
-
+        android:hint="Address title"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/building"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="building name"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/floor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="floor"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/zip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="zip"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/street"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="street"/>
     <Button
-        android:id="@+id/button_popup"
+        android:id="@+id/nobtn"
         android:layout_marginTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close "
+        android:text="Save "
         />
+
+
 </LinearLayout>

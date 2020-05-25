@@ -51,19 +51,12 @@
             android:layout_height="wrap_content"/>
 
 
-        <RatingBar
-            android:id="@+id/rBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:numStars="5"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:stepSize="0.5"
-            android:theme="@style/Widget.AppCompat.RatingBar" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
         <Button
             android:id="@+id/certificates"
             android:layout_margin="5sp"
@@ -86,23 +79,28 @@
             android:layout_height="40dp"
             android:textSize="15dp"/>
     </LinearLayout>
-        <ImageView
-            android:id="@+id/imagee"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:visibility="invisible"
-           />
+        <RatingBar
+            android:id="@+id/rBar"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:numStars="5"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:stepSize="0.5"
+            android:theme="@style/Widget.AppCompat.RatingBar"
+            android:layout_marginBottom="10dp"/>
+
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Images"
+            android:text="feedback"
             android:textSize="20dp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/images_recycle_view_id"
+            android:id="@+id/feedbackrecycler"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

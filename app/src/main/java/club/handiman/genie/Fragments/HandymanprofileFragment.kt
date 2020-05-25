@@ -10,15 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.Utils.putExtraJson
+import club.handiman.genie.adapter.feedbackAdapter
 import club.handiman.genie.requestForm2
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 
 class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
-
+    var adapter: feedbackAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,8 +31,11 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        initRecyclerView()
+        adapter = feedbackAdapter(context!!)
+        //try
+        feedbackrecycler.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        feedbackrecycler.setAdapter(adapter)
         bio.text = (data as JSONObject).getString("biography")
         username.text = (data as JSONObject).getString("name")
         val image_url = (data as JSONObject).optString("image")
@@ -38,6 +43,13 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
         rBar.rating=(data as JSONObject).optDouble("rating").toFloat()
         val certificatess = (data as JSONObject).optString("certificate").toString()
+            val items: JSONArray?= (data as JSONObject).getJSONArray("feedbacks")
+
+            for (i in 0 until items!!.length()) {
+                adapter!!.setItem(items.get(i))
+            }
+            adapter!!.notifyDataSetChanged()
+
         certificates.setOnClickListener {
             DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
         }
@@ -63,15 +75,6 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             }
         }
     }
-
-    private fun initRecyclerView() {
-        images_recycle_view_id.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        //images_recycle_view_id.adapter = HomeAdapter(context as MainActivity, "handyman")
-    }
-
-// Add your downolde file URL
-
 
 }
 

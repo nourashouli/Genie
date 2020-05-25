@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.genie_cl.R
-import kotlinx.android.synthetic.main.clientaddress.view.*
+import kotlinx.android.synthetic.main.feedback.view.*
 import org.json.JSONObject
 
-class locationAdapter(var context: Context) : RecyclerView.Adapter<locationAdapter.ViewHolder>() {
+class feedbackAdapter(var context: Context) : RecyclerView.Adapter<feedbackAdapter.ViewHolder>() {
 
     var list: ArrayList<Any> = ArrayList()
 
@@ -36,12 +36,12 @@ class locationAdapter(var context: Context) : RecyclerView.Adapter<locationAdapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.clientaddress, parent, false)
+                .inflate(R.layout.feedback, parent, false)
         )
     }
 
-     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-         holder.itemView.address.text = (list[position] as JSONObject).optString("name")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.feedback.text = (list[position] ).toString()
 
 
 
