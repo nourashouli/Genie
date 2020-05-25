@@ -25,7 +25,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name="club.handiman.genie.Rating"></activity>
+=======
+        <activity android:name="club.handiman.genie.Fragments.ChatLog.ChatLogActivity"></activity>
+        <activity android:name="club.handiman.genie.Rating" />
+        <activity android:name="club.handiman.genie.rating" />
+        <activity android:name="club.handiman.genie.DownloadTask" />
+        <activity android:name="club.handiman.genie.CheckoutActivity" />
+>>>>>>> parent of 630f31b... Revert "Merge branch 'master' of https://github.com/nourashouli/Genie"
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
