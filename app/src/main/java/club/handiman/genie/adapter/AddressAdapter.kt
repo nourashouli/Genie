@@ -1,22 +1,21 @@
 package club.handiman.genie.adapter
 
-
 import android.content.Context
-import android.net.Uri
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.genie_cl.R
-import kotlinx.android.synthetic.main.post_image.view.*
+import kotlinx.android.synthetic.main.feedback.view.*
+import kotlinx.android.synthetic.main.radioaddress.view.*
+import org.json.JSONObject
 
-class RequestImagesAdapter(var context: Context) :
-    RecyclerView.Adapter<RequestImagesAdapter.ViewHolder>() {
-    var list: ArrayList<Uri> = ArrayList()
+class AddressAdapter(var context: Context) : RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
 
-    fun setItem(ob: Uri) {
-        list.add(ob!!)
+    var list: ArrayList<Any> = ArrayList()
+
+    fun setItem(ob:Any) {
+        list.add(ob)
         notifyItemInserted(list.size - 1)
     }
 
@@ -32,22 +31,21 @@ class RequestImagesAdapter(var context: Context) :
         notifyDataSetChanged()
     }
 
+    fun getItems() = list
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.post_image, parent, false)
+                .inflate(R.layout.radioaddress, parent, false)
         )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.radio_Ad.text = (list[position] as JSONObject).optString("name")
 
-        val bitmap =
-            MediaStore.Images.Media.getBitmap(
-                context.contentResolver, list[position]
-            )
 
-        holder.itemView.create_post_image.setImageBitmap(bitmap)
-        //(list[position] as JSONObject).optString("name","unknown")
+
     }
 
     override fun getItemCount(): Int {

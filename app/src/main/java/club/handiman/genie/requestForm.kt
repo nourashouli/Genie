@@ -1,11 +1,6 @@
 package club.handiman.genie
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
@@ -14,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -24,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import club.handiman.genie.Utils.Constants
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.adapter.RequestImagesAdapter
@@ -34,22 +27,13 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import com.google.android.libraries.places.api.model.Place
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.rtchagas.pingplacepicker.PingPlacePicker
-import com.wdullaer.materialdatetimepicker.time.Timepoint
 import kotlinx.android.synthetic.main.fragment_request_form.*
 import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
-import java.sql.Time
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 

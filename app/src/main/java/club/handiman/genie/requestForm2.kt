@@ -1,11 +1,7 @@
 package club.handiman.genie
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
@@ -14,42 +10,38 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import club.handiman.genie.Utils.Constants
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
+import club.handiman.genie.adapter.AddressAdapter
 import club.handiman.genie.adapter.RequestImagesAdapter
+import club.handiman.genie.adapter.locationAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import com.google.android.libraries.places.api.model.Place
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.rtchagas.pingplacepicker.PingPlacePicker
 import com.wdullaer.materialdatetimepicker.time.Timepoint
 import kotlinx.android.synthetic.main.fragment_request_form.*
+import kotlinx.android.synthetic.main.requestaddress.*
+import kotlinx.android.synthetic.main.view.*
 import org.jetbrains.anko.toast
 import org.json.JSONArray
 import org.json.JSONObject
-import java.sql.Time
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -93,7 +85,7 @@ class requestForm2 : AppCompatActivity(),
     data class request(var date: String, var from: String, var to: String)
 
     var request_array: ArrayList<request>? = null
-
+    var adapter1: AddressAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
@@ -114,13 +106,12 @@ class requestForm2 : AppCompatActivity(),
         Hour = calendar!!.get(Calendar.HOUR_OF_DAY)
         Minute = calendar!!.get(Calendar.MINUTE)
 
-
         button_datepicker.setOnClickListener {
 
             selectDate()
-            //  timee()
         }
         btnOpenPlacePicker.setOnClickListener {
+          // showDialog()
             showPlacePicker()
         }
 
@@ -205,7 +196,26 @@ class requestForm2 : AppCompatActivity(),
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
+    private fun showDialog() {
 
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.requestaddress)
+
+        val noBtn = dialog.findViewById(R.id.nobtn) as TextView
+        noBtn.setOnClickListener { dialog.dismiss()
+
+           // saveProfile()
+        }
+        dialog.show()
+//        adapter1 = AddressAdapter(this)
+//        //try
+//        oldAd.layoutManager =
+//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+//        oldAd.setAdapter(adapter1)
+//        viewProfile()
+    }
     private fun getPathFromURI(uri: Uri) {
         var path: String? = uri.path // uri = any content Uri
 
@@ -609,7 +619,50 @@ class requestForm2 : AppCompatActivity(),
 
             }
     }
+    private fun viewProfile() {
+        Fuel.get(Utils.API_EDIT_PROFILE)
+            .header(
+                "accept" to "application/json",
+                Utils.AUTHORIZATION to SharedPreferences.getToken(this!!.baseContext).toString()
+            )
+            .responseJson { _, _, result ->
 
+                result.success {
+
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+
+                        var profile = res.getJSONObject("profile")
+                        this!!.runOnUiThread {
+
+                            if(profile.has("client_addresses")){
+                                val items:JSONArray ?= profile.getJSONArray("client_addresses")
+
+                                for (i in 0 until items!!.length()) {
+                                    adapter1!!.setItem(items.getJSONObject(i))
+                                }
+                                adapter1!!.notifyDataSetChanged()
+                            }}
+
+                    } else {
+
+                        Toast.makeText(
+                            this,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG!!
+                        ).show()
+                    }
+                }
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+
+    }
 
     private fun getHandymanRequests(id: String) {
         Fuel.get(Utils.API_HANDYMAN_REQUESTS.plus(id))

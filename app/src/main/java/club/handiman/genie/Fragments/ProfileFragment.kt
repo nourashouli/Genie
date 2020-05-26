@@ -39,7 +39,6 @@ import org.json.JSONObject
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
-    var REQUEST_CODE=3
     var title="d"
     var building="d"
     var zip="d"
