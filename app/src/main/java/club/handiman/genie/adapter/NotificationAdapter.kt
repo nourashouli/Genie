@@ -46,8 +46,8 @@ class NotificationAdapter(var context: Context) : RecyclerView.Adapter<Notificat
 //          //  if ((list[position] as JSONObject).)
 //        }
 
-        holder.itemView.textView.text=
-            (list[position] as JSONObject).optString("description", "title")
+//        holder.itemView.textView.text=
+//            (list[position] as JSONObject).optString("description", "title")
        holder.itemView.name.text=
            (list[position] as JSONObject).optString("email", "name")
         val url = (list[position] as JSONObject).optString("image", "image.png")

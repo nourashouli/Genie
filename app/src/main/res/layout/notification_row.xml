@@ -29,6 +29,39 @@
                 android:paddingTop="10sp"
                 android:paddingBottom="20dp">
 
+                <!--                <TextView-->
+<!--                    android:id="@+id/to"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="to"-->
+<!--                    android:textSize="15dp"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/cancel"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.262"-->
+<!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/from"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="from"-->
+<!--                    android:textSize="15dp"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/to"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.262"-->
+<!--                    app:layout_constraintStart_toStartOf="parent" />-->
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/textView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="The handyman has accepted"-->
+<!--                    android:textSize="15dp"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/date"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.496"-->
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imageView2"
                     android:layout_width="70dp"
@@ -38,17 +71,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.692" />
+
 
                 <TextView
                     android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Name field is here"
-                    app:layout_constraintBottom_toTopOf="@+id/textView"
+                    app:layout_constraintBottom_toTopOf="@+id/date"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.278"
+                    app:layout_constraintHorizontal_bias="0.264"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
@@ -57,53 +92,19 @@
                     android:layout_height="wrap_content"
                     android:text="date"
                     android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/from"
+                    app:layout_constraintBottom_toBottomOf="@+id/name"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.262"
-                    app:layout_constraintStart_toStartOf="parent" />
-                <TextView
-                    android:id="@+id/to"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="to"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/cancel"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.262"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/from"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="from"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/to"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.262"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="The handyman has accepted"
-                    android:textSize="15dp"
-                    app:layout_constraintBottom_toTopOf="@+id/date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.496"
+                    app:layout_constraintHorizontal_bias="0.298"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/cancel"
-                    android:layout_width="150dp"
+                    android:id="@+id/more"
+                    android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    android:text="Cancel request"
-                    app:layout_constraintBottom_toBottomOf="@id/textView"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2" />     -->
+                    android:text="more details"
+                    app:layout_constraintStart_toEndOf="@+id/date"
+                    tools:layout_editor_absoluteY="33dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -70,24 +70,24 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             (list[position]).handyman
         holder.itemView.date.text =
             (list[position]).date
-        holder.itemView.from.text =
-            (list[position]).from
-        holder.itemView.to.text =
-            (list[position]).to
-        holder.itemView.textView.text =
-            (list[position]).request
+//        holder.itemView.from.text =
+//            (list[position]).from
+//        holder.itemView.to.text =
+//            (list[position]).to
+//        holder.itemView.textView.text =
+//            (list[position]).request
         val url = (list[position]).image
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(url))
             .into(holder.itemView.imageView2)
 
-        holder.itemView.cancel.setOnClickListener {
-
-            Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
-            list.remove(list[position])
-            notifyDataSetChanged()
-        }
+//        holder.itemView.cancel.setOnClickListener {
+//
+//            Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
+//            list.remove(list[position])
+//            notifyDataSetChanged()
+//        }
 
     }
 
