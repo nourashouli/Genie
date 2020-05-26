@@ -58,7 +58,7 @@
                 android:id="@+id/HandymaUpload"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/painter"/>
+                android:src="@drawable/loading1"/>
 
         </LinearLayout>
 

@@ -43,6 +43,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
         rBar.rating=(data as JSONObject).optDouble("rating").toFloat()
         val certificatess = (data as JSONObject).optString("certificate").toString()
+        if((data as JSONObject).has("feedbacks")){
             val items: JSONArray?= (data as JSONObject).getJSONArray("feedbacks")
 
             for (i in 0 until items!!.length()) {
@@ -76,6 +77,6 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         }
     }
 
-}
+}}
 
 
