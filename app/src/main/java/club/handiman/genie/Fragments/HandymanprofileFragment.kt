@@ -1,11 +1,22 @@
 package club.handiman.genie.Fragments
 
 import Helpers.DownloadTask
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
+import android.webkit.URLUtil
+import android.widget.Button
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat.getSystemServiceName
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
@@ -14,12 +25,15 @@ import club.handiman.genie.adapter.feedbackAdapter
 import club.handiman.genie.requestForm2
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
+import com.google.android.gms.common.wrappers.Wrappers
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 
 
 class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
+    lateinit internal var uri: Uri
     var adapter: feedbackAdapter? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +47,16 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         super.onActivityCreated(savedInstanceState)
         adapter = feedbackAdapter(context!!)
         //try
+        val openActivityDownload: Button =certificates
+        openActivityDownload.setOnClickListener {
+            val s = "https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf"
+            val fname = "123.pdf"
+            if (FileExists(fname)) { previewpdf(fname) }
+            else { download(s)
+                Toast.makeText(context, "File will download", Toast.LENGTH_LONG).show()
+            }
+        }
+
         feedbackrecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         feedbackrecycler.setAdapter(adapter)
@@ -51,16 +75,16 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             }
             adapter!!.notifyDataSetChanged()
 
-        certificates.setOnClickListener {
-            DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
-        }
-        criminal.setOnClickListener {
-            DownloadTask(context!!,criminalrecord)
-        }
-
-        Cv.setOnClickListener {
-            DownloadTask(context!!,cv)
-        }
+//        certificates.setOnClickListener {
+//            DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
+//        }
+//        criminal.setOnClickListener {
+//            DownloadTask(context!!,criminalrecord)
+//        }
+//
+//        Cv.setOnClickListener {
+//            DownloadTask(context!!,cv)
+//        }
         Glide
             .with(this)
             .load(Utils.BASE_IMAGE_URL.plus(image_url))
@@ -77,6 +101,38 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         }
     }
 
-}}
+}
 
+
+    fun FileExists(name: String): Boolean {
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + name)
+        return file.exists()
+    }
+
+    private fun download(s: String) {
+        //val downloadManager = getSystemServiceName(context.DOWNLOAD_SERVICE) as DownloadManager
+        val uri = Uri.parse(s)
+        val request = DownloadManager.Request(uri)
+        val nameOfFile = URLUtil.guessFileName(uri.toString(), null, MimeTypeMap.getFileExtensionFromUrl(uri.toString()))
+        val destinationInExternalPublicDir = request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, nameOfFile)
+        request.setAllowedOverMetered(true)
+        request.setAllowedOverRoaming(true)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
+        request.allowScanningByMediaScanner()
+        //downloadManager.enqueue(request)
+    }
+
+    private fun previewpdf(name: String) {
+        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + name)
+        val path = Uri.fromFile(file)
+     //   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val intent = Intent(Intent.ACTION_VIEW, path)
+
+        val chooser = Intent.createChooser(intent, "Open with")
+       // if (intent.resolveActivity(Wrappers.packageManager()) != null)
+            startActivity(chooser)
+                // else
+          //  Toast.makeText(context, "No suitable application to open file", Toast.LENGTH_LONG).show()
+    }
+}
 
