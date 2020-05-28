@@ -76,7 +76,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             adapter!!.notifyDataSetChanged()
 
 //        certificates.setOnClickListener {
-//            DownloadTask(context!!, "http://www.codeplayon.com/samples/resume.pdf")
+//            DownloadTask(context!!, "https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf")
 //        }
 //        criminal.setOnClickListener {
 //            DownloadTask(context!!,criminalrecord)
@@ -110,7 +110,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
     }
 
     private fun download(s: String) {
-        //val downloadManager = getSystemServiceName(context.DOWNLOAD_SERVICE) as DownloadManager
+       // val downloadManager = getSystemServiceName(context.DOWNLOAD_SERVICE) as DownloadManager
         val uri = Uri.parse(s)
         val request = DownloadManager.Request(uri)
         val nameOfFile = URLUtil.guessFileName(uri.toString(), null, MimeTypeMap.getFileExtensionFromUrl(uri.toString()))
@@ -119,18 +119,18 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         request.setAllowedOverRoaming(true)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
         request.allowScanningByMediaScanner()
-        //downloadManager.enqueue(request)
+      //  downloadManager.enqueue(request)
     }
 
     private fun previewpdf(name: String) {
         val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + name)
         val path = Uri.fromFile(file)
-     //   intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+       // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         val intent = Intent(Intent.ACTION_VIEW, path)
 
         val chooser = Intent.createChooser(intent, "Open with")
        // if (intent.resolveActivity(Wrappers.packageManager()) != null)
-            startActivity(chooser)
+          //  startActivity(chooser)
                 // else
           //  Toast.makeText(context, "No suitable application to open file", Toast.LENGTH_LONG).show()
     }

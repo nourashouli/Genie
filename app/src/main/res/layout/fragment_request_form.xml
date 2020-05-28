@@ -83,13 +83,11 @@
                 <Button
                     android:id="@+id/button_datepicker"
                     android:layout_width="150dp"
-                    android:layout_height="60dp"
-
-
+                    android:layout_height="55dp"
                     android:layout_below="@+id/description"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/rounded"
                     android:text="pick date and time"
                     android:textColor="@color/white"
                     app:layout_constraintVertical_bias="0.864" />
@@ -104,11 +102,11 @@
                 <Button
                     android:id="@+id/btnOpenPlacePicker"
                     android:layout_width="150dp"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_below="@+id/description"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/rounded"
                     android:text="pick location"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -135,9 +133,9 @@
                     style="@style/loginButton"
 
                     android:layout_width="150dp"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/rounded"
                     android:text="add images">
 
                 </Button>
@@ -156,9 +154,9 @@
                 style="@style/loginButton"
 
                 android:layout_width="150dp"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/rounded"
                 android:layout_marginTop="@dimen/loginViewsMargin"
                 android:text="Submit" />
 

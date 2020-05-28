@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import club.handiman.genie.Fragments.HandymanprofileFragment
 import club.handiman.genie.Fragments.PaymentFragment
+import club.handiman.genie.Fragments.RequestDetailsFragment
 import club.handiman.genie.MainActivity
 import club.handiman.genie.Models.RequestModel
 import com.bumptech.glide.Glide
@@ -82,13 +83,22 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             .load(Utils.BASE_IMAGE_URL.plus(url))
             .into(holder.itemView.imageView2)
 
-//        holder.itemView.cancel.setOnClickListener {
-//
-//            Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
-//            list.remove(list[position])
-//            notifyDataSetChanged()
-//        }
+        holder.itemView.cancel.setOnClickListener {
 
+            Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
+            list.remove(list[position])
+            notifyDataSetChanged()
+        }
+        holder.itemView.setOnClickListener {
+
+            // {itemClick(layoutPosition)}
+            (context as MainActivity).navigateToFragment(
+                RequestDetailsFragment(
+                    (list[position])
+                )
+            )
+//           this.listener!!.onAction(list[position])
+        }
     }
 
     override fun getItemCount(): Int {
