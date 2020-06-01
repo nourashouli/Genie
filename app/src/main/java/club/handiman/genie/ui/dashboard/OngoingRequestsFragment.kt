@@ -17,7 +17,6 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.fragment_noti.*
-import org.jetbrains.anko.support.v4.runOnUiThread
 import org.json.JSONObject
 
 
@@ -75,7 +74,9 @@ class OngoingRequestsFragment : Fragment() {
                                         false, false,
                                         request.optString("date"),
                                         request.optString("from"),
-                                        request.optString("to")
+                                        request.optString("to"),
+                                        request.optString("subject"),
+                                        request.getJSONArray("images")
                                     )
                                 )
 

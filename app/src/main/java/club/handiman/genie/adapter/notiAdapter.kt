@@ -71,12 +71,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             (list[position]).handyman
         holder.itemView.date.text =
             (list[position]).date
-//        holder.itemView.from.text =
-//            (list[position]).from
-//        holder.itemView.to.text =
-//            (list[position]).to
-//        holder.itemView.textView.text =
-//            (list[position]).request
+
         val url = (list[position]).image
         Glide
             .with(holder.itemView)
@@ -94,7 +89,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             // {itemClick(layoutPosition)}
             (context as MainActivity).navigateToFragment(
                 RequestDetailsFragment(
-                    (list[position])
+                    (list[position] as RequestModel)
                 )
             )
 //           this.listener!!.onAction(list[position])
