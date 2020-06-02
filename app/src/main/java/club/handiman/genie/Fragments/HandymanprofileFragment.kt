@@ -47,15 +47,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         super.onActivityCreated(savedInstanceState)
         adapter = feedbackAdapter(context!!)
         //try
-        val openActivityDownload: Button =certificates
-        openActivityDownload.setOnClickListener {
-            val s = "https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf"
-            val fname = "123.pdf"
-            if (FileExists(fname)) { previewpdf(fname) }
-            else { download(s)
-                Toast.makeText(context, "File will download", Toast.LENGTH_LONG).show()
-            }
-        }
+
 
         feedbackrecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -109,30 +101,6 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         return file.exists()
     }
 
-    private fun download(s: String) {
-       // val downloadManager = getSystemServiceName(context.DOWNLOAD_SERVICE) as DownloadManager
-        val uri = Uri.parse(s)
-        val request = DownloadManager.Request(uri)
-        val nameOfFile = URLUtil.guessFileName(uri.toString(), null, MimeTypeMap.getFileExtensionFromUrl(uri.toString()))
-        val destinationInExternalPublicDir = request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, nameOfFile)
-        request.setAllowedOverMetered(true)
-        request.setAllowedOverRoaming(true)
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
-        request.allowScanningByMediaScanner()
-      //  downloadManager.enqueue(request)
-    }
 
-    private fun previewpdf(name: String) {
-        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + name)
-        val path = Uri.fromFile(file)
-       // intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        val intent = Intent(Intent.ACTION_VIEW, path)
-
-        val chooser = Intent.createChooser(intent, "Open with")
-       // if (intent.resolveActivity(Wrappers.packageManager()) != null)
-          //  startActivity(chooser)
-                // else
-          //  Toast.makeText(context, "No suitable application to open file", Toast.LENGTH_LONG).show()
-    }
 }
 
