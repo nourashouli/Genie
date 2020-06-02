@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
@@ -14,6 +15,8 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.Window
+import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -81,7 +84,9 @@ class requestForm2 : AppCompatActivity(),
     var time_fromAsInt: Int? = null
     var ex: String? = null
     var time_to: String? = null
-
+    var addresses_: ArrayList<Any>? = ArrayList()
+    var customDropDownAdapter: AddressAdapter? = null
+    var address_id:Any?=null
     data class request(var date: String, var from: String, var to: String)
 
     var request_array: ArrayList<request>? = null
@@ -90,7 +95,41 @@ class requestForm2 : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
         initAdapter()
+
+        initAddresses()
+
+        var spinner: Spinner = codeSpinner
+
+
+        customDropDownAdapter = AddressAdapter(this, addresses_!!)
+
+        spinner.adapter = customDropDownAdapter
+
+
+
+        spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                address_id=(addresses_!![position] as JSONObject).optString("_id")
+
+                Toast.makeText(
+                    this@requestForm2,
+                    addresses_!![position].toString()!!,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
         var Date: Date
+        is_urgent.visibility = View.GONE
         var obje: JSONObject = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
         employee_id = (object2).optString("employee_id")
@@ -110,10 +149,7 @@ class requestForm2 : AppCompatActivity(),
 
             selectDate()
         }
-        btnOpenPlacePicker.setOnClickListener {
-          // showDialog()
-            showPlacePicker()
-        }
+
 
         submit_request.setOnClickListener {
 
@@ -139,24 +175,6 @@ class requestForm2 : AppCompatActivity(),
             }
         }
     }
-
-
-    private fun showPlacePicker() {
-
-        val builder = PingPlacePicker.IntentBuilder()
-        builder.setAndroidApiKey("AIzaSyDnGiz0xHyB0ktZ5Kt5L4BzNCAdE-qbB6w")
-            .setMapsApiKey("AIzaSyAvIuv88TNm5f5M76GC3Or4k5OBRjfcJK0")
-
-        try {
-            val placeIntent = builder.build(this)
-            startActivityForResult(placeIntent, pingActivityRequestCode)
-        } catch (ex: Exception) {
-            toast("Google Play Services is not Available")
-        }
-    }
-
-
-    //pick a photo from gallery
 
 
     override fun onActivityResult(
@@ -196,26 +214,8 @@ class requestForm2 : AppCompatActivity(),
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
-    private fun showDialog() {
 
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.requestaddress)
 
-        val noBtn = dialog.findViewById(R.id.nobtn) as TextView
-        noBtn.setOnClickListener { dialog.dismiss()
-
-           // saveProfile()
-        }
-        dialog.show()
-//        adapter1 = AddressAdapter(this)
-//        //try
-//        oldAd.layoutManager =
-//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        oldAd.setAdapter(adapter1)
-//        viewProfile()
-    }
     private fun getPathFromURI(uri: Uri) {
         var path: String? = uri.path // uri = any content Uri
 
@@ -568,6 +568,53 @@ class requestForm2 : AppCompatActivity(),
             }
     }
 
+    fun initAddresses() {
+        Fuel.get(Utils.API_EDIT_PROFILE)
+            .header(
+                "accept" to "application/json",
+                Utils.AUTHORIZATION to SharedPreferences.getToken(baseContext).toString()
+            )
+            .responseJson { _, _, result ->
+
+                result.success {
+
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+
+                        var profile = res.getJSONObject("profile")
+                        runOnUiThread {
+                            if (profile.has("client_addresses")) {
+                                val items = profile.optJSONArray("client_addresses")
+                                //   addresses_ = ArrayList<String>()
+                                for (item in 0 until items!!.length()) {
+
+                                    addresses_!!.add((items.get(item) as JSONObject))
+                                    customDropDownAdapter!!.notifyDataSetChanged()
+                                }
+                                //      user_addresses = profile.optJSONArray("client_addresses")
+                            }
+
+                        }
+                    } else {
+
+                        Toast.makeText(
+                            this,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+
+    }
+
     fun save() {
         var des: String = description!!.text!!.toString()
         val role = "user"
@@ -575,13 +622,15 @@ class requestForm2 : AppCompatActivity(),
 
 
         var params = HashMap<String, String>()
+
+
         params.put("employee_id", employee_id)
         params.put("service_id", service_id)
         params.put("description", des)
         params.put("timezone", "Asia/Beirut")
         params.put("subject", subject)
-        params.put("latitude", location[0].toString())
-        params.put("longitude", location[1].toString())
+        params.put("address", address_id!!.toString())
+
         params.put("date", stringDate1.toString())
         params.put("to", time_to.toString())
         params.put("from", time_fromAsString.toString())
@@ -592,7 +641,7 @@ class requestForm2 : AppCompatActivity(),
         Toast.makeText(this, fileUri.toString(), Toast.LENGTH_SHORT).show()
         Fuel.post(
             Utils.API_MAKE_REQUEST,
-                params.toList()
+            params.toList()
 
 
         ).header(
@@ -619,50 +668,8 @@ class requestForm2 : AppCompatActivity(),
 
             }
     }
-    private fun viewProfile() {
-        Fuel.get(Utils.API_EDIT_PROFILE)
-            .header(
-                "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(this!!.baseContext).toString()
-            )
-            .responseJson { _, _, result ->
-
-                result.success {
-
-                    var res = it.obj()
-
-                    if (res.optString("status", "error") == "success") {
-
-                        var profile = res.getJSONObject("profile")
-                        this!!.runOnUiThread {
-
-                            if(profile.has("client_addresses")){
-                                val items:JSONArray ?= profile.getJSONArray("client_addresses")
-
-                                for (i in 0 until items!!.length()) {
-                                    adapter1!!.setItem(items.getJSONObject(i))
-                                }
-                                adapter1!!.notifyDataSetChanged()
-                            }}
-
-                    } else {
-
-                        Toast.makeText(
-                            this,
-                            res.getString("status"),
-                            Toast.LENGTH_LONG!!
-                        ).show()
-                    }
-                }
-                result.failure {
-
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
 
 
-    }
 
     private fun getHandymanRequests(id: String) {
         Fuel.get(Utils.API_HANDYMAN_REQUESTS.plus(id))
