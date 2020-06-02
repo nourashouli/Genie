@@ -12,14 +12,15 @@ import android.provider.MediaStore
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.Models.AddressModel
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
+import club.handiman.genie.adapter.AddressAdapter
 import club.handiman.genie.adapter.RequestImagesAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
@@ -37,7 +38,8 @@ import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
-class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener,
+class requestForm : AppCompatActivity(),
+    com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener,
     com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener {
     var datePickerDialog: com.wdullaer.materialdatetimepicker.date.DatePickerDialog? = null
     var timePickerDialog: com.wdullaer.materialdatetimepicker.time.TimePickerDialog? = null
@@ -61,10 +63,11 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
     var Dat = "j"
     var time: String = "h"
     var timee: String = "h"
-
+    var address: Any? = null
+    var isUrgent: Boolean = false
     private val pingActivityRequestCode = 1001
 
-    var service_id: String?=null
+    var service_id: String? = null
     var stringDate1: String? = null
     var location = DoubleArray(2)
     var day_of_week_currenctselection: Int? = null
@@ -72,17 +75,62 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
     var time_fromAsInt: Int? = null
     var ex: String? = null
     var time_to: String? = null
-
-
-
+    var addresses_: ArrayList<Any>? = ArrayList()
+    var customDropDownAdapter: AddressAdapter? = null
+    var address_id:Any?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
         initAdapter()
+        initAddresses()
+        is_urgent.setOnClickListener {
+            if (!isUrgent) {
+                isUrgent = true
+                date_text.visibility = View.GONE
+                button_datepicker.visibility = View.GONE
+            } else {
+                isUrgent = false
+                date_text.visibility = View.VISIBLE
+                button_datepicker.visibility = View.VISIBLE
+            }
+        }
+
+
+        var spinner: Spinner = codeSpinner
+
+
+        customDropDownAdapter = AddressAdapter(this, addresses_!!)
+
+        spinner.adapter = customDropDownAdapter
+
+
+
+        spinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                address_id=(addresses_!![position] as JSONObject).optString("_id")
+
+                Toast.makeText(
+                    this@requestForm,
+                    addresses_!![position].toString()!!,
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // write code to perform some action
+            }
+        }
+
+
         var Date: Date
         var obje = JSONObject(intent!!.extras!!.getString("object"))
         var object2 = JSONObject(obje.getString("nameValuePairs"))
-       service_id = (object2).optString("id")
+        service_id = (object2).optString("id")
 
 
         calendar = Calendar.getInstance()
@@ -99,9 +147,7 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
             selectDate()
             //  timee()
         }
-        btnOpenPlacePicker.setOnClickListener {
-            showPlacePicker()
-        }
+
 
         submit_request.setOnClickListener {
 
@@ -125,21 +171,6 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
                 intent.type = "image/*"
                 startActivityForResult(intent, PICK_IMAGE_MULTIPLE);
             }
-        }
-    }
-
-
-    private fun showPlacePicker() {
-
-        val builder = PingPlacePicker.IntentBuilder()
-        builder.setAndroidApiKey("AIzaSyDnGiz0xHyB0ktZ5Kt5L4BzNCAdE-qbB6w")
-            .setMapsApiKey("AIzaSyAvIuv88TNm5f5M76GC3Or4k5OBRjfcJK0")
-
-        try {
-            val placeIntent = builder.build(this)
-            startActivityForResult(placeIntent, pingActivityRequestCode)
-        } catch (ex: Exception) {
-            toast("Google Play Services is not Available")
         }
     }
 
@@ -400,16 +431,23 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
 
 
         var params = HashMap<String, String>()
+        if (!isUrgent) {
+            params.put("is_urgent", "false")
+            params.put("date", stringDate1.toString())
+            params.put("to", time_to.toString())
+            params.put("from", time_fromAsString.toString())
+
+        } else {
+            params.put("is_urgent", "true")
+
+
+        }
         params.put("service_id", service_id.toString())
         params.put("description", des)
         params.put("timezone", "Asia/Beirut")
         params.put("subject", subject)
-        params.put("latitude", location[0].toString())
-        params.put("longitude", location[1].toString())
-        params.put("is_urgent","is_urgent")
-        params.put("date", stringDate1.toString())
-        params.put("to", time_to.toString())
-        params.put("from", time_fromAsString.toString())
+        params.put("address", address_id!!.toString())
+
         for (x in 0 until listOfImages.size) {
             params.put("images[$x]", listOfImages.get(x))
         }
@@ -445,7 +483,52 @@ class requestForm : AppCompatActivity(),  com.wdullaer.materialdatetimepicker.da
             }
     }
 
+    fun initAddresses() {
+        Fuel.get(Utils.API_EDIT_PROFILE)
+            .header(
+                "accept" to "application/json",
+                Utils.AUTHORIZATION to SharedPreferences.getToken(baseContext).toString()
+            )
+            .responseJson { _, _, result ->
 
+                result.success {
+
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+
+                        var profile = res.getJSONObject("profile")
+                        runOnUiThread {
+                            if (profile.has("client_addresses")) {
+                                val items = profile.optJSONArray("client_addresses")
+                                //   addresses_ = ArrayList<String>()
+                                for (item in 0 until items!!.length()) {
+
+                                    addresses_!!.add((items.get(item) as JSONObject))
+                                    customDropDownAdapter!!.notifyDataSetChanged()
+                                }
+                                //      user_addresses = profile.optJSONArray("client_addresses")
+                            }
+
+                        }
+                    } else {
+
+                        Toast.makeText(
+                            this,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+
+    }
 
     fun initAdapter() {
 

@@ -39,11 +39,11 @@ import org.json.JSONObject
  * A simple [Fragment] subclass.
  */
 class ProfileFragment : Fragment() {
-    var title="d"
-    var building="d"
-    var zip="d"
-    var floor="d"
-    var street="d"
+    var title = "d"
+    var building = "d"
+    var zip = "d"
+    var floor = "d"
+    var street = "d"
     var adapter: locationAdapter? = null
     private val pingActivityRequestCode = 1001
     var location = DoubleArray(2)
@@ -57,23 +57,23 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-    adapter = locationAdapter(context!!)
+        adapter = locationAdapter(context!!)
         //try
         locations.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         locations.setAdapter(adapter)
-viewProfile()
+        viewProfile()
         edit_account_settings_btn.setOnClickListener {
             val i = Intent(this.context, AccountSettingActivity::class.java)
             startActivity(i)
 
         }
         Logout.setOnClickListener {
-           Utils.logout(context!!)
+            Utils.logout(context!!)
 
         }
         newAddress.setOnClickListener {
-        showPlacePicker()
+            showPlacePicker()
         }
     }
 
@@ -89,6 +89,7 @@ viewProfile()
             toast("Google Play Services is not Available")
         }
     }
+
     override fun onActivityResult(
         requestCode: Int, resultCode: Int,
         data: Intent?
@@ -101,23 +102,27 @@ viewProfile()
             location[0] = place!!.latLng!!.latitude!!.toDouble()
             location[1] = place!!.latLng!!.longitude!!.toDouble()
 
-        }}
+        }
+    }
+
     private fun showDialog() {
         val dialog = Dialog(context!!)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.view)
         val noBtn = dialog.findViewById(R.id.nobtn) as TextView
-        noBtn.setOnClickListener { dialog.dismiss()
-             title= dialog.titlee.text.toString()
-             building= dialog.building.text.toString()
-             zip= dialog.zip.text.toString()
-             floor= dialog.floor.text.toString()
-             street= dialog.street.text.toString()
+        noBtn.setOnClickListener {
+            dialog.dismiss()
+            title = dialog.titlee.text.toString()
+            building = dialog.building.text.toString()
+            zip = dialog.zip.text.toString()
+            floor = dialog.floor.text.toString()
+            street = dialog.street.text.toString()
             saveProfile()
-       }
+        }
         dialog.show()
     }
+
     private fun viewProfile() {
         Fuel.get(Utils.API_EDIT_PROFILE)
             .header(
@@ -144,14 +149,15 @@ viewProfile()
                             Glide
                                 .with(this)
                                 .load(url).into(pro_image_profile_frag)
-              if(profile.has("client_addresses")){
-                            val items:JSONArray ?= profile.getJSONArray("client_addresses")
+                            if (profile.has("client_addresses")) {
+                                val items: JSONArray? = profile.getJSONArray("client_addresses")
 
-                            for (i in 0 until items!!.length()) {
-                                adapter!!.setItem(items.getJSONObject(i))
+                                for (i in 0 until items!!.length()) {
+                                    adapter!!.setItem(items.getJSONObject(i))
+                                }
+                                adapter!!.notifyDataSetChanged()
                             }
-                       adapter!!.notifyDataSetChanged()
-                        }}
+                        }
 
                     } else {
 
@@ -171,12 +177,19 @@ viewProfile()
 
 
     }
+
     private fun saveProfile() {
         Fuel.post(
             Utils.API_EDIT_PROFILE, listOf(
+                "address" to true,
                 "name" to title,
-                "street" to street,"zip" to zip,"floor" to floor,"building" to building
-            ,"latitude" to location[0],"longitude" to location[1])
+                "street" to street,
+                "zip" to zip,
+                "floor" to floor,
+                "building" to building
+                , "lat" to location[0],
+                "lng" to location[1]
+            )
 
         ).header(
             "accept" to "application/json",
@@ -201,5 +214,5 @@ viewProfile()
 
 
     }
-    }
+}
 

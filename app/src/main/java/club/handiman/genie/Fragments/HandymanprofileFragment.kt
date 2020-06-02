@@ -57,7 +57,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         val image_url = (data as JSONObject).optString("image")
         val cv = (data as JSONObject).optString("cv").toString()
         val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
-        rBar.rating=(data as JSONObject).optDouble("rating").toFloat()
+        rBar.rating=(data as JSONObject).optJSONObject("rating_object").getDouble(id!!).toFloat()
         val certificatess = (data as JSONObject).optString("certificate").toString()
         if((data as JSONObject).has("feedbacks")){
             val items: JSONArray?= (data as JSONObject).getJSONArray("feedbacks")

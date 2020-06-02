@@ -4,55 +4,57 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.Models.AddressModel
 import com.example.genie_cl.R
+import kotlinx.android.synthetic.main.address_item.view.*
 import kotlinx.android.synthetic.main.feedback.view.*
 import kotlinx.android.synthetic.main.radioaddress.view.*
 import org.json.JSONObject
 
-class AddressAdapter(var context: Context) : RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
+class AddressAdapter(val context: Context, var dataSource: ArrayList<Any>) : BaseAdapter() {
 
-    var list: ArrayList<Any> = ArrayList()
+    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    fun setItem(ob:Any) {
-        list.add(ob)
-        notifyItemInserted(list.size - 1)
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+
+        val view: View
+        val vh: ItemHolder
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.address_item, parent, false)
+            vh = ItemHolder(view)
+            view?.tag = vh
+        } else {
+            view = convertView
+            vh = view.tag as ItemHolder
+        }
+        vh.label.text = (dataSource.get(position) as JSONObject).optString("name")
+
+
+        return view
     }
 
-    fun getItem(index: Int) = list[index]
-
-    fun removeItem(index: Int) {
-        list.removeAt(index)
-        notifyItemRemoved(index)
+    override fun getItem(position: Int): Any? {
+        return dataSource[position];
     }
 
-    fun removeItems() {
-        list.clear()
-        notifyDataSetChanged()
+    override fun getCount(): Int {
+        return dataSource.size;
     }
 
-    fun getItems() = list
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.radioaddress, parent, false)
-        )
+    override fun getItemId(position: Int): Long {
+        return position.toLong();
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.radio_Ad.text = (list[position] as JSONObject).optString("name")
+    private class ItemHolder(row: View?) {
+        val label: TextView
 
 
-
+        init {
+            label = row?.findViewById(R.id.address_name) as TextView
+        }
     }
-
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
 }
-
