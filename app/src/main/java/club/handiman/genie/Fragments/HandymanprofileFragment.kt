@@ -1,22 +1,14 @@
 package club.handiman.genie.Fragments
 
-import Helpers.DownloadTask
 import android.app.DownloadManager
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.MimeTypeMap
-import android.webkit.URLUtil
-import android.widget.Button
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.getSystemServiceName
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
@@ -25,16 +17,15 @@ import club.handiman.genie.adapter.feedbackAdapter
 import club.handiman.genie.requestForm2
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
-import com.google.android.gms.common.wrappers.Wrappers
 import kotlinx.android.synthetic.main.fragment_handymanprofile.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.File
 
 
 class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
     lateinit internal var uri: Uri
     var adapter: feedbackAdapter? = null
+    var certificatess:String="h"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,10 +46,10 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         bio.text = (data as JSONObject).getString("biography")
         username.text = (data as JSONObject).getString("name")
         val image_url = (data as JSONObject).optString("image")
+         certificatess = (data as JSONObject).optString("certificate").toString()
         val cv = (data as JSONObject).optString("cv").toString()
         val criminalrecord = (data as JSONObject).optString("criminal_record").toString()
         rBar.rating=(data as JSONObject).optJSONObject("rating_object").getDouble(id!!).toFloat()
-        val certificatess = (data as JSONObject).optString("certificate").toString()
         if((data as JSONObject).has("feedbacks")){
             val items: JSONArray?= (data as JSONObject).getJSONArray("feedbacks")
 
@@ -67,9 +58,10 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             }
             adapter!!.notifyDataSetChanged()
 
-//        certificates.setOnClickListener {
-//            DownloadTask(context!!, "https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf")
-//        }
+        certificates.setOnClickListener {
+           // DownloadTask(context!!, "https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf")
+            StartDownloading(view)
+        }
 //        criminal.setOnClickListener {
 //            DownloadTask(context!!,criminalrecord)
 //        }
@@ -96,9 +88,30 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
 }
 
 
-    fun FileExists(name: String): Boolean {
-        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path + File.separator + name)
-        return file.exists()
+    fun StartDownloading(view: View?) {
+
+        val title1: String = "nnn"
+        DownloadBooks("https://drive.google.com/file/d/0B71LXrqWr0mFUTk5WnVyVEQ3MFE/export?format=pdf", title1)
+    }
+
+    fun DownloadBooks(url: String?, title: String) {
+        val request = DownloadManager.Request(Uri.parse(url))
+        val tempTitle = title.replace("", "_")
+        request.setTitle(tempTitle)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request.allowScanningByMediaScanner()
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        }
+        request.setDestinationInExternalPublicDir(
+            Environment.DIRECTORY_DOWNLOADS,
+            "$tempTitle.pdf"
+        )
+        val downloadManager =
+       //   getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+         request.setMimeType("application/pdf")
+        request.allowScanningByMediaScanner()
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
+       //downloadManager!!.enqueue(request)
     }
 
 
