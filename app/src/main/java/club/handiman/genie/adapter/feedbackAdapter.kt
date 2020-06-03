@@ -41,7 +41,7 @@ class feedbackAdapter(var context: Context) : RecyclerView.Adapter<feedbackAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.feedback.text = (list[position] ).toString()
+        holder.itemView.feedback.text = (list[position] as JSONObject).optString("feedback")
 
 
 
