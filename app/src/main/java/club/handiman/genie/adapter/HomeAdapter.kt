@@ -1,7 +1,6 @@
 package club.handiman.genie.adapter
 
 import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,9 @@ import com.example.genie_cl.R
 import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.home_row.view.*
 import org.json.JSONObject
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.stream.Collectors
 
 class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
@@ -54,7 +56,13 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
 
         holder.itemView.HandymaName.text = handyman
 
-
+        holder.itemView.timecreated.text= (list[position] as JSONObject).optString("created_at")
+//        val formatter =
+//            DateTimeFormatter.ofPattern("yyyy-MM-ss HH:mm:ss")
+//        val dateTimes: List<LocalDateTime> =
+//            list.stream().map({ date -> LocalDateTime.parse(date as CharSequence?, formatter) }).sorted()
+//                .collect(Collectors.toList())
+//        println(dateTimes)
         if ((list[position] as JSONObject).has("images")) {
             //for post images
             var images_array = (list[position] as JSONObject).getJSONArray("images")
@@ -77,6 +85,7 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.handymanImage)
 
+
     }
 
 
@@ -90,3 +99,8 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
     }
 
 }
+
+
+
+
+

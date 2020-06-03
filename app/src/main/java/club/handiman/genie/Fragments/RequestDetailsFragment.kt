@@ -40,11 +40,11 @@ class RequestDetailsFragment(var data: RequestModel) : Fragment() {
         date1.text = data.date
         from1.text = data.from
         to1.text =  data.to
-//        val items: JSONArray?=data.images
-//        for (i in 0 until items!!.length()) {
-//            adapter!!.setItem(items.get(i) as RequestModel)
-//        }
-//        adapter!!.notifyDataSetChanged()
+        val items: JSONArray?=data.images
+        for (i in 0 until items!!.length()) {
+            adapter!!.setItem(items.get(i) )
+        }
+    //    adapter!!.notifyDataSetChanged()
 
 
                 }

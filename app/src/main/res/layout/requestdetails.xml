@@ -19,7 +19,10 @@
                 android:id="@+id/handymanname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Requested handyman :"/>
+                android:text="Requested handyman :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -32,7 +35,8 @@
                 android:id="@+id/handymanname1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject :"/>
+                android:text="Subject :"
+                android:textSize="17dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -51,7 +55,10 @@
             android:id="@+id/subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject :"/>
+            android:text="Subject :"
+             android:textSize="18dp"
+             android:textStyle="bold"
+             android:textColor="@android:color/black"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +71,8 @@
             android:id="@+id/subject1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject :"/>
+            android:text="Subject :"
+            android:textSize="17dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>
@@ -83,7 +91,10 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description :"/>
+                android:text="description :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -96,7 +107,8 @@
                 android:id="@+id/description1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject :"/>
+                android:text="Subject :"
+                android:textSize="17dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -115,7 +127,10 @@
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="date :"/>
+                android:text="date :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -128,7 +143,8 @@
                 android:id="@+id/date1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject :"/>
+                android:text="Subject :"
+                android:textSize="17dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -147,7 +163,10 @@
                 android:id="@+id/from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="from :"/>
+                android:text="from :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -160,7 +179,8 @@
                 android:id="@+id/from1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject :"/>
+                android:text="Subject :"
+                android:textSize="17dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -179,7 +199,10 @@
                 android:id="@+id/to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="to :"/>
+                android:text="to :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -192,7 +215,8 @@
                 android:id="@+id/to1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject :"/>
+                android:text="Subject :"
+                android:textSize="17dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
@@ -211,7 +235,10 @@
                 android:id="@+id/images"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="images :"/>
+                android:text="Sent images :"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

@@ -11,12 +11,13 @@ import com.bumptech.glide.Glide
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_images_adapter.view.*
+import org.json.JSONArray
 
 class imagesAdapter(var context: Context) : RecyclerView.Adapter<imagesAdapter.ViewHolder>() {
 
-    var list: ArrayList<RequestModel> = ArrayList()
+    var list: ArrayList<Any> = ArrayList()
 
-    fun setItem(ob: RequestModel) {
+    fun setItem(ob:Any) {
         list.add(ob)
         notifyItemInserted(list.size - 1)
     }
@@ -45,7 +46,7 @@ class imagesAdapter(var context: Context) : RecyclerView.Adapter<imagesAdapter.V
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val url = (list[position] ).toString()
+        val url = (list[position]  ).toString()
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(url))

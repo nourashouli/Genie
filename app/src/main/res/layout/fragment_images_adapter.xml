@@ -15,11 +15,12 @@
 
             <ImageView
                 android:id="@+id/requestimage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
+                android:layout_width="260dp"
+                android:layout_height="170dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:layout_marginStart="60dp"/>
 
     </androidx.cardview.widget.CardView>
 
