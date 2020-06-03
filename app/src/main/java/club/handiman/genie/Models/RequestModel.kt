@@ -14,7 +14,9 @@ class RequestModel(
     var from: String,
     var to: String,
     var subject: String,
-    var images: JSONArray
+    var images: JSONArray,
+    var receipt:JSONArray?=null,
+    var receipt_images :JSONArray?=null
 //    var request_title: String,
 //    var description: String,
 //    var street: String,

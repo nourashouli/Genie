@@ -55,6 +55,9 @@ class PaymentFragment(var ob: Any) : Fragment() {
         submit_payment.setOnClickListener {
             validateCard()
         }
+        val receipt_images=(ob as RequestModel).receipt_images
+        val receipt=(ob as RequestModel).receipt
+
     }
 
     fun sendTokenToServer(token: String) {
@@ -97,7 +100,6 @@ class PaymentFragment(var ob: Any) : Fragment() {
     }
 
     fun validateCard() {
-        Toast.makeText(context!!, "hello", Toast.LENGTH_LONG).show()
         cardInputWidget.card?.let { card ->
             if (!card.validateNumber() || !card.validateCVC()
                 || !card.validateExpiryDate()

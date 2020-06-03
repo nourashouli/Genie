@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/receipt_recyler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/receipt_recyler"
+        android:id="@+id/receipt_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.stripe.android.view.CardInputWidget
         android:id="@+id/cardInputWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/receipt_images"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="#00A32323" />
 
     <Button
         android:id="@+id/submit_payment"
-        android:text="submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
+        android:layout_below="@id/cardInputWidget"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/primaryTextColor"
+        android:gravity="center"
+        android:text="submit">
 
     </Button>
 
-</FrameLayout>
+</RelativeLayout>

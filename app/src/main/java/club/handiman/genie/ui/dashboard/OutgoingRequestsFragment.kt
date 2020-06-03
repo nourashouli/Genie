@@ -70,10 +70,17 @@ class OutgoingRequestsFragment : Fragment() {
                             var model: RequestModel = RequestModel(
                                 request.optString("_id", "id"),
                                 handyman.optString("name"),
-                                handyman.optString("image"), request.optString("description"),
-                                flag, flag2, request.optString("date"),
+                                handyman.optString("image"),
+                                request.optString("description"),
+                                flag,
+                                flag2,
+                                request.optString("date"),
                                 request.optString("from"),
-                                request.optString("to"),  request.optString("subject"),request.getJSONArray("images")
+                                request.optString("to"),
+                                request.optString("subject"),
+                                request.getJSONArray("images"),
+                                request.optJSONArray("receipt"),
+                                request.optJSONArray("receipt_images")
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)

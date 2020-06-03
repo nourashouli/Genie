@@ -62,7 +62,7 @@ class OngoingRequestsFragment : Fragment() {
                                 if (!request.has("handyman")) {
                                     handyman = JSONObject()
                                     handyman.put("name", " The engine is searching for a name")
-                                    handyman.put("image","services/service_1585417538.png")
+                                    handyman.put("image", "services/service_1585417538.png")
                                 }
                                 adapter!!.setItem(
                                     RequestModel(
@@ -71,7 +71,8 @@ class OngoingRequestsFragment : Fragment() {
                                         handyman.optString("name", "w"),
                                         handyman.optString("image", "a"),
                                         request.optString("description"),
-                                        false, false,
+                                        false,
+                                        false,
                                         request.optString("date"),
                                         request.optString("from"),
                                         request.optString("to"),
