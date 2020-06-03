@@ -30,6 +30,7 @@ class HandymanListAdapter(var context: Context, var id: String) :
     var datelist: ArrayList<Any> = ArrayList()
     var day: Int = 0
 
+    var b:Boolean? = null
 
     val d = FloatArray(1)
     // var context:Context = context
@@ -42,6 +43,7 @@ class HandymanListAdapter(var context: Context, var id: String) :
         notifyItemInserted(list.size - 1)
         notifyItemInserted(filterlist.size - 1)
         notifyItemInserted(datelist.size - 1)
+
 
     }
 
@@ -112,6 +114,59 @@ class HandymanListAdapter(var context: Context, var id: String) :
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //itemView.setOnClickListener( {itemClick(layoutPosition)} )
+    }
+    fun DateChooser(date:String,from:Int,to:Int) {
+        if(date.equals("Monday"))
+        {
+            day = 0
+        }
+        if(date.equals("Tuesday"))
+        {
+            day = 1
+        }
+        if(date.equals("Wednesday"))
+        {
+            day = 2
+        }
+        if(date.equals("Thursday"))
+        {
+            day = 3
+        }
+        if(date.equals("Friday"))
+        {
+            day = 4
+        }
+        if(date.equals("Saturday"))
+        {
+            day = 5
+        }
+        if(date.equals("Sunday"))
+        {
+            day = 6
+        }
+        //  this.list.addAll(listOf(this.datelist.any().equals(true)))
+
+
+
+
+        //this.list.addAll(this.datelist.any)
+        for(i in from until to)
+        {
+            this.list.clear()
+
+            this.list.addAll(this.datelist.filter {
+                b =(it as JSONObject).getJSONArray("timeline").getJSONArray(day).get(i).equals(true)
+                (it as JSONObject).getJSONArray("timeline").getJSONArray(day).get(i).equals(true)
+                //check(from,to,it as JSONObject,day,i)
+
+            })
+            if(b?.equals(true)!!)
+            {
+                break
+            }
+
+        }
+        notifyDataSetChanged()
     }
 
     fun locationsort(userlat: Double, userlon: Double, lat: String, lon: String, order: String) {

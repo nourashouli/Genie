@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import android.widget.Button
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.Utils.putExtraJson
@@ -34,6 +33,9 @@ class handymanlist(var data: Any) : Fragment() {
 
     var id: String? = null
 
+    var SelectedDay:String? = null
+    var From:Int? = null
+    var To:Int? = null
 
     var latitude: Double? = 0.0
     var longitude: Double? = 0.0
@@ -128,6 +130,101 @@ class handymanlist(var data: Any) : Fragment() {
             }
         }
 
+        activity!!.runOnUiThread()
+        {
+            sort_time.setOnClickListener {
+                val dialog = getActivity()?.let { it1 -> Dialog(it1) }
+                dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+                dialog?.setContentView(R.layout.timer)
+                val Fromtext:TextView = dialog.findViewById<View>(R.id.From_Time) as TextView
+                val Totext:TextView = dialog.findViewById<View>(R.id.To_Time) as TextView
+                val FromSeekbar:SeekBar = dialog.findViewById<View>(R.id.From_Seekbar) as SeekBar
+                val ToSeekbar:SeekBar = dialog.findViewById<View>(R.id.To_Seekbar) as SeekBar
+                val SubmitButton:Button = dialog.findViewById<View>(R.id.Submit_Timer)as Button
+                val CancelButton:Button = dialog.findViewById<View>(R.id.Cancel_Timer)as Button
+                val spin:Spinner = dialog.findViewById<View>(R.id.Time_Spinner) as Spinner
+                val array = arrayOf("Choose Day","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
+                val arrayAdapter1 =ArrayAdapter(context!!,android.R.layout.simple_spinner_item,array)
+                spin.adapter = arrayAdapter1
+
+                spin.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        SelectedDay = array[position]
+                    }
+
+                }
+
+
+
+
+                // FromSeekbar.setOnSeekBarChangeListener()
+                FromSeekbar.max = 24
+                FromSeekbar.min = 0
+                ToSeekbar.max = 24
+                ToSeekbar.min = 0
+
+                FromSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(
+                        seekBar: SeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        Fromtext.text = progress.toString()
+                        From = progress
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+                })
+                ToSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                    override fun onProgressChanged(
+                        seekBar: SeekBar?,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        Totext.text = progress.toString()
+                        To = progress
+                    }
+
+                    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+
+                    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                    }
+
+                })
+                SubmitButton.setOnClickListener {
+                    dialog.dismiss()
+                    From?.let { it1 -> To?.let { it2 ->
+                        adapter?.DateChooser(SelectedDay.toString(), it1,
+                            it2
+                        )
+                    } }
+                }
+
+                dialog.show()
+
+
+
+            }
+        }
 
         sss.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

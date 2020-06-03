@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_blue100">
+
+    <TextView
+        android:id="@+id/From_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From:"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/From_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_toRightOf="@+id/From_Text"
+        android:text="21"
+        android:textSize="30sp" />
+
+    <SeekBar
+        android:id="@+id/From_Seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/From_Text"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/To_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/From_Seekbar"
+        android:layout_marginTop="40dp"
+        android:text="TO:"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/To_Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/From_Time"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="80dp"
+        android:layout_toRightOf="@+id/To_Text"
+        android:text="21"
+        android:textSize="30sp" />
+
+    <SeekBar
+        android:id="@+id/To_Seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/To_Text"
+        android:layout_marginTop="20dp" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/Time_Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/To_Seekbar"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="40dp"
+
+        />
+
+    <Button
+        android:id="@+id/Submit_Timer"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Time_Spinner"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="80dp"
+        android:background="@color/colorAccent"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/Cancel_Timer"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Submit_Timer"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="80dp"
+        android:background="@color/primaryTextColor"
+        android:text="Cancel" />
+</RelativeLayout>
