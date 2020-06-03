@@ -42,7 +42,13 @@ class locationAdapter(var context: Context) : RecyclerView.Adapter<locationAdapt
 
      override fun onBindViewHolder(holder: ViewHolder, position: Int) {
          holder.itemView.address.text = (list[position] as JSONObject).optString("name")
+         val address_id=(list[position] as JSONObject).optString("_id")
+         holder.itemView.garbage.setOnClickListener {
 
+             Helpers.DeleteAddress.cancel(address_id, context!!)
+             list.remove(list[position])
+             notifyDataSetChanged()
+         }
 
 
     }

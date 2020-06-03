@@ -6,12 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import club.handiman.genie.Models.AddressModel
 import com.example.genie_cl.R
-import kotlinx.android.synthetic.main.address_item.view.*
-import kotlinx.android.synthetic.main.feedback.view.*
-import kotlinx.android.synthetic.main.radioaddress.view.*
+
 import org.json.JSONObject
 
 class AddressAdapter(val context: Context, var dataSource: ArrayList<Any>) : BaseAdapter() {

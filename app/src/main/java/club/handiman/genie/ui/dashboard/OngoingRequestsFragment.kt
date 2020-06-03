@@ -77,7 +77,7 @@ class OngoingRequestsFragment : Fragment() {
                                         request.optString("from"),
                                         request.optString("to"),
                                         request.optString("subject"),
-                                        request.getJSONArray("images")
+                                        request.optJSONArray("images")
                                     )
                                 )
 

@@ -9,10 +9,10 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import org.jetbrains.anko.support.v4.runOnUiThread
-class RequestHelper {
+class DeleteAddress {
     companion object {
         fun cancel(id:String,context:Context) {
-            Fuel.post(Utils.API_CANCEL_REQUEST.plus(id))
+            Fuel.post(Utils.API_DELETE_Address.plus(id))
                 .header(
                     "accept" to "application/json",
                     Utils.AUTHORIZATION to SharedPreferences.getToken(context!!).toString()
@@ -24,7 +24,7 @@ class RequestHelper {
                         var res = it.obj()
 
                         if (res.optString("status", "error") == "success") {
-                          // it does not return anything
+                            // it does not return anything
 
                         } else {
 

@@ -1,12 +1,10 @@
 package club.handiman.genie
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
@@ -38,7 +36,6 @@ import com.google.android.libraries.places.api.model.Place
 import com.rtchagas.pingplacepicker.PingPlacePicker
 import com.wdullaer.materialdatetimepicker.time.Timepoint
 import kotlinx.android.synthetic.main.fragment_request_form.*
-import kotlinx.android.synthetic.main.requestaddress.*
 import kotlinx.android.synthetic.main.view.*
 import org.jetbrains.anko.toast
 import org.json.JSONArray

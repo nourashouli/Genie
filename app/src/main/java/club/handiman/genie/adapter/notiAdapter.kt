@@ -78,7 +78,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             .load(Utils.BASE_IMAGE_URL.plus(url))
             .into(holder.itemView.imageView2)
 
-        holder.itemView.cancel.setOnClickListener {
+        holder.itemView.garbage1.setOnClickListener {
 
             Helpers.RequestHelper.cancel((list[position]).request_id, context!!)
             list.remove(list[position])

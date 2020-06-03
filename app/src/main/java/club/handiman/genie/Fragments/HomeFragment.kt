@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
         adapter = HomeAdapter(context!!)
       getRequest()
        home_recycler_view.adapter = adapter
+
    }
     fun getRequest() {
         Fuel.get(Utils.API_POST)
