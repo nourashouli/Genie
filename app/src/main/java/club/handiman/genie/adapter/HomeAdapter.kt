@@ -55,7 +55,7 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
             (list[position] as JSONObject).getJSONObject("handyman").optString("name", "handyman")
 
         holder.itemView.HandymaName.text = handyman
-
+        holder.itemView.caption.text= (list[position] as JSONObject).optString("body")
         holder.itemView.timecreated.text= (list[position] as JSONObject).optString("created_at")
 //        val formatter =
 //            DateTimeFormatter.ofPattern("yyyy-MM-ss HH:mm:ss")
