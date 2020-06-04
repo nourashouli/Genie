@@ -1,4 +1,5 @@
 package club.handiman.genie.Fragments
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,6 +8,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.Fragments.ChatLog.ViewPDFActivity
@@ -24,7 +26,7 @@ import org.json.JSONObject
 class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
     lateinit internal var uri: Uri
     var adapter: feedbackAdapter? = null
-    var certificatess:String="h"
+    var certificatess: String = "h"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,15 +44,24 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         feedbackrecycler.setAdapter(adapter)
         bio.text = (data as JSONObject).getString("biography")
         username.text = (data as JSONObject).getString("name")
-        rBar.rating = (data as JSONObject).optJSONObject("rating_object").getDouble(id!!).toFloat()
+        if ((data as JSONObject).has("rating_object")) {
+            if ((data as JSONObject).optJSONObject("rating_object").has(id)) {
+                var arr = (data as JSONObject).optJSONObject("rating_object").optJSONArray(id)
+                if (arr!=null)
+                    rBar.rating = arr.getDouble(0).toFloat()
+            }
 
-         certificatess = (data as JSONObject).optString("certificate").toString()
+
+        }
+
+        certificatess = (data as JSONObject).optString("certificate").toString()
         val cv = (data as JSONObject).optString("cv").toString()
 
         val criminal_record = (data as JSONObject).optString("criminal_record").toString()
         val _certificates = (data as JSONObject).optString("certificate").toString()
-        if((data as JSONObject).has("feedback_object")) {
-            val items: JSONArray? = (data as JSONObject).getJSONObject("feedback_object").getJSONArray(id!!)
+        if ((data as JSONObject).has("feedback_object")) {
+            val items: JSONArray? =
+                (data as JSONObject).getJSONObject("feedback_object").getJSONArray(id!!)
 
 
             for (i in 0 until items!!.length()) {
@@ -58,15 +69,15 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             }
             adapter!!.notifyDataSetChanged()
         }
-            certificates.setOnClickListener {
-                val i = Intent(context!!, ViewPDFActivity::class.java)
-                i.putExtra("url", _certificates)
-                startActivity(i)
-            }
-            criminal.setOnClickListener {
-                val i = Intent(context!!, ViewPDFActivity::class.java)
-                i.putExtra("url", criminal_record)
-            }
+        certificates.setOnClickListener {
+            val i = Intent(context!!, ViewPDFActivity::class.java)
+            i.putExtra("url", _certificates)
+            startActivity(i)
+        }
+        criminal.setOnClickListener {
+            val i = Intent(context!!, ViewPDFActivity::class.java)
+            i.putExtra("url", criminal_record)
+        }
 
         Cv.setOnClickListener {
             val i = Intent(context!!, ViewPDFActivity::class.java)
@@ -107,8 +118,9 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
                     i!!.putExtraJson("object", ob)
                     startActivity(i)
                 }
-            }}
+            }
         }
+    }
 
 
 }

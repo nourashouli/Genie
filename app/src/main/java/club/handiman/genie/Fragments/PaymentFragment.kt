@@ -4,7 +4,9 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +15,18 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import club.handiman.genie.Models.RequestModel
 import club.handiman.genie.Rating
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.Utils.putExtraJson
+import club.handiman.genie.adapter.ReceiptAdapter
+import club.handiman.genie.adapter.ReceiptImagesAdapter
+import club.handiman.genie.adapter.imagesAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -29,6 +38,7 @@ import com.stripe.android.Stripe
 import com.stripe.android.model.Card
 import com.stripe.android.model.Token
 import kotlinx.android.synthetic.main.fragment_payment.*
+import kotlinx.android.synthetic.main.fragment_search.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.json.JSONObject
 import java.lang.ref.WeakReference
@@ -55,8 +65,38 @@ class PaymentFragment(var ob: Any) : Fragment() {
         submit_payment.setOnClickListener {
             validateCard()
         }
-        val receipt_images=(ob as RequestModel).receipt_images
-        val receipt=(ob as RequestModel).receipt
+
+
+        total_amount.text = (ob as RequestModel).total.toString().plus(" $")
+        val receipt = (ob as RequestModel).receipt
+        receipt_recyler!!.layoutManager =
+            LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+        var receiptAdap = ReceiptAdapter(context!!)
+        for (i in 0 until receipt!!.length()) {
+            receiptAdap.setItem(receipt.getJSONObject(i))
+        }
+        receipt_recyler.adapter = receiptAdap
+
+
+        val images = (ob as RequestModel).receipt_images
+
+
+        var receiptImages = ReceiptImagesAdapter(context!!)
+        for (i in 0 until images!!.length()) {
+            receiptImages.setItem(images.getString(i))
+        }
+
+        val mLayoutManager = GridLayoutManager(context!!, 2)
+        receipt_images.setLayoutManager(mLayoutManager)
+        receipt_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        receipt_images.setItemAnimator(DefaultItemAnimator())
+        receipt_images.setAdapter(receiptImages)
+
+
+        receipt_images.setLayoutManager(mLayoutManager)
+        receipt_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        receipt_images.setItemAnimator(DefaultItemAnimator())
+
 
     }
 
@@ -130,4 +170,55 @@ class PaymentFragment(var ob: Any) : Fragment() {
             }
         })
     }
+
+    inner class GridSpacingItemDecoration(
+        private val spanCount: Int,
+        private val spacing: Int,
+        private val includeEdge: Boolean
+    ) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val position = parent.getChildAdapterPosition(view) // item position
+            val column = position % spanCount // item column
+
+            if (includeEdge) {
+                outRect.left =
+                    spacing - column * spacing / spanCount // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    (column) * spacing / spanCount // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing
+                }
+                outRect.bottom = spacing // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
+                outRect.right =
+                    spacing - (column) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing // item top
+                }
+            }
+        }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private fun dpToPx(dp: Int): Int {
+        val r = resources
+        return Math.round(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp.toFloat(),
+                r.displayMetrics
+            )
+        )
+    }
+
 }

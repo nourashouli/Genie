@@ -80,7 +80,8 @@ class OutgoingRequestsFragment : Fragment() {
                                 request.optString("subject"),
                                 request.getJSONArray("images"),
                                 request.optJSONArray("receipt"),
-                                request.optJSONArray("receipt_images")
+                                request.optJSONArray("receipt_images"),
+                                request.optString("total")
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)
