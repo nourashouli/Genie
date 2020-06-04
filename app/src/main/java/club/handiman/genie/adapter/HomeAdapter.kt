@@ -2,8 +2,10 @@ package club.handiman.genie.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import club.handiman.genie.Utils.Utils
 import com.bumptech.glide.Glide
@@ -11,13 +13,12 @@ import com.example.genie_cl.R
 import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.home_row.view.*
 import org.json.JSONObject
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.stream.Collectors
+
 
 class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
     var listener: AdapterListener? = null
+    var service ="h"
 
     constructor(context: Context, listener: AdapterListener) : this(context) {
         this.listener = listener
@@ -53,21 +54,16 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
 
         var handyman =
             (list[position] as JSONObject).getJSONObject("handyman").optString("name", "handyman")
-
+//        service =
+//            (list[position] as JSONObject).getJSONObject("services").optString("name", "services")
         holder.itemView.HandymaName.text = handyman
-        holder.itemView.caption.text= (list[position] as JSONObject).optString("body")
-        holder.itemView.timecreated.text= (list[position] as JSONObject).optString("created_at")
-//        val formatter =
-//            DateTimeFormatter.ofPattern("yyyy-MM-ss HH:mm:ss")
-//        val dateTimes: List<LocalDateTime> =
-//            list.stream().map({ date -> LocalDateTime.parse(date as CharSequence?, formatter) }).sorted()
-//                .collect(Collectors.toList())
-//        println(dateTimes)
+        holder.itemView.caption.text = (list[position] as JSONObject).optString("body")
+        holder.itemView.timecreated.text = (list[position] as JSONObject).optString("created_at")
+
         if ((list[position] as JSONObject).has("images")) {
             //for post images
             var images_array = (list[position] as JSONObject).getJSONArray("images")
             val url = images_array.get(0).toString()
-
 
             Glide
                 .with(holder.itemView)
@@ -85,8 +81,20 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(image_url)).into(holder.itemView.handymanImage)
 
+        val clickListener = View.OnClickListener { view ->
+            when (view.id) {
+                R.id.tagg -> {
+                    showPopup(view)
 
-    }
+
+                }
+            }
+
+        }
+        holder.itemView.tagg.setOnClickListener(clickListener)
+
+        }
+
 
 
     override fun getItemCount(): Int {
@@ -97,7 +105,30 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
 
         // itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
+    fun showPopup(view: View) {
+        var popup: PopupMenu? = null;
+        popup = PopupMenu(context, view)
+        popup.inflate(R.menu.category_menu)
 
+        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+              when (item!!.itemId) {
+                  R.id.category1 -> {
+
+                          item.setTitle(service);
+                  }
+//                   R.id.header2 -> {
+//                       Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show();
+//                   }
+//                   R.id.header3 -> {
+//                       Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show();
+//                   }
+//               }
+              }
+            true
+        })
+
+        popup.show()
+    }
 }
 
 

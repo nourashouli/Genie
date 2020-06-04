@@ -43,7 +43,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
                     <TextView
                         android:id="@+id/HandymaName"
                         android:layout_width="wrap_content"
@@ -58,19 +61,34 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.383" />
 
+                    <Button
+                        android:id="@+id/tagg"
+                        android:layout_width="28dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="115dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/tag"
+                        app:layout_constraintVertical_bias="0.383"
+
+
+                        />
+
+
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/timecreated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="70dp"
                     android:text="time"
                     android:textSize="13dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/handymanImage"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.807" />
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
