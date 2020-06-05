@@ -263,11 +263,7 @@ class handymanlist(var data: Any) : Fragment() {
 
 
                         activity!!.runOnUiThread {
-                            //                                Toast.makeText(
-//                                    activity,
-//                                    res.getJSONArray("handymen").toString(),
-//                                    Toast.LENGTH_LONG
-//                                ).show()
+
                             val items = res.getJSONArray("handymen")
 
                             for (i in 0 until items.length()) {

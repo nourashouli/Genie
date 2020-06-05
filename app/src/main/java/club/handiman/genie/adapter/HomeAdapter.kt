@@ -6,20 +6,23 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.Fragments.HandymanprofileFragment
+import club.handiman.genie.MainActivity
 import club.handiman.genie.Utils.Utils
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
 import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.home_row.view.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 
 class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     var list: ArrayList<Any> = ArrayList()
     var listener: AdapterListener? = null
-    var service ="h"
-
+   var items: JSONArray? =null
     constructor(context: Context, listener: AdapterListener) : this(context) {
         this.listener = listener
     }
@@ -51,11 +54,14 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        var view: View=View(context)
+        var popup: PopupMenu? = null;
+        popup = PopupMenu(context, view)
+        popup.inflate(R.menu.category_menu)
         var handyman =
             (list[position] as JSONObject).getJSONObject("handyman").optString("name", "handyman")
-//        service =
-//            (list[position] as JSONObject).getJSONObject("services").optString("name", "services")
+         items =  (list[position] as JSONObject).getJSONArray("services")
+
         holder.itemView.HandymaName.text = handyman
         holder.itemView.caption.text = (list[position] as JSONObject).optString("body")
         holder.itemView.timecreated.text = (list[position] as JSONObject).optString("created_at")
@@ -84,7 +90,30 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
         val clickListener = View.OnClickListener { view ->
             when (view.id) {
                 R.id.tagg -> {
-                    showPopup(view)
+                    var popup: PopupMenu? = null;
+                    popup = PopupMenu(context, view)
+                    popup!!.inflate(R.menu.category_menu)
+                    for (i in 0 until items!!.length()) {
+                        popup!!.menu.add(items!!.getJSONObject(i).optString("name"))
+
+                    }
+                    popup!!.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+//
+                        if (item!!.title == "g") {
+
+                        }
+                        else{   (context as MainActivity).navigateToFragment(
+                            HandymanprofileFragment(
+                                (list[position] as JSONObject).getJSONObject("handyman"),
+                                (list[position] as JSONObject).getJSONArray("services").getJSONObject(1).optString("_id")
+                            )
+                        )}
+
+                        true
+                    })
+
+                    popup!!.show()
+
 
 
                 }
@@ -104,32 +133,34 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         // itemView.setOnClickListener( {itemClick(layoutPosition)} )
-    }
-    fun showPopup(view: View) {
-        var popup: PopupMenu? = null;
-        popup = PopupMenu(context, view)
-        popup.inflate(R.menu.category_menu)
-
-        popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-              when (item!!.itemId) {
-                  R.id.category1 -> {
-
-                          item.setTitle(service);
-                  }
-//                   R.id.header2 -> {
-//                       Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show();
-//                   }
-//                   R.id.header3 -> {
-//                       Toast.makeText(this@MainActivity, item.title, Toast.LENGTH_SHORT).show();
-//                   }
-//               }
-              }
-            true
-        })
-
-        popup.show()
-    }
-}
+    }}
+//    fun showPopup(view: View) {
+//        var popup: PopupMenu? = null;
+//        popup = PopupMenu(context, view)
+//        popup.inflate(R.menu.category_menu)
+//        for (i in 0 until items!!.length()) {
+//            popup.menu.add(items!!.getJSONObject(i).optString("name"))
+//
+//        }
+//            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+//
+//                    if (item!!.title == "Carpenter") {
+//                        (context as MainActivity).navigateToFragment(
+//                            HandymanprofileFragment(
+//                                (list[position] as JSONObject).getJSONObject("handyman"),
+//                                "5ecd92a7e8deab7c2f7962b2"
+//                            )
+//                        )
+//                    }
+//else{  Toast.makeText(context, "tiling", Toast.LENGTH_LONG)
+//                        .show()}
+//
+//            true
+//        })
+//
+//        popup.show()
+//    }
+//}
 
 
 
