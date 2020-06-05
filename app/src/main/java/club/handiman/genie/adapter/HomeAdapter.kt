@@ -26,8 +26,7 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
     constructor(context: Context, listener: AdapterListener) : this(context) {
         this.listener = listener
     }
-
-
+//id , employee-profille (Json
     // var context:Context = context
     fun setItem(ob: Any) {
         list.add(ob)
