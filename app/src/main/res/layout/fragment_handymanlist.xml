@@ -4,62 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/viewBg"
+    android:background="@color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        tools:ignore="InvalidId">
+        android:layout_height="wrap_content"
+>
 
         <Button
             android:id="@+id/sort_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Time" />
+            android:layout_gravity="start"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@android:drawable/ic_menu_my_calendar"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:text="Time"
+            android:textColor="#fff"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:id="@+id/sort_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Price" />
+            android:layout_gravity="center"
+
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@drawable/ic_monetization_on_black_24dp"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:text="Price"
+
+            android:textColor="#fff"
+            app:layout_constraintLeft_toRightOf="@id/sort_time"
+            app:layout_constraintRight_toLeftOf="@id/sort_location"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <Button
             android:id="@+id/sort_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Location" />
-
+            android:layout_gravity="right"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@android:drawable/ic_dialog_map"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:text="Map"
+            android:textColor="#fff"
+            app:layout_constraintLeft_toRightOf="@id/sort_price"
+            app:layout_constraintEnd_toStartOf="@id/sort_by_rating" />
         <Button
-            android:id="@+id/open_urgent_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/quantum_googred"
-            android:padding="5dp"
-            android:text="urgent rqeuest"
-            android:textColor="@color/white"></Button>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="left"
+            app:layout_constraintLeft_toRightOf="@id/sort_location"
+            android:id="@+id/sort_by_rating"
+            android:layout_marginRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@drawable/ic_star_half_black_24dp"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:text="Rating"
+            android:textColor="#fff">
 
-    </LinearLayout>
+        </Button>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/search_layout_field"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/search_layout"
+        android:orientation="horizontal">
 
-
-        android:layout_above="@+id/handymanlist_recycler"
-        android:layout_marginBottom="-100dp">
-
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sss"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
 
-            android:hint="Search..."></EditText>
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/search_input_style"
+            android:drawableLeft="@drawable/ic_search_gray_24dp"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="search"
+            android:inputType="text"
+            android:textColor="@color/content_text_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@drawable/ic_favorite_black_24dp"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+
+            android:text="Favorite"
+            android:textColor="#fff">
+
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_btn"
+            android:drawableTop="@drawable/ic_delete_forever_black_24dp"
+            android:paddingTop="20dp"
+            android:padding="10dp"
+            android:text="Reset"
+            android:textColor="#fff">
+
+        </Button>
+
 
     </LinearLayout>
 
@@ -67,7 +140,8 @@
         android:id="@+id/handymanlist_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_below="@+id/search_layout_field"
+        android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:scrollbars="vertical" />
 
