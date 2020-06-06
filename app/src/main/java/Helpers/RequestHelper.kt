@@ -11,6 +11,37 @@ import com.github.kittinunf.result.success
 import org.jetbrains.anko.support.v4.runOnUiThread
 class RequestHelper {
     companion object {
+
+        fun incrementVisits(id:String,context: Context){
+            Fuel.post(Utils.API_VISITS.plus(id))
+                .header(
+                    "accept" to "application/json"
+                )
+                .responseJson { _, _, result ->
+
+                    result.success {
+
+                        var res = it.obj()
+
+
+
+                            Toast.makeText(
+                                context!!,
+                                res.getString("status"),
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                    }
+                    result.failure {
+
+                        Toast.makeText(context!!, it.localizedMessage, Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+        }
+
+
+
         fun cancel(id:String,context:Context) {
             Fuel.post(Utils.API_CANCEL_REQUEST.plus(id))
                 .header(
