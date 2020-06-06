@@ -2,6 +2,7 @@ package club.handiman.genie.adapter
 
 
 import android.content.Context
+import android.graphics.Color
 import android.location.Location
 import android.view.LayoutInflater
 import android.view.View
@@ -30,7 +31,7 @@ class HandymanListAdapter(var context: Context, var id: String) :
     var datelist: ArrayList<Any> = ArrayList()
     var day: Int = 0
 
-    var b:Boolean? = null
+    var b: Boolean? = null
 
     val d = FloatArray(1)
     // var context:Context = context
@@ -67,6 +68,9 @@ class HandymanListAdapter(var context: Context, var id: String) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if ((list[position] as JSONObject).optBoolean("online")){
+            holder.itemView.handyman_profile_picture.borderColor=Color.GREEN
+        }
         if ((list[position] as JSONObject).getString("name") != "") {
 
             holder.itemView.handyman_name.text = (list[position] as JSONObject).getString("name")
@@ -79,7 +83,11 @@ class HandymanListAdapter(var context: Context, var id: String) :
             .load(Utils.BASE_IMAGE_URL.plus(image_url))
             .into(holder.itemView.handyman_profile_picture)
         holder.itemView.setOnClickListener {
-
+            // increment visits
+            Helpers.RequestHelper.incrementVisits(
+                (list[position] as JSONObject).optString("_id","id"),
+                context!!
+            )
             // {itemClick(layoutPosition)}
             (context as MainActivity).navigateToFragment(
                 HandymanprofileFragment(
@@ -115,53 +123,44 @@ class HandymanListAdapter(var context: Context, var id: String) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         //itemView.setOnClickListener( {itemClick(layoutPosition)} )
     }
-    fun DateChooser(date:String,from:Int,to:Int) {
-        if(date.equals("Monday"))
-        {
+
+    fun DateChooser(date: String, from: Int, to: Int) {
+        if (date.equals("Monday")) {
             day = 0
         }
-        if(date.equals("Tuesday"))
-        {
+        if (date.equals("Tuesday")) {
             day = 1
         }
-        if(date.equals("Wednesday"))
-        {
+        if (date.equals("Wednesday")) {
             day = 2
         }
-        if(date.equals("Thursday"))
-        {
+        if (date.equals("Thursday")) {
             day = 3
         }
-        if(date.equals("Friday"))
-        {
+        if (date.equals("Friday")) {
             day = 4
         }
-        if(date.equals("Saturday"))
-        {
+        if (date.equals("Saturday")) {
             day = 5
         }
-        if(date.equals("Sunday"))
-        {
+        if (date.equals("Sunday")) {
             day = 6
         }
         //  this.list.addAll(listOf(this.datelist.any().equals(true)))
 
 
-
-
         //this.list.addAll(this.datelist.any)
-        for(i in from until to)
-        {
+        for (i in from until to) {
             this.list.clear()
 
             this.list.addAll(this.datelist.filter {
-                b =(it as JSONObject).getJSONArray("timeline").getJSONArray(day).get(i).equals(true)
+                b = (it as JSONObject).getJSONArray("timeline").getJSONArray(day).get(i)
+                    .equals(true)
                 (it as JSONObject).getJSONArray("timeline").getJSONArray(day).get(i).equals(true)
                 //check(from,to,it as JSONObject,day,i)
 
             })
-            if(b?.equals(true)!!)
-            {
+            if (b?.equals(true)!!) {
                 break
             }
 

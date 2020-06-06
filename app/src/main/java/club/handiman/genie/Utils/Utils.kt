@@ -40,6 +40,7 @@ class Utils {
         const val API_EDIT_PROFILE = "$BASE_URL/profile-edit"
         const val API_DEVICE_TOKEN = "$BASE_URL/device-token"
         const val API_PROFILE = "$BASE_URL/profile"
+        const val API_VISITS="$BASE_URL/visit/"
         const val API_SEND_MESSAGE = "$BASE_URL/message/"
         const val API_Addresses = "$BASE_URL/addresses"
         const val API_Address = "$BASE_URL/address"

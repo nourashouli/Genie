@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.Utils.putExtraJson
 import club.handiman.genie.adapter.HandymanListAdapter
@@ -33,9 +34,9 @@ class handymanlist(var data: Any) : Fragment() {
 
     var id: String? = null
 
-    var SelectedDay:String? = null
-    var From:Int? = null
-    var To:Int? = null
+    var SelectedDay: String? = null
+    var From: Int? = null
+    var To: Int? = null
 
     var latitude: Double? = 0.0
     var longitude: Double? = 0.0
@@ -137,18 +138,30 @@ class handymanlist(var data: Any) : Fragment() {
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
                 dialog?.setContentView(R.layout.timer)
-                val Fromtext:TextView = dialog.findViewById<View>(R.id.From_Time) as TextView
-                val Totext:TextView = dialog.findViewById<View>(R.id.To_Time) as TextView
-                val FromSeekbar:SeekBar = dialog.findViewById<View>(R.id.From_Seekbar) as SeekBar
-                val ToSeekbar:SeekBar = dialog.findViewById<View>(R.id.To_Seekbar) as SeekBar
-                val SubmitButton:Button = dialog.findViewById<View>(R.id.Submit_Timer)as Button
-                val CancelButton:Button = dialog.findViewById<View>(R.id.Cancel_Timer)as Button
-                val spin:Spinner = dialog.findViewById<View>(R.id.Time_Spinner) as Spinner
-                val array = arrayOf("Choose Day","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
-                val arrayAdapter1 =ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,array)
+
+                val Fromtext: TextView = dialog.findViewById<View>(R.id.From_Time) as TextView
+                val Totext: TextView = dialog.findViewById<View>(R.id.To_Time) as TextView
+                val FromSeekbar: SeekBar = dialog.findViewById<View>(R.id.From_Seekbar) as SeekBar
+                val ToSeekbar: SeekBar = dialog.findViewById<View>(R.id.To_Seekbar) as SeekBar
+                val SubmitButton: Button = dialog.findViewById<View>(R.id.Submit_Timer) as Button
+                val CancelButton: Button = dialog.findViewById<View>(R.id.Cancel_Timer) as Button
+                val spin: Spinner = dialog.findViewById<View>(R.id.Time_Spinner) as Spinner
+                val array = arrayOf(
+                    "Choose Day",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday"
+                )
+                val arrayAdapter1 =
+                    ArrayAdapter(context!!, android.R.layout.simple_spinner_item, array)
+
                 spin.adapter = arrayAdapter1
 
-                spin.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
+                spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
@@ -165,15 +178,13 @@ class handymanlist(var data: Any) : Fragment() {
                 }
 
 
-
-
                 // FromSeekbar.setOnSeekBarChangeListener()
                 FromSeekbar.max = 24
                 FromSeekbar.min = 0
                 ToSeekbar.max = 24
                 ToSeekbar.min = 0
 
-                FromSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                FromSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
                         progress: Int,
@@ -191,7 +202,7 @@ class handymanlist(var data: Any) : Fragment() {
 
                     }
                 })
-                ToSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+                ToSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(
                         seekBar: SeekBar?,
                         progress: Int,
@@ -212,15 +223,17 @@ class handymanlist(var data: Any) : Fragment() {
                 })
                 SubmitButton.setOnClickListener {
                     dialog.dismiss()
-                    From?.let { it1 -> To?.let { it2 ->
-                        adapter?.DateChooser(SelectedDay.toString(), it1,
-                            it2
-                        )
-                    } }
+                    From?.let { it1 ->
+                        To?.let { it2 ->
+                            adapter?.DateChooser(
+                                SelectedDay.toString(), it1,
+                                it2
+                            )
+                        }
+                    }
                 }
 
                 dialog.show()
-
 
 
             }
@@ -267,12 +280,16 @@ class handymanlist(var data: Any) : Fragment() {
                             val items = res.getJSONArray("handymen")
 
                             for (i in 0 until items.length()) {
-                                adapter?.setItem(items.getJSONObject(i))
-                                arr = items.getJSONObject(i).getJSONArray("location")
+                                if (items.getJSONObject(i).optString("_id") != SharedPreferences.getID(
+                                        context!!
+                                    )
+                                ) {
+                                    adapter?.setItem(items.getJSONObject(i))
+                                    arr = items.getJSONObject(i).getJSONArray("location")
 
-                                HandymanLat = arr?.get(0) as Double
-                                HandymanLon = arr?.get(1) as Double
-
+                                    HandymanLat = arr?.get(0) as Double
+                                    HandymanLon = arr?.get(1) as Double
+                                }
 
                             }
                         }

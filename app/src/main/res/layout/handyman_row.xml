@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/main_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:padding="10sp"
+        app:cardCornerRadius="15dp">
 
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10sp"
+            android:orientation="vertical"
             android:paddingStart="10sp"
-            android:paddingEnd="10sp">
+            android:paddingEnd="10sp"
+            android:paddingBottom="10sp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:paddingTop="10sp"
-                android:paddingBottom="20dp"
                 android:layout_marginStart="15dp"
-                >
+                android:paddingTop="10sp"
+                android:paddingBottom="20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/handyman_profile_picture"
@@ -31,6 +37,8 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="12dp"
                     android:src="@drawable/painterpro"
+                    app:civ_border_color="@color/material_red300"
+                    app:civ_border_width="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
