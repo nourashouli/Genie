@@ -10,13 +10,17 @@ import club.handiman.genie.Models.RequestModel
 import com.bumptech.glide.Glide
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
+import com.example.genie_cl.adapter.utils.AdapterListener
 import kotlinx.android.synthetic.main.fragment_images_adapter.view.*
+import kotlinx.android.synthetic.main.post_image.view.*
 import org.json.JSONArray
 
 class imagesAdapter(var context: Context) : RecyclerView.Adapter<imagesAdapter.ViewHolder>() {
-
+    var listener: AdapterListener? = null
     var list: ArrayList<Any> = ArrayList()
-
+    constructor(context: Context, listener: AdapterListener) : this(context) {
+        this.listener = listener
+    }
     fun setItem(ob:Any) {
         list.add(ob)
         notifyItemInserted(list.size - 1)
@@ -40,7 +44,7 @@ class imagesAdapter(var context: Context) : RecyclerView.Adapter<imagesAdapter.V
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_images_adapter, parent, false)
+                .inflate(R.layout.post_image, parent, false)
         )
     }
 
@@ -50,7 +54,7 @@ class imagesAdapter(var context: Context) : RecyclerView.Adapter<imagesAdapter.V
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(url))
-            .into(holder.itemView.requestimage)
+            .into(holder.itemView.create_post_image)
 
 
 

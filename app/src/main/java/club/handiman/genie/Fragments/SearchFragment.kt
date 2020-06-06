@@ -39,7 +39,7 @@ class SearchFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var adapter = ServiceAdapter(context!!, object :AdapterListener{
+        var adapter = ServiceAdapter(requireContext(), object :AdapterListener{
             override fun onAction(ob: Any) {
                 // play ur game here
 
@@ -47,7 +47,7 @@ class SearchFragment : Fragment() {
         })
        // recycler_view.layoutManager=GridLayoutManager(context!!,30)
 
-        val mLayoutManager = GridLayoutManager(context!!, 2)
+        val mLayoutManager = GridLayoutManager(requireContext(), 2)
         recycler_view.setLayoutManager(mLayoutManager)
         recycler_view.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
         recycler_view.setItemAnimator(DefaultItemAnimator())
@@ -75,7 +75,7 @@ class SearchFragment : Fragment() {
                     if (res.optString("status", "error") == "success") {
 
                    //     var services = res.getJSONObject("services")
-                        activity!!.runOnUiThread {
+                        requireActivity().runOnUiThread {
 
 
                             val items = res.getJSONArray("services")

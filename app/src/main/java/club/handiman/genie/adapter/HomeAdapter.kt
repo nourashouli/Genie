@@ -101,10 +101,12 @@ class HomeAdapter(var context: Context) : RecyclerView.Adapter<HomeAdapter.ViewH
                         if (item!!.title == "g") {
 
                         }
-                        else{   (context as MainActivity).navigateToFragment(
+                        else{
+                            var employeeid=(list[position] as JSONObject).getJSONObject("handyman").optString("_id")
+                            var service_id=(list[position] as JSONObject).getJSONArray("services").getJSONObject(1).optString("_id")
+                            (context as MainActivity).navigateToFragment(
                             HandymanprofileFragment(
-                                (list[position] as JSONObject).getJSONObject("handyman"),
-                                (list[position] as JSONObject).getJSONArray("services").getJSONObject(1).optString("_id")
+                                Helpers.EmployeeProfile.employeeprofile(employeeid,context!!) as Any,service_id
                             )
                         )}
 

@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import club.handiman.genie.AccountSettingActivity
+import club.handiman.genie.MainActivity
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -57,19 +58,18 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter = locationAdapter(context!!)
+        adapter = locationAdapter(requireContext())
         //try
         locations.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         locations.setAdapter(adapter)
         viewProfile()
         edit_account_settings_btn.setOnClickListener {
-            val i = Intent(this.context, AccountSettingActivity::class.java)
-            startActivity(i)
+            (context as MainActivity).navigateToFragment(AccountSettingActivity())
 
         }
         Logout.setOnClickListener {
-            Utils.logout(context!!)
+            Utils.logout(requireContext())
 
         }
         newAddress.setOnClickListener {
@@ -106,7 +106,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun showDialog() {
-        val dialog = Dialog(context!!)
+        val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.view)
@@ -127,7 +127,7 @@ class ProfileFragment : Fragment() {
         Fuel.get(Utils.API_EDIT_PROFILE)
             .header(
                 "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(activity!!.baseContext).toString()
+                Utils.AUTHORIZATION to SharedPreferences.getToken(requireActivity().baseContext).toString()
             )
             .responseJson { _, _, result ->
 
@@ -138,7 +138,7 @@ class ProfileFragment : Fragment() {
                     if (res.optString("status", "error") == "success") {
 
                         var profile = res.getJSONObject("profile")
-                        activity!!.runOnUiThread {
+                        requireActivity().runOnUiThread {
 
                             full_name_profile_frag.setText(profile.optString("name", ""))
                             biography.setText(profile.optString("biography", ""))
@@ -193,7 +193,7 @@ class ProfileFragment : Fragment() {
 
         ).header(
             "accept" to "application/json",
-            Utils.AUTHORIZATION to SharedPreferences.getToken(context!!).toString()
+            Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
         ).responseJson { _, _, result ->
 
             result.success {
@@ -206,7 +206,7 @@ class ProfileFragment : Fragment() {
                 }
             }
             result.failure {
-                Toast.makeText(context!!, it.localizedMessage, Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
                     .show()
             }
 

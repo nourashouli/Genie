@@ -1,10 +1,16 @@
 package club.handiman.genie
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import club.handiman.genie.Fragments.ProfileFragment
 import com.bumptech.glide.Glide
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
@@ -14,14 +20,19 @@ import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
 import com.github.kittinunf.result.success
 import kotlinx.android.synthetic.main.activity_account_settings.*
+import org.jetbrains.anko.support.v4.runOnUiThread
 
-
-class AccountSettingActivity : AppCompatActivity() {
+class AccountSettingActivity() : Fragment() {
     private var image: String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account_settings)
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.activity_account_settings, container, false)
+    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         viewProfile()
         save_infor_profile_btn.setOnClickListener { editProfile() }
         change_image_text_btn.setOnClickListener {
@@ -44,7 +55,7 @@ class AccountSettingActivity : AppCompatActivity() {
 
         ).header(
             "accept" to "application/json",
-            Utils.AUTHORIZATION to SharedPreferences.getToken(baseContext).toString()
+            Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
         ).responseJson { _, _, result ->
 
             result.success {
@@ -55,9 +66,10 @@ class AccountSettingActivity : AppCompatActivity() {
                     var profile = res.getJSONObject("user")
 
                     }
+                (context as MainActivity).navigateToFragment(ProfileFragment())
                 }
                 result.failure {
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
                         .show()
                 }
 
@@ -67,10 +79,10 @@ class AccountSettingActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0 && resultCode ==RESULT_OK && data != null) {
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
             selectedPhotoUri = data.data
             val bitmap =
-                MediaStore.Images.Media.getBitmap(this.contentResolver, selectedPhotoUri)
+                MediaStore.Images.Media.getBitmap(requireContext().contentResolver, selectedPhotoUri)
             profilei.setImageBitmap(bitmap)
             change_image_text_btn.alpha = 0f
             image= Utils.encodeToBase64(bitmap)
@@ -82,7 +94,7 @@ class AccountSettingActivity : AppCompatActivity() {
         Fuel.get(Utils.API_EDIT_PROFILE)
             .header(
                 "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(baseContext).toString()
+                Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
             )
             .responseJson { _, _, result ->
 
@@ -112,11 +124,13 @@ class AccountSettingActivity : AppCompatActivity() {
 //                                Toast.makeText(this, profile.toString(), Toast.LENGTH_LONG)
 //                                    .show()
 //                            }
-                        }
+
+
+                    }
                      else {
 
                         Toast.makeText(
-                            this,
+                            requireContext(),
                             res.getString("status"),
                             Toast.LENGTH_LONG
                         ).show()
@@ -124,7 +138,7 @@ class AccountSettingActivity : AppCompatActivity() {
                 }
                 result.failure {
 
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                    Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
                         .show()
                 }
             }

@@ -1,23 +1,26 @@
 package club.handiman.genie.adapter
 
+import android.R.attr.fragment
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.R
+import androidx.core.graphics.toColor
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
-import club.handiman.genie.Fragments.HandymanprofileFragment
 import club.handiman.genie.Fragments.PaymentFragment
 import club.handiman.genie.Fragments.RequestDetailsFragment
 import club.handiman.genie.MainActivity
 import club.handiman.genie.Models.RequestModel
-import com.bumptech.glide.Glide
-import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.notification_row.view.*
 
-class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewHolder>() {
 
+class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewHolder>() {
     var list: ArrayList<RequestModel> = ArrayList()
 
     fun setItem(ob: RequestModel) {
@@ -43,7 +46,7 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.notification_row, parent, false)
+                .inflate(com.example.genie_cl.R.layout.notification_row, parent, false)
         )
     }
 
@@ -85,13 +88,11 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             notifyDataSetChanged()
         }
         holder.itemView.setOnClickListener {
-
-            // {itemClick(layoutPosition)}
-            (context as MainActivity).navigateToFragment(
-                RequestDetailsFragment(
-                    (list[position] as RequestModel)
-                )
-            )
+            (context as FragmentActivity).supportFragmentManager.beginTransaction()
+                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN )
+                .replace(com.example.genie_cl.R.id.container, RequestDetailsFragment(list[position] as RequestModel))
+               .addToBackStack(null)
+                .commit();
 //           this.listener!!.onAction(list[position])
         }
     }

@@ -46,7 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="club.handiman.genie.AccountSettingActivity" />
+
         <activity android:name="club.handiman.genie.MainActivity" />
 
         <service android:name="club.handiman.genie.Utils.Firebase">

@@ -69,7 +69,7 @@ class handymanlist(var data: Any) : Fragment() {
 //            intent.putExtraJson("object", ob!!)
 //            startActivity(intent)
 //        }
-        val adapter = HandymanListAdapter(context!!, id!!)
+        val adapter = HandymanListAdapter(requireContext(), id!!)
 
         handymanlist_recycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -82,7 +82,7 @@ class handymanlist(var data: Any) : Fragment() {
             adapter?.sort("price", "asc")
 
         }
-        activity!!.runOnUiThread {
+        requireActivity().runOnUiThread {
             sort_location.setOnClickListener {
                 val dialog = getActivity()?.let { it1 -> Dialog(it1) }
                 dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -130,7 +130,7 @@ class handymanlist(var data: Any) : Fragment() {
             }
         }
 
-        activity!!.runOnUiThread()
+        requireActivity().runOnUiThread()
         {
             sort_time.setOnClickListener {
                 val dialog = getActivity()?.let { it1 -> Dialog(it1) }
@@ -145,7 +145,7 @@ class handymanlist(var data: Any) : Fragment() {
                 val CancelButton:Button = dialog.findViewById<View>(R.id.Cancel_Timer)as Button
                 val spin:Spinner = dialog.findViewById<View>(R.id.Time_Spinner) as Spinner
                 val array = arrayOf("Choose Day","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")
-                val arrayAdapter1 =ArrayAdapter(context!!,android.R.layout.simple_spinner_item,array)
+                val arrayAdapter1 =ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,array)
                 spin.adapter = arrayAdapter1
 
                 spin.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
@@ -262,7 +262,7 @@ class handymanlist(var data: Any) : Fragment() {
                     if (res.optString("status", "error") == "success") {
 
 
-                        activity!!.runOnUiThread {
+                        requireActivity().runOnUiThread {
 
                             val items = res.getJSONArray("handymen")
 
@@ -295,7 +295,7 @@ class handymanlist(var data: Any) : Fragment() {
     }
 
     fun sortByLocation() {
-        activity!!.runOnUiThread {
+        requireActivity().runOnUiThread {
             val dialog = getActivity()?.let { it1 -> Dialog(it1) }
             dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)

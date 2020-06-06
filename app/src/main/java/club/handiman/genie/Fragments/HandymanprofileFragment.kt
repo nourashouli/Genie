@@ -5,10 +5,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.BounceInterpolator
+import android.view.animation.ScaleAnimation
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +43,22 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        adapter = feedbackAdapter(context!!)
+        adapter = feedbackAdapter(requireContext())
+       var scaleAnimation = ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f)
+        scaleAnimation?.setDuration(500)
+       var bounceInterpolator = BounceInterpolator()
+        scaleAnimation?.setInterpolator(bounceInterpolator)
 
+        button_favorite.setOnCheckedChangeListener(object:View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                p0?.startAnimation(scaleAnimation);
+                Log.d("fav", "am i here") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onClick(p0: View?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        });
         feedbackrecycler.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         feedbackrecycler.setAdapter(adapter)
@@ -71,17 +90,17 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             adapter!!.notifyDataSetChanged()
         }
         certificates.setOnClickListener {
-            val i = Intent(context!!, ViewPDFActivity::class.java)
+            val i = Intent(requireContext(), ViewPDFActivity::class.java)
             i.putExtra("url", _certificates)
             startActivity(i)
         }
         criminal.setOnClickListener {
-            val i = Intent(context!!, ViewPDFActivity::class.java)
+            val i = Intent(requireContext(), ViewPDFActivity::class.java)
             i.putExtra("url", criminal_record)
         }
 
         Cv.setOnClickListener {
-            val i = Intent(context!!, ViewPDFActivity::class.java)
+            val i = Intent(requireContext(), ViewPDFActivity::class.java)
             i.putExtra("url", cv)
 
         }
@@ -91,18 +110,18 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             .with(this)
             .load(Utils.BASE_IMAGE_URL.plus(image_url))
             .into(pro_image_profile_frag)
-        activity!!.runOnUiThread {
+        requireActivity().runOnUiThread {
             val ob: JSONObject? = JSONObject()
             ob!!.put("service_id", id!!)
             ob!!.put("employee_id", (data as JSONObject).optString("_id", "id").toString())
             requestbt.setOnClickListener {
-                val i = Intent(context!!, requestForm2::class.java)
+                val i = Intent(requireContext(), requestForm2::class.java)
                 i!!.putExtraJson("object", ob)
                 startActivity(i)
             }
 
             Cv.setOnClickListener {
-                val i = Intent(context!!, ViewPDFActivity::class.java)
+                val i = Intent(requireContext(), ViewPDFActivity::class.java)
                 i.putExtra("url", cv)
                 startActivity(i)
             }
@@ -110,12 +129,12 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
                 .with(this)
                 .load(Utils.BASE_IMAGE_URL.plus(image_url))
                 .into(pro_image_profile_frag)
-            activity!!.runOnUiThread {
+            requireActivity().runOnUiThread {
                 val ob: JSONObject? = JSONObject()
                 ob!!.put("service_id", id!!)
                 ob!!.put("employee_id", (data as JSONObject).optString("_id", "id").toString())
                 requestbt.setOnClickListener {
-                    val i = Intent(context!!, requestForm2::class.java)
+                    val i = Intent(requireContext(), requestForm2::class.java)
                     i!!.putExtraJson("object", ob)
                     startActivity(i)
                 }

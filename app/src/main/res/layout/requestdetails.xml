@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:background="#DBDEDE">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -91,7 +92,7 @@
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description :"
+                android:text="Description :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -127,7 +128,7 @@
                 android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="date :"
+                android:text="Date :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -163,7 +164,7 @@
                 android:id="@+id/from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="from :"
+                android:text="From :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -199,7 +200,7 @@
                 android:id="@+id/to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="to :"
+                android:text="To :"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"/>
@@ -247,7 +248,9 @@
         android:id="@+id/imagesRecycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

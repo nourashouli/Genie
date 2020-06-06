@@ -58,26 +58,26 @@ class ServiceAdapter(var context: Context) : RecyclerView.Adapter<ServiceAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.overflow.setOnClickListener {
-            val popupMenu: PopupMenu = PopupMenu(context!!, holder.itemView.overflow)
-            popupMenu.menuInflater.inflate(R.menu.menu_album, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.urgent_request -> {
-                        val intent = Intent(context!!, requestForm::class.java)
-                        var ob = JSONObject()
-                        ob.put("id", (list[position] as JSONObject).optString("_id"))
-                        intent.putExtraJson("object", ob!!)
-                        ContextCompat.startActivity(context!!, intent!!, null)
-                        Toast.makeText(context!!, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-                true
-            })
-            popupMenu.show()
-
-        }
+//        holder.itemView.overflow.setOnClickListener {
+//            val popupMenu: PopupMenu = PopupMenu(context!!, holder.itemView.overflow)
+//            popupMenu.menuInflater.inflate(R.menu.menu_album, popupMenu.menu)
+//            popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+//                when (item.itemId) {
+//                    R.id.urgent_request -> {
+//                        val intent = Intent(context!!, requestForm::class.java)
+//                        var ob = JSONObject()
+//                        ob.put("id", (list[position] as JSONObject).optString("_id"))
+//                        intent.putExtraJson("object", ob!!)
+//                        ContextCompat.startActivity(context!!, intent!!, null)
+//                        Toast.makeText(context!!, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+//                            .show()
+//                    }
+//                }
+//                true
+//            })
+//            popupMenu.show()
+//
+//        }
         holder.itemView.service_title.text = (list[position] as JSONObject).getString("name")
         val image_url = (list[position] as JSONObject).optString("image", "image.png")
 
