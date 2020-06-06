@@ -18,7 +18,6 @@ import club.handiman.genie.AccountSettingActivity
 import club.handiman.genie.MainActivity
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
-import kotlinx.android.synthetic.main.fragment_profile.*
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
 import com.github.kittinunf.result.failure
@@ -29,6 +28,8 @@ import club.handiman.genie.adapter.locationAdapter
 import club.handiman.genie.requestForm
 import com.google.android.libraries.places.api.model.Place
 import com.rtchagas.pingplacepicker.PingPlacePicker
+import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.content_profile.*
 import kotlinx.android.synthetic.main.view.*
 import org.jetbrains.anko.support.v4.toast
 import org.jetbrains.anko.toast
@@ -53,7 +54,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.activity_profile, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class ProfileFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         locations.setAdapter(adapter)
         viewProfile()
-        edit_account_settings_btn.setOnClickListener {
+        edit_account_settings_btnn.setOnClickListener {
             (context as MainActivity).navigateToFragment(AccountSettingActivity())
 
         }
@@ -83,7 +84,7 @@ class ProfileFragment : Fragment() {
             .setMapsApiKey(getString(R.string.maps))
 
         try {
-            val placeIntent = builder.build(context!! as Activity)
+            val placeIntent = builder.build(requireContext() as Activity)
             startActivityForResult(placeIntent, pingActivityRequestCode)
         } catch (ex: Exception) {
             toast("Google Play Services is not Available")
@@ -139,10 +140,10 @@ class ProfileFragment : Fragment() {
 
                         var profile = res.getJSONObject("profile")
                         requireActivity().runOnUiThread {
-
+                            full_name_profile_fragg.setText(profile.optString("name", ""))
                             full_name_profile_frag.setText(profile.optString("name", ""))
                             biography.setText(profile.optString("biography", ""))
-
+email.setText(profile.optString("email", ""))
                             val url =
                                 Utils.BASE_IMAGE_URL.plus(profile.optString("image", "ic_user.png"))
 

@@ -36,7 +36,16 @@
     <color name="themeColor">#11CFC5</color>
 
     <!--normal colors-->
+    <color name="profilePrimaryDark">#FF3B30</color>
 
+    <color name="profileAccentColor">#F7F7F7</color>
+
+
+    <color name="profileBackground">#fff</color>
+
+    <color name="blackTextColor">#000</color>
+
+    <color name="profileEditTextColor">#707070</color>
 
     <color name="darkTextColor">#020000</color>
 
