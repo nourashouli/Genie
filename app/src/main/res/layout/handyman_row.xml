@@ -5,15 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/main_card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10sp"
-        android:padding="10sp"
-        app:cardCornerRadius="15dp">
+    
 
 
         <LinearLayout
