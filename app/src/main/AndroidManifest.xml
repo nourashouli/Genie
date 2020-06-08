@@ -26,9 +26,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="club.handiman.genie.Fragments.ChatLog.ViewPDFActivity">
-
-        </activity>
+        <activity android:name="club.handiman.genie.SmartRequestActivity"></activity>
+        <activity android:name="club.handiman.genie.Fragments.ChatLog.ViewPDFActivity"></activity>
         <activity android:name="club.handiman.genie.Rating" />
         <activity android:name="club.handiman.genie.Fragments.ChatLog.ChatLogActivity" />
 
@@ -46,7 +45,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name="club.handiman.genie.MainActivity" />
 
         <service android:name="club.handiman.genie.Utils.Firebase">

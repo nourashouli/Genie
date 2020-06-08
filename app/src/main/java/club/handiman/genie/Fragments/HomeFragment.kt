@@ -15,6 +15,7 @@ import club.handiman.genie.*
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
+import club.handiman.genie.Utils.putExtraJson
 import club.handiman.genie.adapter.HomeAdapter
 import com.example.genie_cl.adapter.utils.AdapterListener
 import com.github.kittinunf.fuel.Fuel
@@ -38,7 +39,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Utils.hideSoftKeyBoard(context!!, search_input)
 
         home_recycler_view.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -47,6 +47,11 @@ class HomeFragment : Fragment() {
         getTgas()
         home_recycler_view.adapter = adapter
         smart_request.setOnClickListener {
+            val intent = Intent(context!!, requestForm::class.java)
+            intent!!.putExtraJson("object", "123")
+
+             startActivity(intent)
+
 
         }
 
@@ -62,7 +67,8 @@ class HomeFragment : Fragment() {
             //stripe
             override fun afterTextChanged(editable: Editable) {}
         })
-        search_input.visibility = View.VISIBLE
+
+
 
     }
 
@@ -99,6 +105,9 @@ class HomeFragment : Fragment() {
                         .show()
                 }
             }
+        search_input.visibility = View.VISIBLE
+
+        Utils.hideSoftKeyBoard(context!!, search_input)
     }
 
 

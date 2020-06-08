@@ -22,6 +22,7 @@ import club.handiman.genie.Utils.SharedPreferences
 import club.handiman.genie.Utils.Utils
 import club.handiman.genie.adapter.AddressAdapter
 import club.handiman.genie.adapter.RequestImagesAdapter
+import club.handiman.genie.adapter.ServicesAdapter
 import com.example.genie_cl.R
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.json.responseJson
@@ -77,12 +78,16 @@ class requestForm : AppCompatActivity(),
     var time_to: String? = null
     var addresses_: ArrayList<Any>? = ArrayList()
     var customDropDownAdapter: AddressAdapter? = null
-    var address_id:Any?=null
+    var services_: ArrayList<Any>? = ArrayList()
+
+    var customDropDownAdapterServices: ServicesAdapter? = null
+    var address_id: Any? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
         initAdapter()
         initAddresses()
+        getTgas()
         is_urgent.setOnClickListener {
             if (!isUrgent) {
                 isUrgent = true
@@ -97,40 +102,55 @@ class requestForm : AppCompatActivity(),
 
 
         var spinner: Spinner = codeSpinner
-
+        var spinner2: Spinner = codeSpinner2
 
         customDropDownAdapter = AddressAdapter(this, addresses_!!)
+        customDropDownAdapterServices = ServicesAdapter(this, services_!!)
 
         spinner.adapter = customDropDownAdapter
+        spinner2.adapter=customDropDownAdapterServices
+        spinner2.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    service_id = (services_!![position] as JSONObject).optString("_id")
+                }
 
+                override fun onNothingSelected(parent: AdapterView<*>?) {
 
-
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View, position: Int, id: Long
-            ) {
-                address_id=(addresses_!![position] as JSONObject).optString("_id")
-
-                Toast.makeText(
-                    this@requestForm,
-                    addresses_!![position].toString()!!,
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+                }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
+
+        spinner.onItemSelectedListener =
+            object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View, position: Int, id: Long
+                ) {
+                    address_id = (addresses_!![position] as JSONObject).optString("_id")
+
+                    Toast.makeText(
+                        this@requestForm,
+                        addresses_!![position].toString()!!,
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
             }
-        }
 
 
         var Date: Date
-        var obje = JSONObject(intent!!.extras!!.getString("object"))
-        var object2 = JSONObject(obje.getString("nameValuePairs"))
-        service_id = (object2).optString("id")
+//        var obje = JSONObject(intent!!.extras!!.getString("object"))
+//        var object2 = JSONObject(obje.getString("nameValuePairs"))
+//        service_id = (object2).optString("id")
 
 
         calendar = Calendar.getInstance()
@@ -142,7 +162,7 @@ class requestForm : AppCompatActivity(),
         Minute = calendar!!.get(Calendar.MINUTE)
 
 
-        button_datepicker.setOnClickListener {
+        button_datepicker.setOnClickListener{
 
             selectDate()
             //  timee()
@@ -151,11 +171,11 @@ class requestForm : AppCompatActivity(),
         }
 
 
-        submit_request.setOnClickListener {
+        submit_request.setOnClickListener{
 
             save()
         }
-        select_request_images.setOnClickListener {
+        select_request_images.setOnClickListener{
             if (Build.VERSION.SDK_INT < 19) {
 
                 var intent = Intent()
@@ -334,7 +354,8 @@ class requestForm : AppCompatActivity(),
                 }
 
             }
-            Toast.makeText(this, day_of_week_currenctselection.toString(), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, day_of_week_currenctselection.toString(), Toast.LENGTH_LONG)
+                .show()
 
             selectTimeFrom()
         }
@@ -485,6 +506,49 @@ class requestForm : AppCompatActivity(),
             }
     }
 
+    fun getTgas() {
+        Fuel.get(Utils.API_Services)
+            .header(
+                "accept" to "application/json"
+            )
+            .responseJson { _, _, result ->
+
+                result.success {
+                    //
+                    var res = it.obj()
+
+                    if (res.optString("status", "error") == "success") {
+
+                        //     var services = res.getJSONObject("services")
+                        runOnUiThread {
+
+
+                            val items = res.getJSONArray("services")
+
+                            for (i in 0 until items.length()) {
+                                services_!!.add((items.get(i) as JSONObject))
+                                customDropDownAdapterServices!!.notifyDataSetChanged()
+                            }
+
+
+                        }
+                    } else {
+
+                        Toast.makeText(
+                            this,
+                            res.getString("status"),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+                result.failure {
+
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+    }
+
     fun initAddresses() {
         Fuel.get(Utils.API_EDIT_PROFILE)
             .header(
@@ -538,7 +602,13 @@ class requestForm : AppCompatActivity(),
 
         recycler_request_images.setLayoutManager(mLayoutManager)
 
-        recycler_request_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        recycler_request_images.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                dpToPx(10),
+                true
+            )
+        )
 
         recycler_request_images.setItemAnimator(DefaultItemAnimator())
 
@@ -547,7 +617,13 @@ class requestForm : AppCompatActivity(),
 
         recycler_request_images.setLayoutManager(mLayoutManager)
 
-        recycler_request_images.addItemDecoration(GridSpacingItemDecoration(2, dpToPx(10), true))
+        recycler_request_images.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                dpToPx(10),
+                true
+            )
+        )
 
         recycler_request_images.setItemAnimator(DefaultItemAnimator())
 
@@ -580,7 +656,8 @@ class requestForm : AppCompatActivity(),
                 }
                 outRect.bottom = spacing // item bottom
             } else {
-                outRect.left = column * spacing / spanCount // column * ((1f / spanCount) * spacing)
+                outRect.left =
+                    column * spacing / spanCount // column * ((1f / spanCount) * spacing)
                 outRect.right =
                     spacing - (column) * spacing / spanCount // spacing - (column + 1) * ((1f /    spanCount) * spacing)
                 if (position >= spanCount) {

@@ -83,7 +83,8 @@ class requestForm2 : AppCompatActivity(),
     var time_to: String? = null
     var addresses_: ArrayList<Any>? = ArrayList()
     var customDropDownAdapter: AddressAdapter? = null
-    var address_id:Any?=null
+    var address_id: Any? = null
+
     data class request(var date: String, var from: String, var to: String)
 
     var request_array: ArrayList<request>? = null
@@ -92,7 +93,8 @@ class requestForm2 : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_request_form)
         initAdapter()
-
+        services_txt.visibility = View.GONE
+        codeSpinner2.visibility = View.GONE
         initAddresses()
 
         var spinner: Spinner = codeSpinner
@@ -110,7 +112,7 @@ class requestForm2 : AppCompatActivity(),
                 parent: AdapterView<*>,
                 view: View, position: Int, id: Long
             ) {
-                address_id=(addresses_!![position] as JSONObject).optString("_id")
+                address_id = (addresses_!![position] as JSONObject).optString("_id")
 
                 Toast.makeText(
                     this@requestForm2,
@@ -665,7 +667,6 @@ class requestForm2 : AppCompatActivity(),
 
             }
     }
-
 
 
     private fun getHandymanRequests(id: String) {
