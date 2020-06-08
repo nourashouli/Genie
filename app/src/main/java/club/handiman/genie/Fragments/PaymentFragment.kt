@@ -80,7 +80,6 @@ class PaymentFragment(var ob: Any) : Fragment() {
 
         val images = (ob as RequestModel).receipt_images
 
-
         var receiptImages = ReceiptImagesAdapter(context!!)
         for (i in 0 until images!!.length()) {
             receiptImages.setItem(images.getString(i))

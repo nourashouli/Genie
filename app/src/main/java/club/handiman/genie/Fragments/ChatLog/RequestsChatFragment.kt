@@ -42,7 +42,6 @@ class RequestsChatFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 
-
         chat_request = ChatAdapter(context!!)
 
         chat_request_recycler.adapter = chat_request

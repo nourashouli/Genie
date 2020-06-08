@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical"
+    android:padding="5dp">
 
 
+    <AutoCompleteTextView
+        android:id="@+id/search_input"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toLeftOf="@id/smart_request"
+        android:background="@drawable/search_input_style"
+        android:drawableLeft="@drawable/ic_search_gray_24dp"
 
+        android:drawablePadding="8dp"
+        android:ems="14"
+        android:hint="search"
+        android:inputType="text"
+        android:textColor="@color/content_text_color" />
+
+    <Button
+        android:id="@+id/smart_request"
+        style="@style/customButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/holo_red_light"
+        android:gravity="right"
+        android:padding="10dp"
+        android:text="Smart Request"
+
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="italic">
+
+    </Button>
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/requestbt"
-        />
+        android:layout_below="@+id/smart_request" />
 
 </RelativeLayout>

@@ -10,8 +10,12 @@
 
     style>
 
-
-    -<style parent="parent" name="modifiedEditText">
+    <style name="customButton" parent="viewParent">
+        <item name="android:background">@drawable/custom_upload_button</item>
+        <item name="android:textColor">@color/whiteTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style parent="parent" name="modifiedEditText">
 
     <item name="android:textSize">@dimen/newsMoreTextSize</item>
 
