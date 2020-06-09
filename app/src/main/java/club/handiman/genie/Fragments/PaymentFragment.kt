@@ -240,7 +240,7 @@ class PaymentFragment(var ob: Any) : Fragment() {
     }
     fun reject_payment(){
         Fuel.post(
-            Utils.API_EDIT_PROFILE.plus(request_id), listOf(
+            Utils.API_REJECT_PAYMENT.plus(request_id), listOf(
                 "report" to report_content
 
             )
