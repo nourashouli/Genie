@@ -109,6 +109,7 @@ class PaymentFragment(var ob: Any) : Fragment() {
         save.setOnClickListener {
             dialog.dismiss()
             report_content = dialog.reportt.text.toString()
+            reject_payment()
 
         }
         cancel.setOnClickListener {
