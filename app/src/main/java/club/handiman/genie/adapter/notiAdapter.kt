@@ -88,11 +88,8 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
             notifyDataSetChanged()
         }
         holder.itemView.setOnClickListener {
-            (context as FragmentActivity).supportFragmentManager.beginTransaction()
-                .setTransition( FragmentTransaction.TRANSIT_FRAGMENT_OPEN )
-                .replace(com.example.genie_cl.R.id.container, RequestDetailsFragment(list[position] as RequestModel))
-               .addToBackStack(null)
-                .commit();
+            (context as MainActivity).navigateToFragment(RequestDetailsFragment(list[position]))
+
 //           this.listener!!.onAction(list[position])
         }
     }

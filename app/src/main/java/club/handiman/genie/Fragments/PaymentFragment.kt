@@ -108,8 +108,8 @@ class PaymentFragment(var ob: Any) : Fragment() {
         val cancel = dialog.findViewById(R.id.cancel) as TextView
         save.setOnClickListener {
             report_content = dialog.reportt.text.toString()
-            dialog.dismiss()
             reject_payment()
+            dialog.dismiss()
 
         }
         cancel.setOnClickListener {
