@@ -63,13 +63,6 @@ class handymanlist(var data: Any) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         id = (data as JSONObject).getString("_id")
-//        open_urgent_request.setOnClickListener {
-//            val intent = Intent(context!!, requestForm::class.java)
-//            var ob=JSONObject()
-//            ob.put("id",id!!)
-//            intent.putExtraJson("object", ob!!)
-//            startActivity(intent)
-//        }
         val adapter = HandymanListAdapter(requireContext(), id!!)
 
         handymanlist_recycler.layoutManager =

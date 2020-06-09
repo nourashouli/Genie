@@ -7,10 +7,7 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -19,6 +16,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import club.handiman.genie.MainActivity
 import club.handiman.genie.Models.RequestModel
 import club.handiman.genie.Rating
 import club.handiman.genie.Utils.SharedPreferences
@@ -39,6 +37,7 @@ import com.stripe.android.model.Card
 import com.stripe.android.model.Token
 import kotlinx.android.synthetic.main.fragment_payment.*
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.report_dialog.*
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.json.JSONObject
 import java.lang.ref.WeakReference
@@ -46,11 +45,10 @@ import java.lang.ref.WeakReference
 
 class PaymentFragment(var ob: Any) : Fragment() {
 
-
+    val request_id = (ob as RequestModel).request_id
     lateinit var stripe: Stripe
     val publishKey: String = "pk_test_Yzk4eIQ2VOEGQFZ70vFBuQur00xW3XqfFv"
-
-
+    var report_content="f"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,7 +63,10 @@ class PaymentFragment(var ob: Any) : Fragment() {
         submit_payment.setOnClickListener {
             validateCard()
         }
+        report.setOnClickListener {
+          showDialog()
 
+        }
 
         total_amount.text = (ob as RequestModel).total.toString().plus(" $")
         val receipt = (ob as RequestModel).receipt
@@ -98,9 +99,27 @@ class PaymentFragment(var ob: Any) : Fragment() {
 
 
     }
+    private fun showDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.report_dialog)
+        val save = dialog.findViewById(R.id.save) as TextView
+        val cancel = dialog.findViewById(R.id.cancel) as TextView
+        save.setOnClickListener {
+            dialog.dismiss()
+            report_content = dialog.reportt.text.toString()
+
+        }
+        cancel.setOnClickListener {
+            dialog.dismiss()
+
+        }
+        dialog.show()
+    }
 
     fun sendTokenToServer(token: String) {
-        val request_id = (ob as RequestModel).request_id
+
         val intent = Intent(context!!, Rating::class.java)
         intent.flags =
             Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -219,5 +238,36 @@ class PaymentFragment(var ob: Any) : Fragment() {
             )
         )
     }
+    fun reject_payment(){
+        Fuel.post(
+            Utils.API_EDIT_PROFILE.plus(request_id), listOf(
+                "report" to report_content
+
+            )
+
+        ).header(
+            "accept" to "application/json",
+            Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
+        ).responseJson { _, _, result ->
+
+            result.success {
+
+                    Toast.makeText(requireContext(), "your report has been sent successfully waiting for an action from the admin", Toast.LENGTH_LONG)
+                        .show()
+
+                    (context as MainActivity).navigateToFragment(HomeFragment())
+                }
+
+            result.failure {
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+
+    }
 
 }
+
+

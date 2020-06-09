@@ -143,7 +143,7 @@ class ProfileFragment : Fragment() {
                             full_name_profile_fragg.setText(profile.optString("name", ""))
                             full_name_profile_frag.setText(profile.optString("name", ""))
                             biography.setText(profile.optString("biography", ""))
-email.setText(profile.optString("email", ""))
+                            email.setText(profile.optString("email", ""))
                             val url =
                                 Utils.BASE_IMAGE_URL.plus(profile.optString("image", "ic_user.png"))
 

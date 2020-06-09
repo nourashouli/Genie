@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.genie_cl.R
 import club.handiman.genie.Utils.Utils
 import kotlinx.android.synthetic.main.fragment_images_adapter.view.*
+import kotlinx.android.synthetic.main.post_image.view.*
 import kotlinx.android.synthetic.main.service_card.view.*
 import org.json.JSONArray
 
@@ -41,7 +42,7 @@ public  class ReceiptImagesAdapter(var context: Context) : RecyclerView.Adapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.service_card, parent, false)
+                .inflate(R.layout.post_image, parent, false)
         )
     }
 
@@ -51,7 +52,7 @@ public  class ReceiptImagesAdapter(var context: Context) : RecyclerView.Adapter<
         Glide
             .with(holder.itemView)
             .load(Utils.BASE_IMAGE_URL.plus(url))
-            .into(holder.itemView.service_image)
+            .into(holder.itemView.create_post_image)
 
 
 

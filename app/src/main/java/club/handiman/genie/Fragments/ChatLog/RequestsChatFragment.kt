@@ -42,7 +42,7 @@ class RequestsChatFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 
-        chat_request = ChatAdapter(context!!)
+        chat_request = ChatAdapter(requireContext())
 
         chat_request_recycler.adapter = chat_request
         fetchRequests()
@@ -52,7 +52,7 @@ class RequestsChatFragment : Fragment() {
         Fuel.get(Utils.API_CHAT_REQUESTS)
             .header(
                 "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(activity!!.baseContext).toString()
+                Utils.AUTHORIZATION to SharedPreferences.getToken(requireActivity().baseContext).toString()
             )
             .responseJson { _, _, result ->
 
@@ -65,7 +65,7 @@ class RequestsChatFragment : Fragment() {
 
                         for (i in 0 until list.length()) {
                             var request = list.getJSONObject(i)
-                            activity!!.runOnUiThread {
+                            requireActivity().runOnUiThread {
                                 chat_request!!.setItem(request)
                             }
                         }

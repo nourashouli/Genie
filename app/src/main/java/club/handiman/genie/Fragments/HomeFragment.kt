@@ -42,12 +42,12 @@ class HomeFragment : Fragment() {
 
         home_recycler_view.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        adapter = HomeAdapter(context!!)
+        adapter = HomeAdapter(requireContext())
         getRequest()
         getTgas()
         home_recycler_view.adapter = adapter
         smart_request.setOnClickListener {
-            val intent = Intent(context!!, requestForm::class.java)
+            val intent = Intent(requireContext(), requestForm::class.java)
             intent!!.putExtraJson("object", "123")
 
              startActivity(intent)
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
         Fuel.get(Utils.API_POST)
             .header(
                 "accept" to "application/json",
-                Utils.AUTHORIZATION to SharedPreferences.getToken(context!!).toString()
+                Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
             )
             .responseJson { _, _, result ->
 
@@ -84,7 +84,7 @@ class HomeFragment : Fragment() {
                     var res = it.obj()
                     if (res.optString("status", "error") == "success") {
 
-                        activity!!.runOnUiThread {
+                        requireActivity().runOnUiThread {
                             val items = res.getJSONArray("posts")
                             for (i in 0 until items.length()) {
                                 adapter!!.setItem(items.getJSONObject(i))
@@ -107,7 +107,7 @@ class HomeFragment : Fragment() {
             }
         search_input.visibility = View.VISIBLE
 
-        Utils.hideSoftKeyBoard(context!!, search_input)
+        Utils.hideSoftKeyBoard(requireContext(), search_input)
     }
 
 
