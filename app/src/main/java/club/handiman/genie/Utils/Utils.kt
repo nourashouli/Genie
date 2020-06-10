@@ -25,7 +25,6 @@ import java.util.*
 
 class Utils {
     companion object {
-
         private const val BASE_CLIENT_URL = "https://handiman.club/api/client"
         private const val BASE_URL = "https://handiman.club/api"
         const val API_MAKE_REQUEST = "$BASE_CLIENT_URL/make-request"
@@ -63,6 +62,7 @@ class Utils {
         const val API_DELETE_Address = "$BASE_CLIENT_URL/remove-address/"
         const val API_EMPLOYEE_PROFILE = "$BASE_CLIENT_URL/employee-profile/"
         const val API_REJECT_PAYMENT = "$BASE_CLIENT_URL/reject-payment/"
+        const val API_CHANGE_PASSWORD = "$BASE_URL/password"
         fun sendRegistrationToServer(context: Context) {
             if (SharedPreferences.getToken(context) != null) {
                 //is it working fine ?

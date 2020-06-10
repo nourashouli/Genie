@@ -34,7 +34,9 @@ class AccountSettingActivity() : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewProfile()
-        save_infor_profile_btn.setOnClickListener { editProfile() }
+        save_infor_profile_btn.setOnClickListener {
+            editProfile()
+            changepass()}
         change_image_text_btn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -47,11 +49,10 @@ class AccountSettingActivity() : Fragment() {
         var bio = biography.text.toString()
         var name=name_edt_profile.text.toString()
         var email=email_edt_profile.text.toString()
-        var password=password_edt_profile.text.toString()
         Fuel.post(
             Utils.API_EDIT_PROFILE, listOf(
                 "image" to image,
-                "biography" to bio,"name" to name,"email" to email,"password" to password)
+                "biography" to bio,"name" to name,"email" to email)
 
         ).header(
             "accept" to "application/json",
@@ -66,7 +67,7 @@ class AccountSettingActivity() : Fragment() {
                     var profile = res.getJSONObject("user")
 
                     }
-                (context as MainActivity).navigateToFragment(ProfileFragment())
+
                 }
                 result.failure {
                     Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
@@ -74,6 +75,34 @@ class AccountSettingActivity() : Fragment() {
                 }
 
             }
+    }
+    private fun changepass() {
+
+        var password=password_edt_profile.text.toString()
+        Fuel.post(
+            Utils.API_CHANGE_PASSWORD, listOf(
+            "password" to password)
+
+        ).header(
+            "accept" to "application/json",
+            Utils.AUTHORIZATION to SharedPreferences.getToken(requireContext()).toString()
+        ).responseJson { _, _, result ->
+
+            result.success {
+
+                var res = it.obj()
+                if (res.optString("status", "error") == "success") {
+                    (context as MainActivity).navigateToFragment(ProfileFragment())
+
+                }
+                (context as MainActivity).navigateToFragment(ProfileFragment())
+            }
+            result.failure {
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
     }
     var selectedPhotoUri: Uri? = null
 
