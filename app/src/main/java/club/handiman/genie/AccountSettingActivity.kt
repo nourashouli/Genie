@@ -35,8 +35,13 @@ class AccountSettingActivity() : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewProfile()
         save_infor_profile_btn.setOnClickListener {
-            editProfile()
+            var password=password_edt_profile.text.toString()
+            if (password.count()>=8){
             changepass()}
+            else if (password.count()<8 && password.isNotEmpty())  {Toast.makeText(requireContext(), "password should be minimum 8 characters", Toast.LENGTH_LONG)
+                .show()}
+            editProfile()
+            }
         change_image_text_btn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -65,6 +70,7 @@ class AccountSettingActivity() : Fragment() {
                 if (res.optString("status", "error") == "success") {
 
                     var profile = res.getJSONObject("user")
+                    (context as MainActivity).navigateToFragment(ProfileFragment())
 
                     }
 
@@ -92,10 +98,7 @@ class AccountSettingActivity() : Fragment() {
 
                 var res = it.obj()
                 if (res.optString("status", "error") == "success") {
-                    (context as MainActivity).navigateToFragment(ProfileFragment())
-
                 }
-                (context as MainActivity).navigateToFragment(ProfileFragment())
             }
             result.failure {
                 Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG)
