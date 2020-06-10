@@ -22,10 +22,10 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_login)
 
-        if (SharedPreferences.getToken(this@Login) != null) {
-            startActivity(Intent(this@Login, MainActivity::class.java))
-            finish()
-        }
+//        if (SharedPreferences.getToken(this@Login) != null) {
+//            startActivity(Intent(this@Login, MainActivity::class.java))
+//            finish()
+//        }
         btn_login.setOnClickListener { login() }
         registration_id.setOnClickListener { Signup() }
         // btn_login.setOnClickListener { performLogin() }
