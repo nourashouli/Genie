@@ -17,7 +17,11 @@ class RequestModel(
     var images: JSONArray,
     var receipt: JSONArray? = null,
     var receipt_images: JSONArray? = null,
-    var total: Any? = null
+    var total: Any? = null,
+    var rescheduled: Boolean? = null,
+    var rescheduled_from: String? = null,
+    var rescheduled_to: String? = null,
+    var rescheduled_date: String? = null
 //    var request_title: String,
 //    var description: String,
 //    var street: String,

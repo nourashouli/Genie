@@ -1,18 +1,14 @@
 package club.handiman.genie.adapter
 
-import android.R.attr.fragment
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.R
-import androidx.core.graphics.toColor
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import club.handiman.genie.Fragments.PaymentFragment
 import club.handiman.genie.Fragments.RequestDetailsFragment
+import club.handiman.genie.Fragments.RescheduleRequest
 import club.handiman.genie.MainActivity
 import club.handiman.genie.Models.RequestModel
 import club.handiman.genie.Utils.Utils
@@ -51,20 +47,36 @@ class notiAdapter(var context: Context) : RecyclerView.Adapter<notiAdapter.ViewH
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if ((list[position]).has_receipt == true) {
-            if (list[position].has_paid == true) {
-                holder.itemView.payment_btn.visibility = View.VISIBLE
-                holder.itemView.payment_btn.text="Paid"
-                holder.itemView.payment_btn.setBackgroundColor(Color.GREEN)
 
-            } else {
-                holder.itemView.payment_btn.visibility = View.VISIBLE
-                holder.itemView.payment_btn.setOnClickListener {
-                    (context as MainActivity).navigateToFragment(
-                        PaymentFragment(
-                            (list[position])
-                        )
+        if ((list[position]).rescheduled == true) {
+            holder.itemView.payment_btn.visibility = View.VISIBLE
+            holder.itemView.payment_btn.text = "Reschedule request "
+
+            holder.itemView.payment_btn.setBackgroundColor(Color.BLUE)
+            holder.itemView.payment_btn.setOnClickListener {
+                (context as MainActivity).navigateToFragment(
+                    RescheduleRequest(
+                        (list[position])
                     )
+                )
+
+            }
+        } else {
+            if ((list[position]).has_receipt == true) {
+                if (list[position].has_paid == true) {
+                    holder.itemView.payment_btn.visibility = View.VISIBLE
+                    holder.itemView.payment_btn.text = "Paid"
+                    holder.itemView.payment_btn.setBackgroundColor(Color.GREEN)
+
+                } else {
+                    holder.itemView.payment_btn.visibility = View.VISIBLE
+                    holder.itemView.payment_btn.setOnClickListener {
+                        (context as MainActivity).navigateToFragment(
+                            PaymentFragment(
+                                (list[position])
+                            )
+                        )
+                    }
                 }
             }
         }

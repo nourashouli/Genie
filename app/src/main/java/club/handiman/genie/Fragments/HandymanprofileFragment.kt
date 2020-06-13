@@ -44,15 +44,28 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = feedbackAdapter(requireContext())
-       var scaleAnimation = ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.7f, Animation.RELATIVE_TO_SELF, 0.7f)
+        var scaleAnimation = ScaleAnimation(
+            0.7f,
+            1.0f,
+            0.7f,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.7f,
+            Animation.RELATIVE_TO_SELF,
+            0.7f
+        )
         scaleAnimation?.setDuration(500)
-       var bounceInterpolator = BounceInterpolator()
+        var bounceInterpolator = BounceInterpolator()
         scaleAnimation?.setInterpolator(bounceInterpolator)
 
-        button_favorite.setOnCheckedChangeListener(object:View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+        button_favorite.setOnCheckedChangeListener(object : View.OnClickListener,
+            CompoundButton.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
                 p0?.startAnimation(scaleAnimation);
-                Log.d("fav", "am i here") //To change body of created functions use File | Settings | File Templates.
+                Log.d(
+                    "fav",
+                    "am i here"
+                ) //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onClick(p0: View?) {
@@ -67,7 +80,7 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
         if ((data as JSONObject).has("rating_object")) {
             if ((data as JSONObject).optJSONObject("rating_object").has(id)) {
                 var arr = (data as JSONObject).optJSONObject("rating_object").optJSONArray(id)
-                if (arr!=null)
+                if (arr != null)
                     rBar.rating = arr.getDouble(0).toFloat()
             }
 
@@ -83,12 +96,13 @@ class HandymanprofileFragment(var data: Any, var id: String) : Fragment() {
             var items: JSONArray? =
                 (data as JSONObject).getJSONObject("feedback_object").optJSONArray(id!!)
 
-if (items!=null){
-            for (i in 0 until items!!.length()) {
-                adapter!!.setItem(items.get(i))
+            if (items != null) {
+                for (i in 0 until items!!.length()) {
+                    adapter!!.setItem(items.get(i))
+                }
+                adapter!!.notifyDataSetChanged()
             }
-            adapter!!.notifyDataSetChanged()
-        }}
+        }
         certificates.setOnClickListener {
             val i = Intent(requireContext(), ViewPDFActivity::class.java)
             i.putExtra("url", _certificates)

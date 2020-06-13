@@ -56,6 +56,7 @@ class Utils {
         const val API_OUTGOING_REQUESTS = "$BASE_CLIENT_URL/outgoing-requests"
         const val API_CANCEL_REQUEST = "$BASE_CLIENT_URL/request-cancel/"
         const val API_ANY_REQUEST = "$BASE_CLIENT_URL/make-request/"
+        const val API_RESCHULE="$BASE_CLIENT_URL/reschedule/"
         const val API_REQUEST_Done = "$BASE_CLIENT_URL/request-done/"
         const val API_POST = "$BASE_CLIENT_URL/post"
         const val API_HANDYMAN_REQUESTS = "$BASE_URL/jobs/"

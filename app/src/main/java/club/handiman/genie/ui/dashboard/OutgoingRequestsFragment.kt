@@ -61,8 +61,20 @@ class OutgoingRequestsFragment : Fragment() {
                             var service = request.getJSONObject("service")
                             var flag = false
                             var flag2 = false
+                            var flag3 = false
+                            var rescheduled_from: String? = null
+                            var rescheduled_to: String? = null
+                            var rescheduled_date: String? = null
                             if (request.has("receipt")) {
                                 flag = true
+                            }
+                            if (request.has("rescheduled")) {
+                                if (request.optBoolean("rescheduled")) {
+                                    flag3 = true
+                                    rescheduled_date = request.optString("rescheduled_date")
+                                    rescheduled_from = request.optString("rescheduled_from")
+                                    rescheduled_to = request.optString("rescheduled_to")
+                                }
                             }
                             if (request.has("paid")) {
                                 flag2 = request.optBoolean("paid")
@@ -81,7 +93,11 @@ class OutgoingRequestsFragment : Fragment() {
                                 request.getJSONArray("images"),
                                 request.optJSONArray("receipt"),
                                 request.optJSONArray("receipt_images"),
-                                request.optString("total")
+                                request.optString("total"),
+                                flag3,
+                                rescheduled_from,
+                                rescheduled_to,
+                                rescheduled_date
                             )
                             runOnUiThread {
                                 adapter!!.setItem(model!!)
